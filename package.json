@@ -56,7 +56,6 @@
     "github-slugger": "2.0.0",
     "globals": "16.2.0",
     "gray-matter": "4.0.3",
-    "hast": "1.0.0",
     "hast-util-from-html-isomorphic": "2.0.0",
     "husky": "9.1.7",
     "lint-staged": "16.1.0",
@@ -79,7 +78,6 @@
     "tailwindcss": "3.4.17",
     "title-case": "4.3.2",
     "typescript-eslint": "8.33.0",
-    "unist": "0.0.1",
     "unist-util-visit": "5.0.0",
     "vitest": "3.1.4"
   },
