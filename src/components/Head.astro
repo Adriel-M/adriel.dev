@@ -2,6 +2,7 @@
 import jetbrainsMonoWoff2 from '@fontsource/jetbrains-mono/files/jetbrains-mono-latin-500-normal.woff2'
 import { ClientRouter } from 'astro:transitions'
 
+import Posthog from '@/components/Posthog.astro'
 import siteConfig from '@/libs/siteConfig'
 
 interface Props {
@@ -40,6 +41,7 @@ let titleToDisplay = `${title} | ${siteConfig.title}`
     href={new URL('rss.xml', Astro.site)}
   />
   <ClientRouter />
+  <Posthog />
   <style>
     body {
       font-family: 'JetBrains Mono', monospace;
