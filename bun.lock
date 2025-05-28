@@ -4,7 +4,6 @@
     "": {
       "name": "adriel-dev-astro",
       "dependencies": {
-        "@astrojs/cloudflare": "^12.5.3",
         "@fontsource/jetbrains-mono": "^5.2.5",
         "astro": "^5.8.0",
         "astro-seo-schema": "^5.0.0",
@@ -14,6 +13,7 @@
       },
       "devDependencies": {
         "@astrojs/check": "0.9.4",
+        "@astrojs/cloudflare": "12.5.3",
         "@astrojs/mdx": "4.3.0",
         "@astrojs/react": "4.3.0",
         "@astrojs/rss": "4.0.11",
