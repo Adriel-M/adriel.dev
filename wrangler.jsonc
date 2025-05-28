@@ -5,7 +5,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "adriel-dev",
-  "main": "./dist/_worker.js/index.js",
   "compatibility_date": "2025-05-28",
   "compatibility_flags": [
     "nodejs_compat",
