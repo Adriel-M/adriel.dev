@@ -1,16 +1,20 @@
 import { useEffect, useState } from 'react'
 
+import { throttle } from '@/libs/FunctionUtils.ts'
+
 const ScrollTop = () => {
   const [show, setShow] = useState(false)
 
   useEffect(() => {
-    const handleWindowScroll = () => {
+    const handleScroll = () => {
       if (window.scrollY > 50) setShow(true)
       else setShow(false)
     }
 
-    window.addEventListener('scroll', handleWindowScroll)
-    return () => window.removeEventListener('scroll', handleWindowScroll)
+    const throttleHandleScroll = throttle(handleScroll)
+
+    window.addEventListener('scroll', throttleHandleScroll)
+    return () => window.removeEventListener('scroll', throttleHandleScroll)
   }, [])
 
   const handleScrollTop = () => {

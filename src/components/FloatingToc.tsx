@@ -1,6 +1,8 @@
 import type { MarkdownHeading } from 'astro'
 import { useEffect, useRef, useState } from 'react'
 
+import { throttle } from '@/libs/FunctionUtils.ts'
+
 interface Props {
   headings: MarkdownHeading[]
 }
@@ -101,16 +103,7 @@ export default function FloatingToc({ headings }: Props) {
       }
     }
 
-    let ticking = false
-    const throttledHandleScroll = () => {
-      if (!ticking) {
-        ticking = true
-        requestAnimationFrame(() => {
-          handleScroll()
-          ticking = false
-        })
-      }
-    }
+    const throttledHandleScroll = throttle(handleScroll)
 
     window.addEventListener('scroll', throttledHandleScroll, { passive: true })
     return () => {
