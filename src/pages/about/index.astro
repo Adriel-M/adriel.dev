@@ -7,7 +7,7 @@ import Content from '@/pages/about/_content.mdx'
 
 export const title = 'About'
 
-const emailAddress = process.env.PUBLIC_EMAIL_ADDRESS
+const emailAddress = import.meta.env.PUBLIC_EMAIL_ADDRESS
 ---
 
 <SimplePageLayout title={title} tagline="Yup, that's me">
