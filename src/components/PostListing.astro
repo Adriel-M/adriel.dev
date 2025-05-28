@@ -1,0 +1,66 @@
+---
+import type { CollectionEntry } from 'astro:content'
+
+import Link from '@/components/Link.astro'
+import Pagination from '@/components/Pagination.astro'
+import Tag from '@/components/Tag.astro'
+import { generatePostPath, sortTagsByAlpha } from '@/libs/CollectionUtils'
+import { formatDate } from '@/libs/DateUtils'
+import siteConfig from '@/libs/siteConfig'
+
+interface Props {
+  posts: CollectionEntry<'posts'>[]
+  currentPage: number
+  totalPages: number
+  prev?: string
+  next?: string
+}
+
+const { posts, currentPage, totalPages, prev, next } = Astro.props
+---
+
+<div class="flex-1">
+  <ul>
+    {
+      posts.map((post) => {
+        const { createdAt, title, tags } = post.data
+        return (
+          <li class="py-5">
+            <article class="flex flex-col space-y-2 xl:space-y-0">
+              <dl>
+                <dt class="sr-only">Published on</dt>
+                <dd class="text-base font-medium leading-6 text-gray-500">
+                  <time datetime={createdAt.toISOString()}>
+                    {formatDate(createdAt, siteConfig.locale)}
+                  </time>
+                </dd>
+              </dl>
+              <div class="space-y-3">
+                <div>
+                  <h2 class="text-xl font-bold leading-8 tracking-tight">
+                    <Link
+                      href={generatePostPath(post)}
+                      class="text-gray-900 hover:text-primary-500"
+                    >
+                      {title}
+                    </Link>
+                  </h2>
+                  <div class="flex flex-wrap">
+                    {sortTagsByAlpha(tags).map((sluggedTag) => (
+                      <Tag sluggedTag={sluggedTag} />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </article>
+          </li>
+        )
+      })
+    }
+  </ul>
+  {
+    totalPages > 1 && (
+      <Pagination currentPage={currentPage} totalPages={totalPages} prev={prev} next={next} />
+    )
+  }
+</div>

@@ -1,0 +1,26 @@
+---
+import Github from '@/components/footer-icons/Github.astro'
+import Linkedin from '@/components/footer-icons/Linkedin.astro'
+import RSS from '@/components/footer-icons/RSS.astro'
+import Link from '@/components/Link.astro'
+
+const components = {
+  github: Github,
+  linkedin: Linkedin,
+  rss: RSS,
+}
+
+interface Props {
+  kind: keyof typeof components
+  href: string
+}
+
+const { kind, href } = Astro.props
+
+const SocialSvg = components[kind]
+---
+
+<Link href={href} class="text-sm text-gray-500 transition hover:text-gray-600">
+  <span class="sr-only">{kind}</span>
+  <SocialSvg />
+</Link>

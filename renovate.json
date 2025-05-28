@@ -1,0 +1,28 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:best-practices"],
+  "packageRules": [
+    {
+      "automerge": true,
+      "matchPackageNames": ["/^eslint/", "/eslint-.*/", "/.*eslint.*/"]
+    },
+    {
+      "automerge": true,
+      "matchPackageNames": ["/^prettier/", "/prettier-.*/"]
+    },
+    {
+      "automerge": true,
+      "matchPackageNames": ["/^@types//"]
+    },
+    {
+      "matchUpdateTypes": ["major", "minor", "patch"],
+      "minimumReleaseAge": "3 days",
+      "prCreation": "not-pending"
+    }
+  ],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["every 1 month on the first day of the month"]
+  },
+  "reviewers": ["Adriel-M"]
+}

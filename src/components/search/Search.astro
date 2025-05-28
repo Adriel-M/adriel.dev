@@ -1,0 +1,63 @@
+---
+import '@docsearch/css/dist/modal.css'
+import '@/components/search/docsearch.css'
+---
+
+<sl-doc-search>
+  <button type="button" class="DocSearch DocSearch-Button" aria-label="search">
+    <span class="DocSearch-Button-Container">
+      <svg width="20" height="20" class="DocSearch-Search-Icon" viewBox="0 0 20 20">
+        <path
+          d="M14.386 14.386l4.0877 4.0877-4.0877-4.0877c-2.9418 2.9419-7.7115 2.9419-10.6533 0-2.9419-2.9418-2.9419-7.7115 0-10.6533 2.9418-2.9419 7.7115-2.9419 10.6533 0 2.9419 2.9418 2.9419 7.7115 0 10.6533z"
+          stroke="currentColor"
+          fill="none"
+          fill-rule="evenodd"
+          stroke-linecap="round"
+          stroke-linejoin="round"></path>
+      </svg>
+      <span class="DocSearch-Button-Placeholder">Search</span>
+    </span>
+    <span class="DocSearch-Button-Keys"></span>
+  </button>
+</sl-doc-search>
+
+<script>
+  import docsearch from '@docsearch/js'
+  import siteConfig from '@/libs/siteConfig'
+
+  const { appId, apiKey, indexName } = siteConfig.search.algoliaConfig
+
+  const TRAILING_ELLIPSIS_PATTERN = /\s+…$/
+
+  docsearch({
+    container: 'sl-doc-search',
+    appId: appId,
+    indexName: indexName,
+    apiKey: apiKey,
+    insights: false,
+    disableUserPersonalization: true,
+    transformItems: (items) => {
+      return items.map((item) => {
+        // Strip the ellipsis at the end. Add ellipsis via css instead.
+        const snippetValue = item._snippetResult?.content?.value
+        if (snippetValue) {
+          item._snippetResult.content.value = snippetValue.replace(TRAILING_ELLIPSIS_PATTERN, '')
+        }
+        if (item._snippetResult.hierarchy) {
+          for (const value of Object.values(item._snippetResult.hierarchy)) {
+            const hierarchyValue = value.value
+            if (hierarchyValue && typeof hierarchyValue === 'string') {
+              value.value = hierarchyValue.replace(TRAILING_ELLIPSIS_PATTERN, '')
+            }
+          }
+        }
+
+        const url = new URL(item.url)
+        return {
+          ...item,
+          url: url.pathname + url.hash,
+        }
+      })
+    },
+  })
+</script>

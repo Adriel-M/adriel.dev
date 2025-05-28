@@ -1,0 +1,49 @@
+---
+import jetbrainsMonoWoff2 from '@fontsource/jetbrains-mono/files/jetbrains-mono-latin-500-normal.woff2'
+import { ClientRouter } from 'astro:transitions'
+
+import siteConfig from '@/libs/siteConfig'
+
+interface Props {
+  title: string
+}
+
+const { title } = Astro.props
+
+let titleToDisplay = `${title} | ${siteConfig.title}`
+---
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="/static/favicons/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/favicons/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/favicons/favicon-16x16.png" />
+  <link rel="manifest" href="/static/favicons/site.webmanifest" />
+  <link rel="mask-icon" href="/static/favicons/safari-pinned-tab.svg" color="#5bbad5" />
+  <meta name="msapplication-TileColor" content="#000000" />
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fff" />
+  <meta name="generator" content={Astro.generator} />
+  <link rel="sitemap" href="/sitemap-index.xml" />
+  <title>{titleToDisplay}</title>
+  <link
+    rel="preload"
+    as="font"
+    type="font/woff2"
+    href={jetbrainsMonoWoff2}
+    crossorigin="anonymous"
+  />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link
+    rel="alternate"
+    type="application/rss+xml"
+    title={siteConfig.title}
+    href={new URL('rss.xml', Astro.site)}
+  />
+  <ClientRouter />
+  <style>
+    body {
+      font-family: 'JetBrains Mono', monospace;
+    }
+  </style>
+  <slot />
+</head>

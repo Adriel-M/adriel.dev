@@ -1,0 +1,62 @@
+---
+import Link from '@/components/Link.astro'
+import SimplePageLayout from '@/layouts/SimplePageLayout.astro'
+import { generatePostPath, getPosts } from '@/libs/CollectionUtils'
+import { formatDate } from '@/libs/DateUtils'
+import siteConfig from '@/libs/siteConfig'
+import { URLS } from '@/libs/UrlLibs'
+
+const posts = await getPosts()
+
+export const title = 'Thinking Emoji 🤔'
+---
+
+<SimplePageLayout title={title} tagline="Latest posts">
+  <div>
+    <ul>
+      {
+        posts.slice(0, siteConfig.postsInFrontPageCount).map((post) => {
+          return (
+            <li class="py-4">
+              <article>
+                <div class="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
+                  <dl>
+                    <dt class="sr-only">Published on</dt>
+                    <dd class="text-base font-medium leading-6 text-gray-500">
+                      <time datetime={post.data.createdAt.toISOString()}>
+                        {formatDate(post.data.createdAt, siteConfig.locale)}
+                      </time>
+                    </dd>
+                  </dl>
+                  <div class="space-y-5 xl:col-span-3">
+                    <div class="space-y-6">
+                      <div>
+                        <h2 class="text-xl font-bold leading-8 tracking-tight">
+                          <Link
+                            href={generatePostPath(post)}
+                            class="text-gray-900 hover:text-primary-500"
+                          >
+                            {post.data.title}
+                          </Link>
+                        </h2>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </li>
+          )
+        })
+      }
+    </ul>
+    {
+      posts.length > siteConfig.postsInFrontPageCount && (
+        <div class="flex justify-end text-base font-medium leading-6">
+          <Link href={URLS.POSTS} className="hover:text-primary-500" aria-label="All posts">
+            All Posts &rarr;
+          </Link>
+        </div>
+      )
+    }
+  </div>
+</SimplePageLayout>

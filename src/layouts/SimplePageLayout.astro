@@ -1,0 +1,40 @@
+---
+import PageTitle from '@/components/PageTitle.astro'
+import type { SeoData } from '@/components/SEO.astro'
+import RootLayout from '@/layouts/RootLayout.astro'
+import siteConfig from '@/libs/siteConfig'
+
+interface Props {
+  title: string
+  tagline?: string
+}
+
+const { title, tagline } = Astro.props
+
+let ogUrl: string
+
+if (Astro.request.url.endsWith('/')) {
+  ogUrl = `${Astro.request.url}og.png`
+} else {
+  ogUrl = `${Astro.request.url}/og.png`
+}
+
+const seoData: SeoData = {
+  title,
+  description: siteConfig.description,
+  isPost: false,
+  ogImage: ogUrl,
+}
+---
+
+<RootLayout title={title} seoData={seoData}>
+  <div class="divide-y divide-gray-200">
+    <header>
+      <div class="space-y-2 pb-8 pt-6 md:space-y-5">
+        <PageTitle>{title}</PageTitle>
+        {tagline && <p class="text-lg leading-7 text-gray-500">{tagline}</p>}
+      </div>
+    </header>
+    <slot />
+  </div>
+</RootLayout>

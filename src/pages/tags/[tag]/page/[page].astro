@@ -1,0 +1,39 @@
+---
+import type { PaginateFunction } from 'astro'
+
+import PostListing from '@/components/PostListing.astro'
+import TagAndPostListingDisplayLayout from '@/layouts/TagAndPostListingDisplayLayout.astro'
+import { getPosts, getPostsByTag, getTagCounts } from '@/libs/CollectionUtils'
+import siteConfig from '@/libs/siteConfig'
+import { generateSluggedTag } from '@/libs/SluggedTag'
+
+export async function getStaticPaths(context: { paginate: PaginateFunction }) {
+  const posts = await getPosts()
+  const tagCounts = await getTagCounts()
+  const tags = Object.keys(tagCounts).map(generateSluggedTag)
+  return tags.flatMap((tag) => {
+    const filteredPosts = getPostsByTag(posts, tag)
+    return context.paginate(filteredPosts, {
+      pageSize: siteConfig.postsInPostsPageCount,
+      params: {
+        tag: tag.tag,
+      },
+    })
+  })
+}
+
+const { page } = Astro.props
+const { tag } = Astro.params
+
+const sluggedTag = generateSluggedTag(tag)
+---
+
+<TagAndPostListingDisplayLayout currentTag={sluggedTag}>
+  <PostListing
+    posts={page.data}
+    currentPage={page.currentPage}
+    totalPages={page.lastPage}
+    prev={page.url.prev}
+    next={page.url.next}
+  />
+</TagAndPostListingDisplayLayout>

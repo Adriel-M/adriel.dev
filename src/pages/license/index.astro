@@ -1,0 +1,17 @@
+---
+import '@/css/user-content.css'
+
+import SimplePageLayout from '@/layouts/SimplePageLayout.astro'
+import componentOverrides from '@/libs/ComponentOverrides'
+import Content from '@/pages/license/_content.mdx'
+
+export const title = 'License'
+---
+
+<SimplePageLayout title={title} tagline="CC BY 4.0 ">
+  <article>
+    <div class="prose max-w-none pb-8 pt-10">
+      <Content components={componentOverrides} />
+    </div>
+  </article>
+</SimplePageLayout>

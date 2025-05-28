@@ -1,0 +1,20 @@
+---
+interface Props {
+  href: string
+  // other specific props
+  [key: string]: unknown
+}
+
+const { href, ...rest } = Astro.props
+
+const isInternalLink = href.startsWith('/')
+const isAnchorLink = href.startsWith('#')
+const isExternal = !isInternalLink && !isAnchorLink
+---
+
+<a
+  href={href}
+  target={isExternal ? '_blank' : undefined}
+  rel={isExternal ? 'noopener noreferrer' : undefined}
+  {...rest}><slot /></a
+>

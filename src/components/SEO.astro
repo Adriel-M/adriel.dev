@@ -1,0 +1,33 @@
+---
+import { SEO as Seo } from 'astro-seo'
+
+import siteConfig from '@/libs/siteConfig'
+
+export interface SeoData {
+  title: string
+  description: string
+  isPost: boolean
+  ogImage: string
+}
+
+interface Props {
+  seoData: SeoData
+}
+
+const {
+  seoData: { title, description, isPost, ogImage },
+} = Astro.props
+---
+
+<Seo
+  title={title}
+  titleTemplate={`%s | ${siteConfig.title}`}
+  description={description}
+  openGraph={{
+    basic: {
+      title: title,
+      type: isPost ? 'article' : 'website',
+      image: ogImage,
+    },
+  }}
+/>

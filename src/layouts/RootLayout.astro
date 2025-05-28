@@ -1,0 +1,42 @@
+---
+import '@fontsource/jetbrains-mono/latin-500.css'
+
+import { Schema } from 'astro-seo-schema'
+import type { BlogPosting, WithContext } from 'schema-dts'
+
+import Footer from '@/components/Footer.astro'
+import Head from '@/components/Head.astro'
+import Header from '@/components/Header.astro'
+import ScrollTop from '@/components/ScrollTop'
+import SectionContainer from '@/components/SectionContainer.astro'
+import type { SeoData } from '@/components/SEO.astro'
+import SEO from '@/components/SEO.astro'
+
+interface Props {
+  title: string
+  seoData: SeoData
+  jsonLd?: WithContext<BlogPosting>
+}
+
+const { title, seoData, jsonLd } = Astro.props
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <Head title={title}>
+    <SEO seoData={seoData} />
+    {jsonLd && <Schema item={jsonLd} />}
+  </Head>
+  <body class="bg-white pl-[calc(100vw-100%)] text-black antialiased">
+    <SectionContainer>
+      <div class="flex h-screen flex-col justify-between">
+        <Header />
+        <main class="mb-auto">
+          <slot />
+          <ScrollTop client:load />
+        </main>
+        <Footer />
+      </div>
+    </SectionContainer>
+  </body>
+</html>

@@ -1,0 +1,69 @@
+---
+import type { CollectionEntry } from 'astro:content'
+
+import PageTitle from '@/components/PageTitle.astro'
+import type { SeoData } from '@/components/SEO.astro'
+import Tag from '@/components/Tag.astro'
+import RootLayout from '@/layouts/RootLayout.astro'
+import { sortTagsByAlpha } from '@/libs/CollectionUtils'
+import { formatDate } from '@/libs/DateUtils'
+import siteConfig from '@/libs/siteConfig'
+
+interface Props {
+  post: CollectionEntry<'posts'>
+  summary: string
+}
+
+const { post, summary } = Astro.props
+
+const seoData: SeoData = {
+  title: post.data.title,
+  description: summary,
+  isPost: false,
+  ogImage: `${Astro.url.toString()}/og.png`,
+}
+---
+
+<RootLayout title={post.data.title} seoData={seoData}>
+  <Fragment slot="jsonLd">
+    <slot name="jsonLd" />
+  </Fragment>
+  <article>
+    <div>
+      <header>
+        <div class="space-y-1 border-b border-gray-200 pb-10 text-center">
+          <dl>
+            <div>
+              <dt class="sr-only">Published on</dt>
+              <dd class="text-base font-medium leading-6 text-gray-500">
+                <time datetime={post.data.createdAt.toISOString()}
+                  >{formatDate(post.data.createdAt, siteConfig.locale)}</time
+                >
+              </dd>
+            </div>
+          </dl>
+          <div>
+            <PageTitle>{post.data.title}</PageTitle>
+            {
+              post.data.tags.length > 0 && (
+                <div class="flex flex-wrap place-content-center pt-2">
+                  {sortTagsByAlpha(post.data.tags).map((tag) => (
+                    <Tag sluggedTag={tag} />
+                  ))}
+                </div>
+              )
+            }
+          </div>
+        </div>
+      </header>
+      {Astro.slots.has('toc') && <slot name="toc" />}
+      <div class="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-8 xl:divide-y-0">
+        <div class="divide-y divide-gray-200 xl:col-span-3 xl:row-span-2 xl:pb-0">
+          <div id="article-body" class="prose max-w-none pb-4 pt-10">
+            <slot />
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+</RootLayout>

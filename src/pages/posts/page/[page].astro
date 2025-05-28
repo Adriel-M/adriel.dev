@@ -1,0 +1,25 @@
+---
+import type { PaginateFunction } from 'astro'
+
+import PostListing from '@/components/PostListing.astro'
+import TagAndPostListingDisplayLayout from '@/layouts/TagAndPostListingDisplayLayout.astro'
+import { getPosts } from '@/libs/CollectionUtils'
+import siteConfig from '@/libs/siteConfig'
+
+export async function getStaticPaths(context: { paginate: PaginateFunction }) {
+  const pages = await getPosts()
+  return context.paginate(pages, { pageSize: siteConfig.postsInPostsPageCount })
+}
+
+const { page } = Astro.props
+---
+
+<TagAndPostListingDisplayLayout>
+  <PostListing
+    posts={page.data}
+    currentPage={page.currentPage}
+    totalPages={page.lastPage}
+    prev={page.url.prev}
+    next={page.url.next}
+  />
+</TagAndPostListingDisplayLayout>

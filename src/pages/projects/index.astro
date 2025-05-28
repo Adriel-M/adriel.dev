@@ -1,0 +1,28 @@
+---
+import { getCollection } from 'astro:content'
+
+import ProjectCard from '@/components/ProjectCard.astro'
+import SimplePageLayout from '@/layouts/SimplePageLayout.astro'
+
+const allProjects = await getCollection('projects')
+
+export const title = 'Projects'
+---
+
+<SimplePageLayout title={title} tagline="Some projects I worked on 🧑‍💻">
+  <div class="container py-12">
+    <div class="-m-4 flex flex-wrap">
+      {
+        allProjects.map((project) => {
+          return (
+            <ProjectCard
+              title={project.data.title}
+              description={project.data.description}
+              href={project.data.href}
+            />
+          )
+        })
+      }
+    </div>
+  </div>
+</SimplePageLayout>

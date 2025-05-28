@@ -1,0 +1,47 @@
+---
+import Link from '@/components/Link.astro'
+interface Props {
+  currentPage: number
+  totalPages: number
+  prev?: string
+  next?: string
+}
+
+const { currentPage, totalPages, prev, next } = Astro.props
+---
+
+<div class="space-y-2 pb-8 pt-6 md:space-y-5">
+  <nav class="flex justify-between">
+    {
+      !prev && (
+        <button class="cursor-auto disabled:opacity-50" disabled={!prev}>
+          Previous
+        </button>
+      )
+    }
+    {
+      prev && (
+        <Link class="hover:text-primary-500" href={prev} rel="prev" scroll={false}>
+          Previous
+        </Link>
+      )
+    }
+    <span>
+      {currentPage} of {totalPages}
+    </span>
+    {
+      !next && (
+        <button class="cursor-auto disabled:opacity-50" disabled={!next}>
+          Next
+        </button>
+      )
+    }
+    {
+      next && (
+        <Link class="hover:text-primary-500" href={next} rel="next" scroll={false}>
+          Next
+        </Link>
+      )
+    }
+  </nav>
+</div>

@@ -1,0 +1,24 @@
+---
+import FooterYear from '@/components/FooterYear'
+import Link from '@/components/Link.astro'
+import SocialIcon from '@/components/SocialIcon.astro'
+import siteConfig from '@/libs/siteConfig'
+import { URLS } from '@/libs/UrlLibs'
+---
+
+<footer>
+  <div class="mt-16 flex flex-col items-center">
+    <div class="mb-4 flex space-x-4">
+      <SocialIcon kind="github" href={siteConfig.github} />
+      <SocialIcon kind="linkedin" href={siteConfig.linkedin} />
+      <SocialIcon kind="rss" href={URLS.RSS} />
+    </div>
+    <div class="mb-8 flex space-x-2 text-sm text-gray-500">
+      <FooterYear client:visible />
+      <div>{` • `}</div>
+      <div>Adriel Martinez</div>
+      <div>{` • `}</div>
+      <Link href="/license" class="hover:text-primary-500"> CC BY 4.0 </Link>
+    </div>
+  </div>
+</footer>

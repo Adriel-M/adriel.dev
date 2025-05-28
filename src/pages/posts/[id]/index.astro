@@ -1,0 +1,53 @@
+---
+import '@/css/user-content.css'
+
+import { getCollection, render } from 'astro:content'
+import { Schema } from 'astro-seo-schema'
+
+import FloatingToc from '@/components/FloatingToc'
+import PostLayout from '@/layouts/PostLayout.astro'
+import componentOverrides from '@/libs/ComponentOverrides'
+import generateSummary from '@/libs/generate-summary'
+import siteConfig from '@/libs/siteConfig'
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts')
+  return posts.map((post) => ({
+    params: { id: post.id },
+    props: { post },
+  }))
+}
+
+const { post } = Astro.props
+const { Content, headings } = await render(post)
+
+const filteredHeadings = headings.filter((heading) => heading.slug !== 'footnote-label')
+
+const pageSummary = await generateSummary(post.body!)
+---
+
+<PostLayout post={post} summary={pageSummary}>
+  <Schema
+    slot="jsonLd"
+    item={{
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: post.data.title,
+      datePublished: post.data.createdAt.toISOString(),
+      dateModified: post.data.updatedAt?.toISOString(),
+      description: pageSummary,
+      url: Astro.url.toString(),
+      author: {
+        '@type': 'Person',
+        name: siteConfig.author,
+      },
+    }}
+  />
+
+  {
+    filteredHeadings.length > 0 && (
+      <FloatingToc headings={filteredHeadings} slot="toc" client:load />
+    )
+  }
+  <Content components={componentOverrides} />
+</PostLayout>

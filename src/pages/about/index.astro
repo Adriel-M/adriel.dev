@@ -1,0 +1,19 @@
+---
+import '@/css/user-content.css'
+
+import SimplePageLayout from '@/layouts/SimplePageLayout.astro'
+import componentOverrides from '@/libs/ComponentOverrides'
+import Content from '@/pages/about/_content.mdx'
+
+export const title = 'About'
+
+const emailAddress = import.meta.env.PUBLIC_EMAIL_ADDRESS
+---
+
+<SimplePageLayout title={title} tagline="Yup, that's me">
+  <article>
+    <div class="prose max-w-none pb-8 pt-10">
+      <Content components={componentOverrides} emailAddress={emailAddress} />
+    </div>
+  </article>
+</SimplePageLayout>

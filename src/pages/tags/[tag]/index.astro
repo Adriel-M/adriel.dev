@@ -1,0 +1,27 @@
+---
+import PostListing from '@/components/PostListing.astro'
+import TagAndPostListingDisplayLayout from '@/layouts/TagAndPostListingDisplayLayout.astro'
+import { getPosts, getPostsByTag, getTagCounts } from '@/libs/CollectionUtils'
+import siteConfig from '@/libs/siteConfig'
+import { generateSluggedTag } from '@/libs/SluggedTag'
+export async function getStaticPaths() {
+  const tagCounts = await getTagCounts()
+  const tags = Object.keys(tagCounts)
+  return tags.map((tag) => ({
+    params: { tag },
+    props: { tag: generateSluggedTag(tag) },
+  }))
+}
+
+const { tag } = Astro.props
+
+const posts = await getPosts()
+const filteredPosts = getPostsByTag(posts, tag)
+const firstPagePosts = filteredPosts.slice(0, siteConfig.postsInPostsPageCount)
+const numberOfPages = Math.ceil(filteredPosts.length / siteConfig.postsInPostsPageCount)
+const nextUrl = `/tags/${tag.tag}/page/2`
+---
+
+<TagAndPostListingDisplayLayout currentTag={tag}>
+  <PostListing posts={firstPagePosts} currentPage={1} totalPages={numberOfPages} next={nextUrl} />
+</TagAndPostListingDisplayLayout>
