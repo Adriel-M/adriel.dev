@@ -8,6 +8,10 @@ tags:
 updatedAt: 2025-04-20T17:00:15.209Z
 ---
 
+> [!Note]
+> As of 2025-05-28, I've migrated this site to use [astro.js](https://astro.build/). I don't use this workaround anymore
+> and rely on astro to bundle the images properly.
+
 # Motivation
 
 On my previous [post](/posts/2025-04-17-properly-caching-images-in-your-mdx-based-nextjs-blog), one concern with bundling
@@ -39,7 +43,7 @@ images
 
 # Plugin
 
-For the most up to do date implementation, check the src [here](https://github.com/Adriel-M/adriel.dev/blob/cba3a8c4c62b337c581d10c93864384336e21970/lib/remarkPlugins/RemarkCopyLinkedImages.ts).
+For the most up to do date implementation, check the src [here](https://github.com/Adriel-M/adriel.dev-next.js/blob/cba3a8c4c62b337c581d10c93864384336e21970/lib/remarkPlugins/RemarkCopyLinkedImages.ts).
 
 ```ts title="RemarkCopyLinkedImages.ts" showLineNumbers
 import { existsSync, mkdirSync } from 'node:fs'

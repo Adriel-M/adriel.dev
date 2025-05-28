@@ -1,6 +1,7 @@
 # adriel.dev
 
-My personal site. Based off [tailwind-nextjs-starter-blog](https://github.com/timlrx/tailwind-nextjs-starter-blog).
+My personal site. Based off [adriel.dev-next.js](https://github.com/Adriel-M/adriel.dev-next.js) ported to astro.
+That was based off [tailwind-nextjs-starter-blog](https://github.com/timlrx/tailwind-nextjs-starter-blog).
 
 Here is an [RSS feed](https://adriel.dev/rss.xml) you can subscribe to for new posts.
 
