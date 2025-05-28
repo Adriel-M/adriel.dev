@@ -75,7 +75,7 @@
     "retext-repeated-words": "5.0.0",
     "retext-sentence-spacing": "6.0.0",
     "schema-dts": "1.1.5",
-    "tailwindcss": "3.4.17",
+    "tailwindcss": "4.1.7",
     "title-case": "4.3.2",
     "typescript-eslint": "8.33.0",
     "unist": "0.0.1",
