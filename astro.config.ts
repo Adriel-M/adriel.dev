@@ -1,3 +1,4 @@
+import cloudflare from '@astrojs/cloudflare'
 import mdx from '@astrojs/mdx'
 import react from '@astrojs/react'
 import sitemap from '@astrojs/sitemap'
@@ -37,10 +38,13 @@ const tagsPagePattern = /^\/tags\/[^/]+\/page\/\d+$/
 
 export default defineConfig({
   site: 'https://adriel.dev',
+
   devToolbar: {
     enabled: false,
   },
+
   trailingSlash: 'never',
+
   markdown: {
     gfm: true,
     syntaxHighlight: false,
@@ -70,6 +74,7 @@ export default defineConfig({
       rehypeGithubAlerts,
     ],
   },
+
   integrations: [
     react(),
     tailwind(),
@@ -83,4 +88,6 @@ export default defineConfig({
     }),
     robotsTxt(),
   ],
+
+  adapter: cloudflare(),
 })
