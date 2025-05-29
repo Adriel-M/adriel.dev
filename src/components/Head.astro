@@ -4,14 +4,6 @@ import { ClientRouter } from 'astro:transitions'
 
 import Stats from '@/components/Stats.astro'
 import siteConfig from '@/libs/siteConfig'
-
-interface Props {
-  title: string
-}
-
-const { title } = Astro.props
-
-let titleToDisplay = `${title} | ${siteConfig.title}`
 ---
 
 <head>
@@ -25,7 +17,6 @@ let titleToDisplay = `${title} | ${siteConfig.title}`
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fff" />
   <meta name="generator" content={Astro.generator} />
   <link rel="sitemap" href="/sitemap-index.xml" />
-  <title>{titleToDisplay}</title>
   <link
     rel="preload"
     as="font"

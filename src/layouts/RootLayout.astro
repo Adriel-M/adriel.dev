@@ -13,18 +13,17 @@ import type { SeoData } from '@/components/SEO.astro'
 import SEO from '@/components/SEO.astro'
 
 interface Props {
-  title: string
-  seoData: SeoData | false
+  seoData: SeoData
   jsonLd?: WithContext<BlogPosting>
 }
 
-const { title, seoData, jsonLd } = Astro.props
+const { seoData, jsonLd } = Astro.props
 ---
 
 <!doctype html>
 <html lang="en" class="scroll-smooth">
-  <Head title={title}>
-    {seoData && <SEO seoData={seoData} />}
+  <Head>
+    <SEO seoData={seoData} />
     {jsonLd && <Schema item={jsonLd} />}
   </Head>
   <body class="bg-white pl-[calc(100vw-100%)] text-black antialiased">

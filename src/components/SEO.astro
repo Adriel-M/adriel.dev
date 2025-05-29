@@ -3,31 +3,45 @@ import { SEO as Seo } from 'astro-seo'
 
 import siteConfig from '@/libs/siteConfig'
 
-export interface SeoData {
+type BasicData = {
+  type: 'basic'
+  title: string
+}
+
+type FullData = {
+  type: 'full'
   title: string
   description: string
   isPost: boolean
   ogImage: string
 }
 
+export type SeoData = BasicData | FullData
+
 interface Props {
   seoData: SeoData
 }
 
-const {
-  seoData: { title, description, isPost, ogImage },
-} = Astro.props
+const { seoData } = Astro.props
+
+const titleTemplate = `%s | ${siteConfig.title}`
 ---
 
-<Seo
-  title={title}
-  titleTemplate={`%s | ${siteConfig.title}`}
-  description={description}
-  openGraph={{
-    basic: {
-      title: title,
-      type: isPost ? 'article' : 'website',
-      image: ogImage,
-    },
-  }}
-/>
+{
+  seoData.type === 'basic' ? (
+    <Seo title={seoData.title} titleTemplate={titleTemplate} />
+  ) : (
+    <Seo
+      title={seoData.title}
+      titleTemplate={titleTemplate}
+      description={seoData.description}
+      openGraph={{
+        basic: {
+          title: seoData.title,
+          type: seoData.isPost ? 'article' : 'website',
+          image: seoData.ogImage,
+        },
+      }}
+    />
+  )
+}

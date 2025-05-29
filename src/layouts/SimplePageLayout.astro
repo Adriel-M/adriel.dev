@@ -20,6 +20,7 @@ if (Astro.request.url.endsWith('/')) {
 }
 
 const seoData: SeoData = {
+  type: 'full',
   title,
   description: siteConfig.description,
   isPost: false,
@@ -27,7 +28,7 @@ const seoData: SeoData = {
 }
 ---
 
-<RootLayout title={title} seoData={seoData}>
+<RootLayout seoData={seoData}>
   <div class="divide-y divide-gray-200">
     <header>
       <div class="space-y-2 pb-8 pt-6 md:space-y-5">
