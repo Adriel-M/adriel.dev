@@ -17,6 +17,7 @@ interface Props {
 const { post, summary } = Astro.props
 
 const seoData: SeoData = {
+  type: 'full',
   title: post.data.title,
   description: summary,
   isPost: false,
@@ -24,7 +25,7 @@ const seoData: SeoData = {
 }
 ---
 
-<RootLayout title={post.data.title} seoData={seoData}>
+<RootLayout seoData={seoData}>
   <Fragment slot="jsonLd">
     <slot name="jsonLd" />
   </Fragment>

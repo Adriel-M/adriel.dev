@@ -54,6 +54,7 @@ if (currentTag) {
 const ogUrl = new URL(ogPathname, Astro.url.origin)
 
 const seoData: SeoData = {
+  type: 'full',
   title,
   description: description,
   isPost: false,
@@ -61,7 +62,7 @@ const seoData: SeoData = {
 }
 ---
 
-<RootLayout title={title} seoData={seoData}>
+<RootLayout seoData={seoData}>
   <div>
     <div class="py-6">
       <h1
