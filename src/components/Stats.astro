@@ -1,22 +1,9 @@
 <script>
   import posthog from 'posthog-js'
 
-  if (typeof document !== 'undefined') {
-    posthog.init(import.meta.env.PUBLIC_POSTHOG_KEY, {
-      api_host: import.meta.env.PUBLIC_POSTHOG_HOST,
-      ui_host: 'https://us.posthog.com',
-      capture_pageview: false, // Disable automatic pageview capture, as we capture manually
-      capture_pageleave: true,
-      autocapture: true,
-      persistence: 'memory',
-    })
-
-    // Initial pageview
-    posthog.capture('$pageview')
-
-    // Handle SPA route changes (if using ClientRouter)
-    document.addEventListener('astro:after-swap', () => {
-      posthog.capture('$pageview')
-    })
-  }
+  posthog.init(import.meta.env.PUBLIC_POSTHOG_KEY, {
+    api_host: import.meta.env.PUBLIC_POSTHOG_HOST,
+    ui_host: 'https://us.posthog.com',
+    persistence: 'memory',
+  })
 </script>
