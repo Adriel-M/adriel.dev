@@ -1,0 +1,20 @@
+---
+import type { ImageMetadata } from 'astro'
+import type { Props } from 'astro/components/Picture.astro'
+import { Picture as AstroPicture } from 'astro:assets'
+
+const props = Astro.props as Props
+const imageMetadata = props.src as ImageMetadata
+const originalWidth = imageMetadata.width
+
+// 896px = Tailwind's max-w-5xl, > 896 will be greater than the container
+const potentialSizes = [320, 480, 640, 750, 828, 896, originalWidth]
+const maxSize = Math.min(896, originalWidth)
+
+const widths = potentialSizes.filter((size) => size <= maxSize)
+props.widths = widths
+props.sizes = '(min-width: 1280px) 896px, 100vw'
+props.formats = ['avif', 'webp']
+---
+
+<AstroPicture {...props} />
