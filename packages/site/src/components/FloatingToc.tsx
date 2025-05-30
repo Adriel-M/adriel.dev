@@ -65,7 +65,7 @@ const TocEntryList = ({ activeSlug, entries }: { activeSlug: string; entries: To
         return (
           <li className="list-inside list-disc" key={entry.slug}>
             <a
-              className={'no-underline hover:text-primary-600 ' + activeCss}
+              className={'hover:text-primary-600 no-underline ' + activeCss}
               href={`#${entry.slug}`}
             >
               {entry.text}
@@ -113,7 +113,7 @@ export default function FloatingToc({ headings }: Props) {
 
   const nestedEntries = generateTocEntry(headings)
   return (
-    <div className="sticky top-20 float-right hidden h-0 px-8 text-xs w-toc-2xl lg:block xl:w-toc-5xl">
+    <div className="w-toc-2xl xl:w-toc-5xl sticky top-20 float-right hidden h-0 px-8 text-xs lg:block">
       <div className="pb-2 text-sm">Table of Contents</div>
       <TocEntryList activeSlug={activeSlug} entries={nestedEntries} />
     </div>

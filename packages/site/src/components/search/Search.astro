@@ -1,0 +1,48 @@
+---
+import '@docsearch/css/dist/modal.css'
+import '@/components/search/docsearch.css'
+
+import { DocSearch, type DocSearchHit } from 'esm-wrapper'
+
+import siteConfig from '@/libs/siteConfig.ts'
+
+const TRAILING_ELLIPSIS_PATTERN = /\s+…$/
+const transformItems = (items: DocSearchHit[]): DocSearchHit[] => {
+  return items.map((item) => {
+    // Strip the ellipsis at the end. Add ellipsis via css instead.
+    const snippetValue = item._snippetResult?.content?.value
+    if (snippetValue) {
+      item._snippetResult.content.value = snippetValue.replace(TRAILING_ELLIPSIS_PATTERN, '')
+    }
+    if (item._snippetResult.hierarchy) {
+      for (const value of Object.values(item._snippetResult.hierarchy)) {
+        const hierarchyValue = value.value
+        if (hierarchyValue && typeof hierarchyValue === 'string') {
+          value.value = hierarchyValue.replace(TRAILING_ELLIPSIS_PATTERN, '')
+        }
+      }
+    }
+
+    const url = new URL(item.url)
+    return {
+      ...item,
+      url: url.pathname + url.hash,
+    }
+  })
+}
+
+const { appId, apiKey, indexName } = siteConfig.search.algoliaConfig
+---
+
+<div>
+  <DocSearch
+    appId={appId}
+    apiKey={apiKey}
+    indexName={indexName}
+    placeholder="Search"
+    insights={false}
+    disableUserPersonalization={true}
+    transformItems={transformItems}
+    client:load
+  />
+</div>
