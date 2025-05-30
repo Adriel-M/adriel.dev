@@ -1,6 +1,5 @@
 ---
 import jetbrainsMonoWoff2 from '@fontsource/jetbrains-mono/files/jetbrains-mono-latin-500-normal.woff2'
-import { ClientRouter } from 'astro:transitions'
 
 import Stats from '@/components/Stats.astro'
 import siteConfig from '@/libs/siteConfig'
@@ -34,7 +33,6 @@ const hasStatsEnvVars =
     title={siteConfig.title}
     href={new URL('rss.xml', Astro.site)}
   />
-  <ClientRouter />
   {hasStatsEnvVars && <Stats />}
   <style>
     body {
