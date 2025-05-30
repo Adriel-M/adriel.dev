@@ -22,7 +22,7 @@ import '@/components/search/docsearch.css'
 </sl-doc-search>
 
 <script>
-  import docsearch from '@docsearch/js'
+  import { docsearch } from 'esm-wrapper'
   import siteConfig from '@/libs/siteConfig'
 
   const { appId, apiKey, indexName } = siteConfig.search.algoliaConfig
