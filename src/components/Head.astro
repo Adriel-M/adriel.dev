@@ -4,6 +4,9 @@ import { ClientRouter } from 'astro:transitions'
 
 import Stats from '@/components/Stats.astro'
 import siteConfig from '@/libs/siteConfig'
+
+const hasStatsEnvVars =
+  !!import.meta.env.PUBLIC_POSTHOG_KEY && !!import.meta.env.PUBLIC_POSTHOG_HOST
 ---
 
 <head>
@@ -32,7 +35,7 @@ import siteConfig from '@/libs/siteConfig'
     href={new URL('rss.xml', Astro.site)}
   />
   <ClientRouter />
-  <Stats />
+  {hasStatsEnvVars && <Stats />}
   <style>
     body {
       font-family: 'JetBrains Mono', monospace;
