@@ -6,6 +6,8 @@ const ScrollTop = () => {
   const [show, setShow] = useState(false)
 
   useEffect(() => {
+    if (window.scrollY > 50) setShow(true)
+
     const handleScroll = () => {
       if (window.scrollY > 50) setShow(true)
       else setShow(false)
