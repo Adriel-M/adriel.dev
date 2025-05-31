@@ -6,7 +6,7 @@
     "packages/*"
   ],
   "private": true,
-  "packageManager": "bun@1.2.0",
+  "packageManager": "bun@1.2.15",
   "scripts": {
     "prepare": "husky",
     "cli": "bun scripts/cli/index.ts",
