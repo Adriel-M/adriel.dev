@@ -27,7 +27,6 @@
     "@docsearch/css": "3.9.0",
     "@docsearch/js": "3.9.0",
     "@fontsource-variable/jetbrains-mono": "5.2.5",
-    "@playform/compress": "0.1.9",
     "@primer/octicons": "19.15.2",
     "@tailwindcss/nesting": "0.0.0-insiders.565cd3e",
     "@tailwindcss/typography": "0.5.16",

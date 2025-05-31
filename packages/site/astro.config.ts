@@ -2,7 +2,6 @@ import mdx from '@astrojs/mdx'
 import react from '@astrojs/react'
 import sitemap from '@astrojs/sitemap'
 import tailwind from '@astrojs/tailwind'
-import compress from '@playform/compress'
 import octicons from '@primer/octicons'
 import { defineConfig } from 'astro/config'
 import robotsTxt from 'astro-robots-txt'
@@ -87,15 +86,5 @@ export default defineConfig({
       },
     }),
     robotsTxt(),
-    compress({
-      Image: false,
-      JavaScript: {
-        terser: {
-          format: {
-            comments: 'all', // keep license notices
-          },
-        },
-      },
-    }),
   ],
 })
