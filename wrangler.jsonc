@@ -9,11 +9,10 @@
   "assets": {
     "directory": "./packages/site/dist",
     "html_handling": "drop-trailing-slash",
-    "not_found_handling": "404-page"
+    "not_found_handling": "404-page",
   },
   "observability": {
-    "enabled": false
+    "enabled": false,
   },
-  "send_metrics": false
+  "send_metrics": false,
 }
-

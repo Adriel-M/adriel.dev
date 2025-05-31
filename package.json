@@ -2,7 +2,9 @@
   "name": "adriel.dev",
   "version": "1.0.0",
   "description": "",
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "private": true,
   "packageManager": "bun@1.2.0",
   "scripts": {
