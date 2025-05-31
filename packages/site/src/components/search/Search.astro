@@ -31,6 +31,17 @@ import '@/components/search/docsearch.css'
 
   const docsearchContainer = document.getElementById('docsearch-container')!
 
+  function debounce<T extends (...args: any[]) => void>(
+    func: T,
+    wait: number
+  ): (...args: Parameters<T>) => void {
+    let timeout: ReturnType<typeof setTimeout>
+    return function (...args: Parameters<T>) {
+      clearTimeout(timeout)
+      timeout = setTimeout(() => func(...args), wait)
+    }
+  }
+
   docsearch({
     container: docsearchContainer,
     appId: appId,
@@ -38,6 +49,22 @@ import '@/components/search/docsearch.css'
     apiKey: apiKey,
     insights: false,
     disableUserPersonalization: true,
+    transformSearchClient: (searchClient) => {
+      const debouncedSearch = debounce(
+        (queries, resolve: (res: any) => void, reject: (err: any) => void) => {
+          searchClient.search(queries).then(resolve).catch(reject)
+        },
+        250
+      )
+      return {
+        ...searchClient,
+        search(queries) {
+          return new Promise((resolve, reject) => {
+            debouncedSearch(queries, resolve, reject)
+          })
+        },
+      }
+    },
     transformItems: (items) => {
       return items.map((item) => {
         // Strip the ellipsis at the end. Add ellipsis via css instead.
