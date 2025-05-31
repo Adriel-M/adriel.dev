@@ -14,7 +14,7 @@ import globals from 'globals'
 import tseslint from 'typescript-eslint'
 
 export default defineConfig([
-  globalIgnores(['dist/*', '.astro']),
+  globalIgnores(['**/dist/*', '**/.astro/*']),
   { files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'], plugins: { js }, extends: ['js/recommended'] },
   {
     files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
@@ -70,7 +70,7 @@ export default defineConfig([
   },
   ...tailwind.configs['flat/recommended'],
   {
-    files: ['**/*.astro'],
+    files: ['**/*.astro', '**/*.tsx'],
     rules: {
       'tailwindcss/migration-from-tailwind-2': 'off',
       'tailwindcss/no-custom-classname': 'off',

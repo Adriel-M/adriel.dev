@@ -1,1 +1,1 @@
-export const postsPath = 'src/content/posts'
+export const postsPath = 'packages/site/src/content/posts'
