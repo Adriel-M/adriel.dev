@@ -7,11 +7,11 @@
     "dev": "tsup --watch"
   },
   "devDependencies": {
-    "@docsearch/react": "^3.9.0",
+    "@docsearch/react": "3.9.0",
     "@types/bun": "latest",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "tsup": "^8.5.0"
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "tsup": "8.5.0"
   },
   "peerDependencies": {
     "typescript": "^5"
