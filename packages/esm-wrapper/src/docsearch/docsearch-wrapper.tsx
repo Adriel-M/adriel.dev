@@ -4,26 +4,11 @@ import React from 'react'
 import { createRoot } from 'react-dom/client'
 
 interface DocSearchProps extends DocSearchComponentProps {
-  container: HTMLElement | string
-  environment?: {
-    document: Document
-  }
-}
-
-function getHTMLElement(
-  value: HTMLElement | string,
-  environment: { document: Document } = { document: document }
-): HTMLElement {
-  if (typeof value === 'string') {
-    return environment.document.querySelector(value)!
-  }
-
-  return value
+  container: HTMLElement
 }
 
 export function docsearch(props: DocSearchProps): void {
-  const container = getHTMLElement(props.container, props.environment)
-  const root = createRoot(container)
+  const root = createRoot(props.container)
 
   root.render(
     <DocSearch

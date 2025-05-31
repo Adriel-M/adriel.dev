@@ -1,5 +1,5 @@
 {
-  "name": "esm-wrapper",
+  "name": "@adrieldev/esm-wrapper",
   "module": "src/index.ts",
   "type": "module",
   "scripts": {

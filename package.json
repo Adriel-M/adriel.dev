@@ -10,7 +10,7 @@
   "scripts": {
     "prepare": "husky",
     "cli": "bun scripts/cli/index.ts",
-    "predev": "bun run --filter=esm-wrapper build",
+    "predev": "bun run --filter ./packages/esm-wrapper build",
     "dev": "concurrently \"bun run dev:esm\" \"bun run dev:site\"",
     "dev:esm": "bun run --cwd packages/esm-wrapper dev",
     "dev:site": "bun run --cwd packages/site dev",

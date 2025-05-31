@@ -3,7 +3,7 @@ import '@docsearch/css/dist/modal.css'
 import '@/components/search/docsearch.css'
 ---
 
-<sl-doc-search>
+<div id="docsearch-container">
   <button type="button" class="DocSearch DocSearch-Button" aria-label="search">
     <span class="DocSearch-Button-Container">
       <svg width="20" height="20" class="DocSearch-Search-Icon" viewBox="0 0 20 20">
@@ -19,18 +19,20 @@ import '@/components/search/docsearch.css'
     </span>
     <span class="DocSearch-Button-Keys"></span>
   </button>
-</sl-doc-search>
+</div>
 
 <script>
-  import { docsearch } from 'esm-wrapper'
+  import { docsearch } from '@adrieldev/esm-wrapper'
   import siteConfig from '@/libs/siteConfig'
 
   const { appId, apiKey, indexName } = siteConfig.search.algoliaConfig
 
   const TRAILING_ELLIPSIS_PATTERN = /\s+…$/
 
+  const docsearchContainer = document.getElementById('docsearch-container')!
+
   docsearch({
-    container: 'sl-doc-search',
+    container: docsearchContainer,
     appId: appId,
     indexName: indexName,
     apiKey: apiKey,

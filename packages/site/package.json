@@ -18,7 +18,7 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-obfuscate-email": "^1.1.5",
-    "esm-wrapper": "*"
+    "@adrieldev/esm-wrapper": "*"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.4",
