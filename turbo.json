@@ -5,5 +5,8 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
     }
+  },
+  "remoteCache": {
+    "teamId": "team_5z71GzQ22kqMiqVRjLE77QAx"
   }
 }
