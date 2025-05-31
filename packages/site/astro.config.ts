@@ -68,7 +68,7 @@ export default defineConfig({
             block: 'ts',
             inline: 'console',
           },
-          theme: 'github-light',
+          theme: 'one-light',
         },
       ],
       rehypeGithubAlerts,
