@@ -8,8 +8,10 @@
   "scripts": {
     "prepare": "husky",
     "cli": "bun scripts/cli/index.ts",
-    "predev": "bun run --filter ./packages/esm-wrapper build",
-    "dev": "concurrently \"bun run dev:esm\" \"nodemon --watch packages/esm-wrapper/dist --exec 'bun run --cwd apps/site dev'\"",
+    "predev": "bun run --filter=esm-wrapper build",
+    "dev": "concurrently \"bun run dev:esm\" \"bun run dev:site\"",
+    "dev:esm": "bun run --cwd packages/esm-wrapper dev",
+    "dev:site": "bun run --cwd packages/site dev",
     "build": "turbo run build",
     "preview": "bun run --filter ./packages/site preview"
   },
