@@ -7,8 +7,6 @@
     }
   },
   "remoteCache": {
-    "timeout": 60,
-    "uploadTimeout": 600,
-    "teamId": "team_5z71GzQ22kqMiqVRjLE77QAx"
+    "signature": true
   }
 }
