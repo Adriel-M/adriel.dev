@@ -3,6 +3,7 @@ import jetbrainsMonoWoff2 from '@fontsource/jetbrains-mono/files/jetbrains-mono-
 
 import Stats from '@/components/Stats.astro'
 import siteConfig from '@/libs/siteConfig'
+import { URLS } from '@/libs/UrlLibs.ts'
 
 const hasStatsEnvVars =
   !!import.meta.env.PUBLIC_POSTHOG_KEY && !!import.meta.env.PUBLIC_POSTHOG_HOST
@@ -29,9 +30,9 @@ const hasStatsEnvVars =
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link
     rel="alternate"
-    type="application/rss+xml"
+    type="application/atom+xml"
     title={siteConfig.title}
-    href={new URL('rss.xml', Astro.site)}
+    href={new URL(URLS.ATOM, Astro.site)}
   />
   {hasStatsEnvVars && <Stats />}
   <style>

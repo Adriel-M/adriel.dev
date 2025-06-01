@@ -10,6 +10,5 @@ export const URLS = {
   POSTS: '/posts',
   PROJECTS: '/projects',
   ABOUT: '/about',
-  RSS: '/rss.xml',
   ATOM: '/atom.xml',
 }

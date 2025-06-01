@@ -14,7 +14,7 @@ import globals from 'globals'
 import tseslint from 'typescript-eslint'
 
 export default defineConfig([
-  globalIgnores(['**/dist/*', '**/.astro/*', '**/static/rss/*']),
+  globalIgnores(['**/dist/*', '**/.astro/*', '**/static/feed/*']),
   { files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'], plugins: { js }, extends: ['js/recommended'] },
   {
     files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
