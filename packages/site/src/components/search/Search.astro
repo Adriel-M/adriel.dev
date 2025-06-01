@@ -1,6 +1,7 @@
 ---
-import '@docsearch/css/dist/modal.css'
 import '@/components/search/docsearch.css'
+
+import modalCss from '@docsearch/css/dist/modal.css?url'
 ---
 
 <div id="docsearch-container">
@@ -20,6 +21,8 @@ import '@/components/search/docsearch.css'
     <span class="DocSearch-Button-Keys"></span>
   </button>
 </div>
+
+<link rel="stylesheet" href={modalCss} media="print" onload="this.media='all'; this.onload=null;" />
 
 <script>
   import { docsearch } from '@adrieldev/esm-wrapper'
