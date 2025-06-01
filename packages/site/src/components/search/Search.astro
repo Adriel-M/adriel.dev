@@ -1,6 +1,7 @@
 ---
-import '@docsearch/css/dist/modal.css'
 import '@/components/search/docsearch.css'
+
+import modalCss from '@docsearch/css/dist/modal.css?url'
 ---
 
 <div id="docsearch-container">
@@ -90,3 +91,5 @@ import '@/components/search/docsearch.css'
     },
   })
 </script>
+
+<link rel="stylesheet" href={modalCss} media="print" onload="this.media='all'; this.onload=null;" />
