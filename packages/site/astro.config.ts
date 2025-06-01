@@ -75,6 +75,12 @@ export default defineConfig({
     ],
   },
 
+  vite: {
+    build: {
+      assetsInlineLimit: 2048,
+    },
+  },
+
   integrations: [
     react(),
     tailwind(),
