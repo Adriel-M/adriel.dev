@@ -10,15 +10,17 @@
     "astro": "astro",
     "test": "vitest",
     "lint": "eslint .",
-    "lint:fix": "eslint --fix ."
+    "lint:fix": "eslint --fix .",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write ."
   },
   "dependencies": {
+    "@adrieldev/esm-wrapper": "workspace:*",
     "@fontsource/jetbrains-mono": "^5.2.5",
     "posthog-js": "^1.248.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-obfuscate-email": "^1.1.5",
-    "@adrieldev/esm-wrapper": "workspace:*"
+    "react-obfuscate-email": "^1.1.5"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.4",

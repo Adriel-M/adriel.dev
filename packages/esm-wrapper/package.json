@@ -6,10 +6,11 @@
     "build": "tsup",
     "dev": "tsup --watch",
     "lint": "eslint .",
-    "lint:fix": "eslint --fix ."
+    "lint:fix": "eslint --fix .",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write ."
   },
   "devDependencies": {
-    "@adrieldev/eslint-configs": "workspace:*",
     "@docsearch/react": "3.9.0",
     "@types/bun": "latest",
     "react": "19.1.0",

@@ -17,7 +17,9 @@
     "build": "turbo run build",
     "preview": "bun run --filter ./packages/site preview",
     "lint": "turbo run lint",
-    "lint:fix": "turbo run lint:fix"
+    "lint:fix": "turbo run lint:fix",
+    "format": "turbo run format",
+    "format:fix": "turbo run format:fix"
   },
   "type": "module",
   "devDependencies": {

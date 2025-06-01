@@ -6,7 +6,9 @@
       "outputs": ["dist/**"]
     },
     "lint": {},
-    "lint:fix": {}
+    "lint:fix": {},
+    "format": {},
+    "format:fix": {}
   },
   "remoteCache": {
     "signature": true

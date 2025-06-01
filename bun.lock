@@ -5,6 +5,7 @@
       "name": "adriel.dev",
       "devDependencies": {
         "@adrieldev/eslint-configs": "workspace:*",
+        "@adrieldev/prettier-configs": "workspace:*",
         "@inquirer/prompts": "7.5.3",
         "concurrently": "9.1.2",
         "eslint": "9.28.0",
@@ -39,7 +40,6 @@
     "packages/esm-wrapper": {
       "name": "@adrieldev/esm-wrapper",
       "devDependencies": {
-        "@adrieldev/eslint-configs": "workspace:*",
         "@docsearch/react": "3.9.0",
         "@types/bun": "latest",
         "react": "19.1.0",
@@ -48,6 +48,12 @@
       },
       "peerDependencies": {
         "typescript": "^5",
+      },
+    },
+    "packages/prettier-configs": {
+      "name": "@adrieldev/prettier-configs",
+      "devDependencies": {
+        "@types/bun": "latest",
       },
     },
     "packages/site": {
@@ -111,6 +117,8 @@
     "@adrieldev/eslint-configs": ["@adrieldev/eslint-configs@workspace:packages/eslint-configs"],
 
     "@adrieldev/esm-wrapper": ["@adrieldev/esm-wrapper@workspace:packages/esm-wrapper"],
+
+    "@adrieldev/prettier-configs": ["@adrieldev/prettier-configs@workspace:packages/prettier-configs"],
 
     "@algolia/autocomplete-core": ["@algolia/autocomplete-core@1.17.9", "", { "dependencies": { "@algolia/autocomplete-plugin-algolia-insights": "1.17.9", "@algolia/autocomplete-shared": "1.17.9" } }, "sha512-O7BxrpLDPJWWHv/DLA9DRFWs+iY1uOJZkqUwjS5HSZAGcl0hIVCQ97LTLewiZmZ402JYUrun+8NqFP+hCknlbQ=="],
 
