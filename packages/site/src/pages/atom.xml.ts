@@ -15,7 +15,7 @@ const author = {
 
 const XML_CONTENT_TO_REPLACE = '<?xml version="1.0" encoding="utf-8"?>'
 
-export async function GET(context: { url: URL }) {
+export async function GET() {
   const posts = await getPosts()
   const postAndSummaries = await Promise.all(
     posts.map(async (post) => {
@@ -26,7 +26,6 @@ export async function GET(context: { url: URL }) {
       }
     })
   )
-  console.log(context.url)
 
   const title = siteConfig.title
   const feed = new Feed({
@@ -38,7 +37,7 @@ export async function GET(context: { url: URL }) {
     favicon: `${siteConfig.siteUrl}/static/favicons/favicon.ico`,
     updated: posts.length > 0 ? posts[0].data.createdAt : undefined,
     feedLinks: {
-      rss: `${siteConfig.siteUrl}${URLS.RSS}`,
+      atom: `${siteConfig.siteUrl}${URLS.ATOM}`,
     },
     author: author,
     copyright: copyrightNotice,
@@ -61,9 +60,9 @@ export async function GET(context: { url: URL }) {
     })
   }
 
-  const rssString = feed.rss2()
+  const rssString = feed.atom1()
 
-  const styleInstruction = '<?xml-stylesheet href="/static/rss/simple-rss.xslt" type="text/xsl"?>'
+  const styleInstruction = '<?xml-stylesheet href="/static/feed/simple-atom.xslt" type="text/xsl"?>'
 
   const styled = rssString.replace(
     XML_CONTENT_TO_REPLACE,
