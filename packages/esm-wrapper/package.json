@@ -4,9 +4,12 @@
   "type": "module",
   "scripts": {
     "build": "tsup",
-    "dev": "tsup --watch"
+    "dev": "tsup --watch",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix ."
   },
   "devDependencies": {
+    "@adrieldev/eslint-configs": "workspace:*",
     "@docsearch/react": "3.9.0",
     "@types/bun": "latest",
     "react": "19.1.0",

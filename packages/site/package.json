@@ -8,7 +8,9 @@
     "check": "astro check",
     "preview": "astro preview",
     "astro": "astro",
-    "test": "vitest"
+    "test": "vitest",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix ."
   },
   "dependencies": {
     "@fontsource/jetbrains-mono": "^5.2.5",
