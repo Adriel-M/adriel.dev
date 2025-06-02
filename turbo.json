@@ -4,7 +4,11 @@
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
-    }
+    },
+    "lint": {},
+    "lint:fix": {},
+    "format": {},
+    "format:fix": {}
   },
   "remoteCache": {
     "signature": true
