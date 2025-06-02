@@ -2,6 +2,8 @@
 import '@/components/search/docsearch.css'
 
 import modalCss from '@docsearch/css/dist/modal.css?url'
+
+const onload = "this.media='all'; this.onload=null;"
 ---
 
 <div id="docsearch-container">
@@ -22,7 +24,7 @@ import modalCss from '@docsearch/css/dist/modal.css?url'
   </button>
 </div>
 
-<link rel="stylesheet" href={modalCss} media="print" onload="this.media='all'; this.onload=null;" />
+<link rel="stylesheet" href={modalCss} media="print" onload={onload} />
 
 <script>
   import { docsearch } from '@adrieldev/esm-wrapper'

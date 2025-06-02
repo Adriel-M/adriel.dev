@@ -8,7 +8,11 @@
     "lint": {},
     "lint:fix": {},
     "format": {},
-    "format:fix": {}
+    "format:fix": {},
+    "test": {},
+    "check": {
+      "dependsOn": ["@adrieldev/esm-wrapper#build"]
+    }
   },
   "remoteCache": {
     "signature": true

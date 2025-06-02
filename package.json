@@ -19,7 +19,9 @@
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
     "format": "turbo run format",
-    "format:fix": "turbo run format:fix"
+    "format:fix": "turbo run format:fix",
+    "test": "turbo run --filter site test",
+    "check": "turbo run --filter site check"
   },
   "type": "module",
   "devDependencies": {
