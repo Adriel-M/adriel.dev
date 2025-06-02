@@ -34,7 +34,7 @@ export const title = 'Thinking Emoji 🤔'
                         <h2 class="text-xl font-bold leading-8 tracking-tight">
                           <Link
                             href={generatePostPath(post)}
-                            class="hover:text-primary-600 text-gray-900"
+                            class="hover:text-primary-400 text-gray-900"
                           >
                             {post.data.title}
                           </Link>
@@ -52,7 +52,7 @@ export const title = 'Thinking Emoji 🤔'
     {
       posts.length > siteConfig.postsInFrontPageCount && (
         <div class="flex justify-end text-base font-medium leading-6">
-          <Link href={URLS.POSTS} className="hover:text-primary-600" aria-label="All posts">
+          <Link href={URLS.POSTS} className="hover:text-primary-400" aria-label="All posts">
             All Posts &rarr;
           </Link>
         </div>

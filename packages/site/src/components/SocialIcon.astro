@@ -20,7 +20,7 @@ const { kind, href } = Astro.props
 const SocialSvg = components[kind]
 ---
 
-<Link href={href} class="text-sm text-gray-500 transition hover:text-gray-600">
+<Link href={href}>
   <span class="sr-only">{kind}</span>
   <SocialSvg />
 </Link>

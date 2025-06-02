@@ -28,7 +28,7 @@ export default {
             a: {
               color: theme('colors.primary.600'),
               '&:hover': {
-                color: theme('colors.primary.700'),
+                color: theme('colors.primary.400'),
               },
             },
             'h1,h2': {
