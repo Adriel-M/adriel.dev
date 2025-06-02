@@ -11,6 +11,7 @@ import { fromHtmlIsomorphic } from 'hast-util-from-html-isomorphic'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import { rehypeGithubAlerts } from 'rehype-github-alerts'
 import rehypePrettyCode from 'rehype-pretty-code'
+import rehypeSlug from 'rehype-slug'
 import remarkGemoji from 'remark-gemoji'
 import { titleCase } from 'title-case'
 import type { Node, Parent } from 'unist'
@@ -50,6 +51,7 @@ export default defineConfig({
     syntaxHighlight: false,
     remarkPlugins: [remarkGemoji, remarkTitleCase],
     rehypePlugins: [
+      rehypeSlug, // needed for rehypeAutolinkHeadings
       [
         rehypeAutolinkHeadings,
         {
