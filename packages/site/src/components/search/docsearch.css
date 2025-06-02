@@ -96,10 +96,6 @@
   display: none;
 }
 
-.DocSearch-Button-Placeholder {
-  color: var(--docsearch-muted-color);
-}
-
 @media (min-width: 50rem) {
   .DocSearch-Button {
     width: 100%;
