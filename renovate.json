@@ -20,7 +20,7 @@
       "prCreation": "not-pending"
     }
   ],
-  "ignoreDeps": ["@adrieldev/esm-wrapper"],
+  "ignoreDeps": ["@adrieldev/esm-wrapper", "@adrieldev/eslint-configs"],
   "lockFileMaintenance": {
     "enabled": true,
     "schedule": ["every 1 month on the first day of the month"]
