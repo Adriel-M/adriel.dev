@@ -3,9 +3,9 @@ import react from '@astrojs/react'
 import sitemap from '@astrojs/sitemap'
 import tailwind from '@astrojs/tailwind'
 import compress from '@playform/compress'
-import octicons from '@primer/octicons'
 import { defineConfig } from 'astro/config'
 import robotsTxt from 'astro-robots-txt'
+import * as cheerio from 'cheerio'
 import type { Text } from 'hast'
 import { fromHtmlIsomorphic } from 'hast-util-from-html-isomorphic'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
@@ -16,6 +16,9 @@ import remarkGemoji from 'remark-gemoji'
 import { titleCase } from 'title-case'
 import type { Node, Parent } from 'unist'
 import { visit } from 'unist-util-visit'
+
+import hashTag from './src/assets/remix-icons/hashtag.svg?raw'
+import SvgReactVitePlugin from './svg-react-vite-plugin'
 
 const remarkTitleCase = () => {
   return (tree: Node) => {
@@ -29,8 +32,18 @@ const remarkTitleCase = () => {
   }
 }
 
+function addDimensionsToSvg(svgString: string, size: string): string {
+  const $ = cheerio.load(svgString, { xmlMode: true })
+  const $svg = $('svg')
+
+  $svg.attr('width', size)
+  $svg.attr('height', size)
+
+  return $.xml() // Return as string
+}
+
 const headerIcon = fromHtmlIsomorphic(
-  `<span class="content-header-link-placeholder">${octicons.hash.toSVG()}</span>`,
+  `<span class="content-header-link-placeholder">${addDimensionsToSvg(hashTag, '24')}</span>`,
   { fragment: true }
 )
 
@@ -45,6 +58,10 @@ export default defineConfig({
   },
 
   trailingSlash: 'never',
+
+  vite: {
+    plugins: [SvgReactVitePlugin()],
+  },
 
   markdown: {
     gfm: true,
