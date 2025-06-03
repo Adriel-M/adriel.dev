@@ -31,7 +31,6 @@
     "@astrojs/tailwind": "6.0.2",
     "@docsearch/css": "3.9.0",
     "@docsearch/js": "3.9.0",
-    "@fontsource-variable/jetbrains-mono": "5.2.5",
     "@playform/compress": "0.1.9",
     "@svgr/core": "8.1.0",
     "@svgr/plugin-jsx": "8.1.0",
