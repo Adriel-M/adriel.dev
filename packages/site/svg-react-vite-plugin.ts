@@ -6,7 +6,7 @@ import { type Plugin } from 'vite'
 /**
  * Vite plugin to transform svg to react component.
  *
- * Needed because when importing an svg in jsx, it is converting it into astro code.
+ * Needed because when importing an svg in jsx, the vite astro plugin converts it into astro code.
  * To not conflict with astro, only look for imports with `.svg?react`.
  */
 export default function SvgReactVitePlugin(): Plugin {
