@@ -5,7 +5,7 @@ import tailwind from '@astrojs/tailwind'
 import compress from '@playform/compress'
 import { defineConfig } from 'astro/config'
 import robotsTxt from 'astro-robots-txt'
-import * as cheerio from 'cheerio'
+import { XMLBuilder, XMLParser } from 'fast-xml-parser'
 import type { Text } from 'hast'
 import { fromHtmlIsomorphic } from 'hast-util-from-html-isomorphic'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
@@ -38,14 +38,17 @@ const remarkTitleCase = () => {
 }
 
 function addDimensionsToSvg(svgString: string, size: number): string {
-  const castedSize = size.toString()
-  const $ = cheerio.load(svgString, { xmlMode: true })
-  const $svg = $('svg')
+  const parser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: '' })
+  const builder = new XMLBuilder({ ignoreAttributes: false, attributeNamePrefix: '' })
 
-  $svg.attr('width', castedSize)
-  $svg.attr('height', castedSize)
+  const obj = parser.parse(svgString)
 
-  return $.xml()
+  if (obj.svg) {
+    obj.svg.width = size.toString()
+    obj.svg.height = size.toString()
+  }
+
+  return builder.build(obj)
 }
 
 const githubAdmonitionSize = 22
