@@ -1,0 +1,20 @@
+---
+import { sortTagsByAlpha } from '../libs/CollectionUtils'
+import type { SluggedTag } from '../libs/SluggedTag'
+import Tag from './Tag.astro'
+interface Props {
+  tags: SluggedTag[]
+}
+
+const { tags } = Astro.props
+---
+
+{
+  tags.length > 0 && (
+    <div class="flex flex-wrap place-content-center pt-2">
+      {sortTagsByAlpha(tags).map((tag) => (
+        <Tag sluggedTag={tag} />
+      ))}
+    </div>
+  )
+}
