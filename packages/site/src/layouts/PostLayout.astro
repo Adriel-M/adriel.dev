@@ -3,11 +3,10 @@ import type { CollectionEntry } from 'astro:content'
 
 import PageTitle from '@/components/PageTitle.astro'
 import type { SeoData } from '@/components/SEO.astro'
-import Tag from '@/components/Tag.astro'
 import RootLayout from '@/layouts/RootLayout.astro'
-import { sortTagsByAlpha } from '@/libs/CollectionUtils'
-import { formatDate } from '@/libs/DateUtils'
-import siteConfig from '@/libs/siteConfig'
+
+import PostDateDisplay from '../components/PostDateDisplay.astro'
+import PostTagList from '../components/PostTagList.astro'
 
 interface Props {
   post: CollectionEntry<'posts'>
@@ -33,28 +32,9 @@ const seoData: SeoData = {
     <div>
       <header>
         <div class="space-y-1 border-b border-gray-200 pb-10 text-center">
-          <dl>
-            <div>
-              <dt class="sr-only">Published on</dt>
-              <dd class="text-base font-medium leading-6 text-gray-500">
-                <time datetime={post.data.createdAt.toISOString()}
-                  >{formatDate(post.data.createdAt, siteConfig.locale)}</time
-                >
-              </dd>
-            </div>
-          </dl>
-          <div>
-            <PageTitle>{post.data.title}</PageTitle>
-            {
-              post.data.tags.length > 0 && (
-                <div class="flex flex-wrap place-content-center pt-2">
-                  {sortTagsByAlpha(post.data.tags).map((tag) => (
-                    <Tag sluggedTag={tag} />
-                  ))}
-                </div>
-              )
-            }
-          </div>
+          <PostTagList tags={post.data.tags} />
+          <PageTitle>{post.data.title}</PageTitle>
+          <PostDateDisplay post={post} />
         </div>
       </header>
       {Astro.slots.has('toc') && <slot name="toc" />}
