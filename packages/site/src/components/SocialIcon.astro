@@ -1,7 +1,7 @@
 ---
-import Github from '@/components/footer-icons/Github.astro'
-import Linkedin from '@/components/footer-icons/Linkedin.astro'
-import RSS from '@/components/footer-icons/RSS.astro'
+import Github from '@/assets/remix-icons/github-fill.svg'
+import Linkedin from '@/assets/remix-icons/linkedin-box-fill.svg'
+import RSS from '@/assets/remix-icons/rss-fill.svg'
 import Link from '@/components/Link.astro'
 
 const components = {
@@ -22,5 +22,5 @@ const SocialSvg = components[kind]
 
 <Link href={href}>
   <span class="sr-only">{kind}</span>
-  <SocialSvg />
+  <SocialSvg class="hover:text-primary-400 size-8 fill-current text-gray-700" />
 </Link>
