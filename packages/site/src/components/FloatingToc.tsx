@@ -61,7 +61,7 @@ const TocEntryList = ({ activeSlug, entries }: { activeSlug: string; entries: To
         // else set the active when matching the section url
         const isActive = (!activeSlug && !isNested && index === 0) || entry.slug === activeSlug
 
-        const activeCss = isActive ? 'text-primary-700' : ''
+        const activeCss = isActive ? 'text-primary-500' : ''
         return (
           <li className="list-inside list-disc" key={entry.slug}>
             <a
