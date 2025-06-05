@@ -16,7 +16,7 @@
     "dev:esm": "bun run --cwd packages/esm-wrapper dev",
     "dev:site": "bun run --cwd apps/site dev",
     "build": "turbo run build",
-    "preview": "bun run --filter apps/site preview",
+    "preview": "bun run --cwd apps/site preview",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
     "format": "turbo run format",
