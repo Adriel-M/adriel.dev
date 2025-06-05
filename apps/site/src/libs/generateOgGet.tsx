@@ -53,8 +53,6 @@ function OgImage({ title, logoBase64 }: Props) {
           width: 'auto',
           maxWidth: 900,
           textAlign: 'center',
-          backgroundColor: 'black',
-          color: 'white',
           lineHeight: 1.4,
         }}
       >
