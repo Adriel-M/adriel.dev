@@ -2,11 +2,11 @@
 
 article {
   .content-header-link-placeholder {
-    @apply hover:text-primary-400 -ml-6 inline-flex h-full items-center text-black opacity-0;
+    @apply hover:text-primary-400 -ml-6 inline-block align-middle text-black opacity-0;
     transition: opacity 0.15s ease;
 
     svg {
-      @apply inline overflow-hidden fill-current align-middle text-inherit;
+      @apply block h-full w-full fill-current text-inherit;
     }
   }
 
