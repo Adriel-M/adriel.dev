@@ -1,5 +1,5 @@
-import type CommandInterface from './CommandInterface'
-import type UpdatePostCommandInterface from './updatePost/UpdatePostCommandInterface'
+import type CommandInterface from './CommandInterface.ts'
+import type UpdatePostCommandInterface from './updatePost/UpdatePostCommandInterface.ts'
 
 class Exit implements CommandInterface, UpdatePostCommandInterface {
   name = 'Exit'

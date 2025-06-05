@@ -2,7 +2,7 @@ import { join } from 'node:path'
 
 import matter from 'gray-matter'
 
-import type UpdatePostCommandInterface from './UpdatePostCommandInterface'
+import type UpdatePostCommandInterface from './UpdatePostCommandInterface.ts'
 
 class UpdatedAt implements UpdatePostCommandInterface {
   name = 'updatedAt'

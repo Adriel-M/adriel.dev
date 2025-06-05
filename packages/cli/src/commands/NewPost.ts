@@ -5,9 +5,9 @@ import { input } from '@inquirer/prompts'
 import { slug } from 'github-slugger'
 import matter from 'gray-matter'
 
-import { getDateString } from '../date-utils'
-import { postsPath } from '../paths'
-import type CommandInterface from './CommandInterface'
+import { getDateString } from '../date-utils.ts'
+import { getPath } from '../paths.ts'
+import type CommandInterface from './CommandInterface.ts'
 
 class NewPost implements CommandInterface {
   name = 'New Post'
@@ -17,7 +17,7 @@ class NewPost implements CommandInterface {
     const now = new Date()
     const date = getDateString(now)
     const folderName = `${date}-${slug(title)}`
-    const targetFolder = join(process.cwd(), postsPath, folderName)
+    const targetFolder = join(process.cwd(), getPath(), folderName)
 
     await mkdir(targetFolder)
 

@@ -1,0 +1,22 @@
+{
+  "name": "@adrieldev/cli",
+  "module": "src/index.ts",
+  "type": "module",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write ."
+  },
+  "devDependencies": {
+    "@inquirer/prompts": "7.5.3",
+    "github-slugger": "2.0.0",
+    "gray-matter": "4.0.3"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "bin": {
+    "cli": "src/index.ts"
+  }
+}
