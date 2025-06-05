@@ -1,0 +1,82 @@
+---
+import 'photoswipe/style.css'
+
+import type { GetImageResult, ImageMetadata } from 'astro'
+import { getImage, Image } from 'astro:assets'
+import { nanoid } from 'nanoid'
+
+interface Props {
+  images: Record<string, () => Promise<{ default: ImageMetadata }>>
+}
+
+const { images } = Astro.props
+
+const resolvedImages: { default: ImageMetadata }[] = await Promise.all(
+  Object.values(images).map((loadFn) => loadFn())
+)
+
+const optimizedImages: {
+  original: ImageMetadata
+  optimized: GetImageResult
+}[] = await Promise.all(
+  resolvedImages.map(async ({ default: metadata }) => {
+    const optimized = await getImage({
+      src: metadata,
+      width: metadata.width,
+      format: 'webp',
+    })
+
+    return { original: metadata, optimized }
+  })
+)
+
+const id = `id_${nanoid()}`
+---
+
+<image-gallery id={id} data-id={id} class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-3">
+  {
+    optimizedImages.map(({ original, optimized }) => (
+      <a
+        href={optimized.src}
+        data-pswp-width={original.width}
+        data-pswp-height={original.height}
+        data-pswp-caption="A beautiful sunrise over the mountains."
+        target="_blank"
+      >
+        <Image
+          src={original}
+          height={600}
+          alt="Gallery Preview Image"
+          class="not-prose aspect-[3/2]"
+        />
+      </a>
+    ))
+  }
+</image-gallery>
+
+<script>
+  import PhotoSwipeLightbox from 'photoswipe/lightbox'
+
+  class ImageGallery extends HTMLElement {
+    lightbox?: PhotoSwipeLightbox
+
+    connectedCallback() {
+      const id = this.dataset.id!
+
+      this.lightbox = new PhotoSwipeLightbox({
+        gallery: `#${id}`,
+        children: 'a',
+        showHideAnimationType: 'none',
+        zoomAnimationDuration: false,
+        pswpModule: () => import('photoswipe'),
+      })
+      this.lightbox.init()
+    }
+
+    disconnectedCallback() {
+      this.lightbox?.destroy()
+    }
+  }
+
+  customElements.define('image-gallery', ImageGallery)
+</script>
