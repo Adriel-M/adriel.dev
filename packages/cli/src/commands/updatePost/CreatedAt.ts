@@ -4,8 +4,8 @@ import { join } from 'node:path'
 import { slug } from 'github-slugger'
 import matter from 'gray-matter'
 
-import { getDateString } from '../../date-utils'
-import type UpdatePostCommandInterface from './UpdatePostCommandInterface'
+import { getDateString } from '../../date-utils.ts'
+import type UpdatePostCommandInterface from './UpdatePostCommandInterface.ts'
 
 class CreatedAt implements UpdatePostCommandInterface {
   name = 'createdAt'
