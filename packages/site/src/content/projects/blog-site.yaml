@@ -1,5 +1,4 @@
 title: Blog Site
 description: >
-  This website. A Next.js site with Tailwind CSS, content management done by Velite,
-  and deployed on Cloudflare Pages.
+  This website. An astro.js site with tailwind css and deployed on Cloudflare workers.
 href: 'https://github.com/Adriel-M/adriel.dev'
