@@ -12,11 +12,19 @@ type FullData = {
   type: 'full'
   title: string
   description: string
-  isPost: boolean
   ogImage: string
 }
 
-export type SeoData = BasicData | FullData
+type Post = Omit<FullData, 'type'> & {
+  type: 'post'
+  article: {
+    publishedTime: string
+    modifiedTime?: string
+    tags: string[]
+  }
+}
+
+export type SeoData = BasicData | FullData | Post
 
 interface Props {
   seoData: SeoData
@@ -38,9 +46,10 @@ const titleTemplate = `%s | ${siteConfig.title}`
       openGraph={{
         basic: {
           title: seoData.title,
-          type: seoData.isPost ? 'article' : 'website',
+          type: seoData.type === 'post' ? 'article' : 'website',
           image: seoData.ogImage,
         },
+        ...(seoData.type === 'post' ? { article: seoData.article } : {}),
       }}
     />
   )
