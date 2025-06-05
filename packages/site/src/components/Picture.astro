@@ -14,7 +14,7 @@ const maxSize = Math.min(896, originalWidth)
 const widths = potentialSizes.filter((size) => size <= maxSize)
 props.widths = widths
 props.sizes = '(min-width: 1280px) 896px, 100vw'
-props.formats = ['avif', 'webp']
+props.format = 'webp'
 ---
 
 <AstroPicture {...props} />

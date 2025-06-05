@@ -18,6 +18,7 @@
   "dependencies": {
     "@adrieldev/esm-wrapper": "workspace:*",
     "@fontsource/jetbrains-mono": "^5.2.5",
+    "photoswipe": "^5.4.4",
     "posthog-js": "^1.248.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
@@ -50,6 +51,7 @@
     "github-slugger": "2.0.0",
     "hast-util-from-html-isomorphic": "2.0.0",
     "mdast-util-to-string": "4.0.0",
+    "nanoid": "^5.1.5",
     "prettier-plugin-tailwindcss": "0.6.12",
     "rehype-autolink-headings": "7.1.0",
     "rehype-github-alerts": "4.1.1",
