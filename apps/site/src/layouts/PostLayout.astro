@@ -16,11 +16,15 @@ interface Props {
 const { post, summary } = Astro.props
 
 const seoData: SeoData = {
-  type: 'full',
+  type: 'post',
   title: post.data.title,
   description: summary,
-  isPost: false,
   ogImage: `${Astro.url.toString()}/og.png`,
+  article: {
+    publishedTime: post.data.createdAt.toISOString(),
+    modifiedTime: post.data.updatedAt?.toISOString(),
+    tags: post.data.tags?.map((sluggedTag) => sluggedTag.tag),
+  },
 }
 ---
 
