@@ -33,7 +33,7 @@ const seoData: SeoData = {
       <header>
         <div class="space-y-1 border-b border-gray-200 pb-10 text-center">
           <PostTagList tags={post.data.tags} />
-          <PageTitle>{post.data.title}</PageTitle>
+          <PageTitle title={post.data.title} />
           <PostDateDisplay post={post} />
         </div>
       </header>
