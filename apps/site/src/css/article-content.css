@@ -11,8 +11,7 @@
 
 article {
   .prose {
-    /* color-slate-100 */
-    --tw-prose-pre-bg: oklch(0.968 0.007 247.896 / 0.75);
+    --tw-prose-pre-bg: --alpha(var(--color-slate-100) / 75%);
 
     --tw-prose-bullets: var(--tw-prose-body);
 

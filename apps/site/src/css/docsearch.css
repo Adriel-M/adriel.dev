@@ -5,8 +5,7 @@
   --docsearch-icon-stroke-width: 1.4;
   --docsearch-highlight-color: var(--docsearch-primary-color);
   --docsearch-muted-color: var(--color-gray-500);
-  /* This is color-gray-400. Hardcoding so I can have transparency */
-  --docsearch-container-background: oklch(0.707 0.022 261.325 / 0.8);
+  --docsearch-container-background: --alpha(var(--color-gray-400) / 80%);
   --docsearch-logo-color: rgba(255, 255, 255);
 
   /* modal */
