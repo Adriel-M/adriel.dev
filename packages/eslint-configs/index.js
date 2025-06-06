@@ -9,7 +9,6 @@ import eslintPluginAstro from 'eslint-plugin-astro'
 import pathAlias from 'eslint-plugin-path-alias'
 import pluginReact from 'eslint-plugin-react'
 import simpleImportSort from 'eslint-plugin-simple-import-sort'
-import tailwind from 'eslint-plugin-tailwindcss'
 import globals from 'globals'
 import tseslint from 'typescript-eslint'
 
@@ -67,15 +66,6 @@ export default defineConfig([
     plugins: { markdown },
     language: 'markdown/gfm',
     extends: ['markdown/recommended'],
-  },
-  ...tailwind.configs['flat/recommended'],
-  {
-    files: ['**/*.astro', '**/*.tsx'],
-    rules: {
-      'tailwindcss/migration-from-tailwind-2': 'off',
-      'tailwindcss/no-custom-classname': 'off',
-      'tailwindcss/classnames-order': 'off',
-    },
   },
   {
     plugins: {
