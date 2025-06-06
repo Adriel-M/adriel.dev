@@ -27,7 +27,7 @@ const { seoData, jsonLd } = Astro.props
     <SEO seoData={seoData} />
     {jsonLd && <Schema item={jsonLd} />}
   </Head>
-  <body class="bg-white pl-[calc(100vw-100%)] text-black antialiased">
+  <body class="bg-white pl-[calc(100vw-100%)] font-mono text-black antialiased">
     <SectionContainer>
       <div class="flex h-screen flex-col justify-between">
         <Header />
