@@ -26,14 +26,5 @@ const hasStatsEnvVars =
     href={new URL(URLS.ATOM, Astro.site)}
   />
   {hasStatsEnvVars && <Stats />}
-  <style>
-    body {
-      font-family: 'JetBrains Mono', monospace;
-    }
-    /* Prevent shifting the page if there's a scrollbar + clicking on docsearch */
-    body {
-      margin-right: 0 !important;
-    }
-  </style>
   <slot />
 </head>
