@@ -22,7 +22,7 @@ export const title = 'Thinking Emoji 🤔'
                 <div class="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
                   <dl>
                     <dt class="sr-only">Published on</dt>
-                    <dd class="text-base font-medium leading-6 text-gray-500">
+                    <dd class="text-base leading-6 font-medium text-gray-500">
                       <time datetime={post.data.createdAt.toISOString()}>
                         {formatDate(post.data.createdAt, siteConfig.locale)}
                       </time>
@@ -31,10 +31,10 @@ export const title = 'Thinking Emoji 🤔'
                   <div class="space-y-5 xl:col-span-3">
                     <div class="space-y-6">
                       <div>
-                        <h2 class="text-xl font-bold leading-8 tracking-tight">
+                        <h2 class="text-xl leading-8 font-bold tracking-tight">
                           <Link
                             href={generatePostPath(post)}
-                            class="hover:text-primary-400 text-gray-900"
+                            class="text-gray-900 hover:text-primary-400"
                           >
                             {post.data.title}
                           </Link>
@@ -51,7 +51,7 @@ export const title = 'Thinking Emoji 🤔'
     </ul>
     {
       posts.length > siteConfig.postsInFrontPageCount && (
-        <div class="flex justify-end text-base font-medium leading-6">
+        <div class="flex justify-end text-base leading-6 font-medium">
           <Link href={URLS.POSTS} className="hover:text-primary-400" aria-label="All posts">
             All Posts &rarr;
           </Link>

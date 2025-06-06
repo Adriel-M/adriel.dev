@@ -16,7 +16,6 @@
     "eslint-plugin-path-alias": "2.1.0",
     "eslint-plugin-react": "7.37.5",
     "eslint-plugin-simple-import-sort": "12.1.1",
-    "eslint-plugin-tailwindcss": "3.18.0",
     "typescript-eslint": "8.33.1"
   },
   "exports": {

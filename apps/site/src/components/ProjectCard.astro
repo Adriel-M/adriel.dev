@@ -11,9 +11,9 @@ const { title, description, href } = Astro.props
 ---
 
 <div class="max-w-[544px] p-4 md:w-1/2">
-  <div class="overflow-hidden rounded-md border-2 border-gray-200 border-opacity-60">
+  <div class="overflow-hidden rounded-md border-2 border-gray-200/60">
     <div class="p-6">
-      <h2 class="mb-3 text-lg font-bold leading-8 tracking-tight">
+      <h2 class="mb-3 text-lg leading-8 font-bold tracking-tight">
         <Link href={href} class="hover:text-primary-400" aria-label={`Link to ${title}`}>
           {title}
         </Link>
@@ -21,7 +21,7 @@ const { title, description, href } = Astro.props
       <p class="prose mb-3 min-h-24 max-w-none text-gray-500">{description}</p>
       <Link
         href={href}
-        class="text-primary-600 hover:text-primary-400 text-base font-medium leading-6"
+        class="text-base leading-6 font-medium text-primary-600 hover:text-primary-400"
         aria-label={`Link to ${title}`}
       >
         Learn more &rarr;

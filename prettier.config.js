@@ -7,4 +7,5 @@ export default {
   trailingComma: 'es5',
   bracketSpacing: true,
   plugins: ['prettier-plugin-astro', 'prettier-plugin-tailwindcss'],
+  tailwindStylesheet: './apps/site/src/css/globals.css',
 }

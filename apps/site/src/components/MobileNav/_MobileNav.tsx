@@ -21,13 +21,13 @@ const MobileNav = () => {
         <Menu className="size-6" />
       </button>
       <div
-        className={`fixed left-0 top-0 z-10 size-full bg-white duration-300 ease-in-out ${
+        className={`fixed top-0 left-0 z-10 size-full bg-white duration-300 ease-in-out ${
           navShow ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
         <section className={sectionContainerClasses}>
           <div className="flex justify-end">
-            <button className="-mr-1 mt-16 size-8" aria-label="Toggle Menu" onClick={onToggleNav}>
+            <button className="mt-16 -mr-1 size-8" aria-label="Toggle Menu" onClick={onToggleNav}>
               <Close className="size-6" />
             </button>
           </div>

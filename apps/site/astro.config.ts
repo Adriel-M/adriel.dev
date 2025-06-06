@@ -1,8 +1,8 @@
 import mdx from '@astrojs/mdx'
 import react from '@astrojs/react'
 import sitemap from '@astrojs/sitemap'
-import tailwind from '@astrojs/tailwind'
 import compress from '@playform/compress'
+import tailwindcss from '@tailwindcss/vite'
 import { defineConfig } from 'astro/config'
 import robotsTxt from 'astro-robots-txt'
 import { XMLBuilder, XMLParser } from 'fast-xml-parser'
@@ -101,7 +101,7 @@ export default defineConfig({
   trailingSlash: 'never',
 
   vite: {
-    plugins: [SvgReactVitePlugin()],
+    plugins: [SvgReactVitePlugin(), tailwindcss()],
   },
 
   markdown: {
@@ -141,7 +141,6 @@ export default defineConfig({
 
   integrations: [
     react(),
-    tailwind(),
     mdx(),
     sitemap({
       filter: (page) => {
