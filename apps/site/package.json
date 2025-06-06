@@ -22,14 +22,14 @@
     "posthog-js": "^1.248.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-obfuscate-email": "^1.1.5"
+    "react-obfuscate-email": "^1.1.5",
+    "tailwindcss": "^4.1.8"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.4",
     "@astrojs/mdx": "4.3.0",
     "@astrojs/react": "4.3.0",
     "@astrojs/sitemap": "3.4.0",
-    "@astrojs/tailwind": "6.0.2",
     "@docsearch/css": "3.9.0",
     "@docsearch/js": "3.9.0",
     "@playform/compress": "0.1.9",
@@ -38,6 +38,7 @@
     "@svgr/plugin-svgo": "8.1.0",
     "@tailwindcss/nesting": "0.0.0-insiders.565cd3e",
     "@tailwindcss/typography": "0.5.16",
+    "@tailwindcss/vite": "^4.1.8",
     "@types/react": "19.1.6",
     "@types/react-dom": "19.1.5",
     "@vercel/og": "0.6.8",
@@ -67,7 +68,6 @@
     "retext-repeated-words": "5.0.0",
     "retext-sentence-spacing": "6.0.0",
     "schema-dts": "1.1.5",
-    "tailwindcss": "3.4.17",
     "title-case": "4.3.2",
     "unist-util-visit": "5.0.0",
     "vitest": "3.2.0"

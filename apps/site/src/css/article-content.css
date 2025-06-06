@@ -1,4 +1,92 @@
+@reference "tailwindcss";
+
 article {
+  .prose {
+    /* color-slate-100 */
+    --tw-prose-pre-bg: oklch(0.968 0.007 247.896 / 0.75);
+
+    --tw-prose-bullets: var(--tw-prose-body);
+
+    a {
+      color: var(--color-primary-600);
+
+      &:hover {
+        color: var(--color-primary-400);
+      }
+    }
+
+    h1,
+    h2 {
+      font-weight: 700;
+    }
+
+    h3 {
+      font-weight: 600;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      letter-spacing: var(--tracking-tight);
+    }
+  }
+
+  /* rehype pretty code */
+  [data-rehype-pretty-code-figure] pre {
+    @apply px-0;
+  }
+
+  [data-rehype-pretty-code-figure] code[data-line-numbers] {
+    counter-reset: line;
+  }
+
+  [data-rehype-pretty-code-figure] code[data-line-numbers] > [data-line]::before {
+    counter-increment: line;
+    content: counter(line);
+    @apply mr-4 inline-block w-4 text-right text-gray-500;
+  }
+
+  [data-rehype-pretty-code-figure] figcaption {
+    @apply border-l-2 border-l-transparent px-3;
+  }
+
+  [data-rehype-pretty-code-figure] pre [data-line] {
+    @apply border-l-2 border-l-transparent px-3;
+  }
+
+  [data-rehype-pretty-code-figure] [data-highlighted-line] {
+    @apply bg-yellow-100;
+  }
+
+  [data-rehype-pretty-code-figure] [data-chars-id] {
+    @apply border-b-2 p-1 shadow-none;
+  }
+
+  /* Heading links */
+  .content-header-link-placeholder {
+    @apply -ml-6 inline-block align-middle text-black opacity-0;
+    transition: opacity 0.15s ease;
+
+    &:hover {
+      color: var(--color-primary-400);
+    }
+
+    svg {
+      @apply block h-full w-full fill-current text-inherit;
+    }
+  }
+
+  .content-header-link-placeholder:hover,
+  .content-header:hover .content-header-link-placeholder {
+    @apply opacity-100;
+    transition: opacity 0.15s ease;
+  }
+
+  /* github alerts*/
+
   --rehype-github-alerts-default-color: rgb(89, 99, 110);
   --rehype-github-alerts-note-color: rgb(9, 105, 218);
   --rehype-github-alerts-tip-color: rgb(26, 127, 55);
@@ -81,5 +169,43 @@ article {
       color: var(--rehype-github-alerts-caution-color);
       fill: var(--rehype-github-alerts-caution-color);
     }
+  }
+
+  /* Rest */
+  sup {
+    @apply pl-1;
+  }
+
+  .task-list-item::before {
+    @apply hidden;
+  }
+
+  .task-list-item {
+    @apply list-none;
+  }
+
+  .footnotes {
+    @apply mt-12 border-t border-gray-200;
+
+    ol > li:target {
+      animation: highlight-footer 3s;
+
+      @keyframes highlight-footer {
+        from {
+          background: theme('colors.yellow.300');
+        }
+        to {
+          background: transparent;
+        }
+      }
+    }
+  }
+
+  .data-footnote-backref {
+    @apply no-underline;
+  }
+
+  img {
+    @apply mx-auto;
   }
 }

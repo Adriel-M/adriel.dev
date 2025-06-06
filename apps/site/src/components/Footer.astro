@@ -1,5 +1,5 @@
 ---
-import FooterYear from '@/components/FooterYear'
+import FooterYear from '@/components/footer-year/FooterYear.astro'
 import Link from '@/components/Link.astro'
 import SocialIcon from '@/components/SocialIcon.astro'
 import siteConfig from '@/libs/siteConfig'
@@ -14,7 +14,7 @@ import { URLS } from '@/libs/UrlLibs'
       <SocialIcon kind="rss" href={URLS.ATOM} />
     </div>
     <div class="mb-8 flex space-x-2 text-sm text-gray-500">
-      <FooterYear client:visible />
+      <FooterYear />
       <div>{` • `}</div>
       <div>Adriel Martinez</div>
       <div>{` • `}</div>
