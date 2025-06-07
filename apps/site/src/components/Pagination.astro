@@ -21,7 +21,7 @@ const { currentPage, totalPages, prev, next } = Astro.props
     }
     {
       prev && (
-        <Link class="hover:text-primary-400" href={prev} rel="prev" scroll={false}>
+        <Link class="hover:text-primary-400" href={prev} rel="prev">
           Previous
         </Link>
       )
