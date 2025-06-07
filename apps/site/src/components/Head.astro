@@ -1,10 +1,6 @@
 ---
-import Stats from '@/components/Stats.astro'
 import siteConfig from '@/libs/siteConfig'
 import { URLS } from '@/libs/UrlLibs.ts'
-
-const hasStatsEnvVars =
-  !!import.meta.env.PUBLIC_POSTHOG_KEY && !!import.meta.env.PUBLIC_POSTHOG_HOST
 ---
 
 <head>
@@ -25,6 +21,5 @@ const hasStatsEnvVars =
     title={siteConfig.title}
     href={new URL(URLS.ATOM, Astro.site)}
   />
-  {hasStatsEnvVars && <Stats />}
   <slot />
 </head>
