@@ -33,7 +33,7 @@ const { seoData, jsonLd } = Astro.props
         <Header />
         <main class="mb-auto">
           <slot />
-          <ScrollTop client:load />
+          <ScrollTop client:idle />
         </main>
         <Footer />
       </div>
