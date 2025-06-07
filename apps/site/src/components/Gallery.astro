@@ -33,7 +33,7 @@ const optimizedImages: {
 const id = `id_${nanoid()}`
 ---
 
-<image-gallery id={id} data-id={id} class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-3">
+<image-gallery id={id} class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-3">
   {
     optimizedImages.map(({ original, optimized }) => (
       <a
@@ -55,13 +55,15 @@ const id = `id_${nanoid()}`
 </image-gallery>
 
 <script>
-  import PhotoSwipeLightbox from 'photoswipe/lightbox'
+  import type PhotoSwipeLightbox from 'photoswipe/lightbox'
 
   class ImageGallery extends HTMLElement {
     lightbox?: PhotoSwipeLightbox
 
-    connectedCallback() {
-      const id = this.dataset.id!
+    async connectedCallback() {
+      const id = this.id
+
+      const { default: PhotoSwipeLightbox } = await import('photoswipe/lightbox')
 
       this.lightbox = new PhotoSwipeLightbox({
         gallery: `#${id}`,
