@@ -113,7 +113,7 @@ export default function FloatingToc({ headings }: Props) {
 
   const nestedEntries = generateTocEntry(headings)
   return (
-    <div className="sticky top-20 float-right hidden h-0 w-toc-2xl px-8 text-xs lg:block xl:w-toc-5xl">
+    <div className="sticky top-20 float-right hidden h-0 w-toc-xl px-8 text-xs lg:block xl:w-toc-4xl">
       <div className="pb-2 text-sm">Table of Contents</div>
       <TocEntryList activeSlug={activeSlug} entries={nestedEntries} />
     </div>
