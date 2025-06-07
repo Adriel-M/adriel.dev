@@ -58,7 +58,7 @@ describe('verify mdx content', async () => {
       })
 
       it('has proper heading title casing', async () => {
-        const tree = await titleCaseProcessor.parse(content)
+        const tree = titleCaseProcessor.parse(content)
 
         const headings: string[] = []
 
