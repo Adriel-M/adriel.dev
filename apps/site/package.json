@@ -19,7 +19,6 @@
     "@adrieldev/esm-wrapper": "workspace:*",
     "@fontsource/jetbrains-mono": "5.2.5",
     "photoswipe": "5.4.4",
-    "posthog-js": "1.249.4",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-obfuscate-email": "1.1.5"
