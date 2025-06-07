@@ -1,9 +1,9 @@
 ---
 import type { ImageMetadata } from 'astro'
-import type { Props } from 'astro/components/Picture.astro'
-import { Picture as AstroPicture } from 'astro:assets'
+import type { ComponentProps } from 'astro/types'
+import { Picture } from 'astro:assets'
 
-const props = Astro.props as Props
+const props = Astro.props as ComponentProps<typeof Picture>
 const imageMetadata = props.src as ImageMetadata
 const originalWidth = imageMetadata.width
 
@@ -17,4 +17,4 @@ props.sizes = '(min-width: 1280px) 896px, 100vw'
 props.format = 'webp'
 ---
 
-<AstroPicture {...props} />
+<Picture {...props} />

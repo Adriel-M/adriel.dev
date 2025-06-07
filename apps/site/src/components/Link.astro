@@ -1,8 +1,8 @@
 ---
-interface Props {
+import type { HTMLAttributes } from 'astro/types'
+
+interface Props extends Omit<HTMLAttributes<'a'>, 'href'> {
   href: string
-  // other specific props
-  [key: string]: unknown
 }
 
 const { href, ...rest } = Astro.props
@@ -13,8 +13,8 @@ const isExternal = !isInternalLink && !isAnchorLink
 ---
 
 <a
+  {...rest}
   href={href}
   target={isExternal ? '_blank' : undefined}
-  rel={isExternal ? 'noopener noreferrer' : undefined}
-  {...rest}><slot /></a
+  rel={isExternal ? 'noopener noreferrer' : undefined}><slot /></a
 >
