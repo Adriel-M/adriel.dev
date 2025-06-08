@@ -3,7 +3,6 @@ import 'photoswipe/style.css'
 
 import type { GetImageResult, ImageMetadata } from 'astro'
 import { getImage, Image } from 'astro:assets'
-import { nanoid } from 'nanoid'
 
 interface Props {
   images: Record<string, () => Promise<{ default: ImageMetadata }>>
@@ -29,11 +28,9 @@ const optimizedImages: {
     return { original: metadata, optimized }
   })
 )
-
-const id = `id_${nanoid()}`
 ---
 
-<image-gallery id={id} class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-3">
+<image-gallery class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-3">
   {
     optimizedImages.map(({ original, optimized }) => (
       <a
@@ -61,12 +58,10 @@ const id = `id_${nanoid()}`
     lightbox?: PhotoSwipeLightbox
 
     async connectedCallback() {
-      const id = this.id
-
       const { default: PhotoSwipeLightbox } = await import('photoswipe/lightbox')
 
       this.lightbox = new PhotoSwipeLightbox({
-        gallery: `#${id}`,
+        gallery: this,
         children: 'a',
         showHideAnimationType: 'none',
         zoomAnimationDuration: false,
