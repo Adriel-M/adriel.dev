@@ -54,6 +54,7 @@ const onload = "this.media='all'; this.onload=null;"
     apiKey: apiKey,
     insights: false,
     disableUserPersonalization: true,
+    placeholder: 'Search',
     transformSearchClient: (searchClient) => {
       const debouncedSearch = debounce(
         (queries, resolve: (res: any) => void, reject: (err: any) => void) => {
