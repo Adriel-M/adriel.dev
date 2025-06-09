@@ -58,28 +58,6 @@ const optimizedImage = await getImage({
 </responsive-picture>
 
 <script>
-  import type PhotoSwipeLightbox from 'photoswipe/lightbox'
-
-  class ResponsivePicture extends HTMLElement {
-    lightbox?: PhotoSwipeLightbox
-
-    async connectedCallback() {
-      const { default: PhotoSwipeLightbox } = await import('photoswipe/lightbox')
-
-      this.lightbox = new PhotoSwipeLightbox({
-        gallery: this,
-        children: 'a',
-        showHideAnimationType: 'none',
-        zoomAnimationDuration: false,
-        pswpModule: () => import('photoswipe'),
-      })
-      this.lightbox.init()
-    }
-
-    disconnectedCallback() {
-      this.lightbox?.destroy()
-    }
-  }
-
-  customElements.define('responsive-picture', ResponsivePicture)
+  import { generateClass } from '@/libs/PhotoSwipeElement.ts'
+  customElements.define('responsive-picture', generateClass())
 </script>
