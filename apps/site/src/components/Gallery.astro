@@ -1,6 +1,4 @@
 ---
-import 'photoswipe/style.css'
-
 import type { GetImageResult, ImageMetadata } from 'astro'
 import { getImage, Image } from 'astro:assets'
 
@@ -51,28 +49,6 @@ const optimizedImages: {
 </image-gallery>
 
 <script>
-  import type PhotoSwipeLightbox from 'photoswipe/lightbox'
-
-  class ImageGallery extends HTMLElement {
-    lightbox?: PhotoSwipeLightbox
-
-    async connectedCallback() {
-      const { default: PhotoSwipeLightbox } = await import('photoswipe/lightbox')
-
-      this.lightbox = new PhotoSwipeLightbox({
-        gallery: this,
-        children: 'a',
-        showHideAnimationType: 'none',
-        zoomAnimationDuration: false,
-        pswpModule: () => import('photoswipe'),
-      })
-      this.lightbox.init()
-    }
-
-    disconnectedCallback() {
-      this.lightbox?.destroy()
-    }
-  }
-
-  customElements.define('image-gallery', ImageGallery)
+  import { generateClass } from '@/libs/PhotoSwipeElement.ts'
+  customElements.define('image-gallery', generateClass())
 </script>
