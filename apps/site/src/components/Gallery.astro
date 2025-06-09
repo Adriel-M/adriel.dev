@@ -30,21 +30,20 @@ const optimizedImages: {
 )
 ---
 
-<image-gallery class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-3">
+<image-gallery class="grid grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-3">
   {
     optimizedImages.map(({ original, optimized }) => (
       <a
         href={optimized.src}
         data-pswp-width={original.width}
         data-pswp-height={original.height}
-        data-pswp-caption="A beautiful sunrise over the mountains."
         target="_blank"
       >
         <Image
           src={original}
           height={600}
           alt="Gallery Preview Image"
-          class="not-prose aspect-3/2"
+          class="not-prose aspect-3/2 object-cover"
         />
       </a>
     ))
