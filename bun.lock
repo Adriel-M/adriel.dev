@@ -49,7 +49,7 @@
         "astro-seo": "0.8.4",
         "astro-seo-schema": "5.0.0",
         "compromise": "14.14.4",
-        "fast-xml-parser": "5.2.3",
+        "fast-xml-parser": "5.2.4",
         "feed": "5.1.0",
         "github-slugger": "2.0.0",
         "gray-matter": "4.0.3",
@@ -1065,7 +1065,7 @@
 
     "fast-uri": ["fast-uri@3.0.6", "", {}, "sha512-Atfo14OibSv5wAp4VWNsFYE1AchQRTv9cBGWET4pZWHzYshFSS9NQI6I57rdKn9croWVMbYFbLhJ+yJvmZIIHw=="],
 
-    "fast-xml-parser": ["fast-xml-parser@5.2.3", "", { "dependencies": { "strnum": "^2.1.0" }, "bin": { "fxparser": "src/cli/cli.js" } }, "sha512-OdCYfRqfpuLUFonTNjvd30rCBZUneHpSQkCqfaeWQ9qrKcl6XlWeDBNVwGb+INAIxRshuN2jF+BE0L6gbBO2mw=="],
+    "fast-xml-parser": ["fast-xml-parser@5.2.4", "", { "dependencies": { "strnum": "^2.1.0" }, "bin": { "fxparser": "src/cli/cli.js" } }, "sha512-6mNrAVwHip2nGyPYn6xQJK/znBbIoz6to5VMNysrka1/aoSylbB8vjYgkpaFp05EFojiflVV+3QzXe9Ap3Esng=="],
 
     "fastq": ["fastq@1.19.1", "", { "dependencies": { "reusify": "^1.0.4" } }, "sha512-GwLTyxkCXjXbxqIhTsMI2Nui8huMPtnxg7krajPJAjnEG/iiOS7i+zCtWGZR9G0NBKbXKh6X9m9UIsYX/N6vvQ=="],
 
