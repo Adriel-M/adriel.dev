@@ -46,58 +46,68 @@ const onload = "this.media='all'; this.onload=null;"
 
   class DocSearch extends HTMLElement {
     async connectedCallback() {
-      const { docsearch } = await import('@adrieldev/esm-wrapper')
-
-      docsearch({
-        container: this,
-        appId: appId,
-        indexName: indexName,
-        apiKey: apiKey,
-        insights: false,
-        disableUserPersonalization: true,
-        placeholder: 'Search',
-        transformSearchClient: (searchClient) => {
-          const debouncedSearch = debounce(
-            (queries, resolve: (res: any) => void, reject: (err: any) => void) => {
-              searchClient.search(queries).then(resolve).catch(reject)
-            },
-            250
-          )
-          return {
-            ...searchClient,
-            search(queries) {
-              return new Promise((resolve, reject) => {
-                debouncedSearch(queries, resolve, reject)
-              })
-            },
+      const idle = window.requestIdleCallback
+        ? function (cb: () => void) {
+            return window.requestIdleCallback(cb, { timeout: 500 })
           }
-        },
-        transformItems: (items) => {
-          return items.map((item) => {
-            // Strip the ellipsis at the end. Add ellipsis via css instead.
-            const snippetValue = item._snippetResult?.content?.value
-            if (snippetValue) {
-              item._snippetResult.content.value = snippetValue.replace(
-                TRAILING_ELLIPSIS_PATTERN,
-                ''
-              )
+        : function (cb: () => void) {
+            return setTimeout(cb, 500)
+          }
+
+      idle(async () => {
+        const { docsearch } = await import('@adrieldev/esm-wrapper')
+
+        docsearch({
+          container: this,
+          appId: appId,
+          indexName: indexName,
+          apiKey: apiKey,
+          insights: false,
+          disableUserPersonalization: true,
+          placeholder: 'Search',
+          transformSearchClient: (searchClient) => {
+            const debouncedSearch = debounce(
+              (queries, resolve: (res: any) => void, reject: (err: any) => void) => {
+                searchClient.search(queries).then(resolve).catch(reject)
+              },
+              250
+            )
+            return {
+              ...searchClient,
+              search(queries) {
+                return new Promise((resolve, reject) => {
+                  debouncedSearch(queries, resolve, reject)
+                })
+              },
             }
-            if (item._snippetResult.hierarchy) {
-              for (const value of Object.values(item._snippetResult.hierarchy)) {
-                const hierarchyValue = value.value
-                if (hierarchyValue && typeof hierarchyValue === 'string') {
-                  value.value = hierarchyValue.replace(TRAILING_ELLIPSIS_PATTERN, '')
+          },
+          transformItems: (items) => {
+            return items.map((item) => {
+              // Strip the ellipsis at the end. Add ellipsis via css instead.
+              const snippetValue = item._snippetResult?.content?.value
+              if (snippetValue) {
+                item._snippetResult.content.value = snippetValue.replace(
+                  TRAILING_ELLIPSIS_PATTERN,
+                  ''
+                )
+              }
+              if (item._snippetResult.hierarchy) {
+                for (const value of Object.values(item._snippetResult.hierarchy)) {
+                  const hierarchyValue = value.value
+                  if (hierarchyValue && typeof hierarchyValue === 'string') {
+                    value.value = hierarchyValue.replace(TRAILING_ELLIPSIS_PATTERN, '')
+                  }
                 }
               }
-            }
 
-            const url = new URL(item.url)
-            return {
-              ...item,
-              url: url.pathname + url.hash,
-            }
-          })
-        },
+              const url = new URL(item.url)
+              return {
+                ...item,
+                url: url.pathname + url.hash,
+              }
+            })
+          },
+        })
       })
     }
   }
