@@ -6,7 +6,7 @@ import modalCss from '@docsearch/css/dist/modal.css?url'
 const onload = "this.media='all'; this.onload=null;"
 ---
 
-<div id="docsearch-container">
+<docsearch-container>
   <button type="button" class="DocSearch DocSearch-Button" aria-label="search">
     <span class="DocSearch-Button-Container">
       <svg width="20" height="20" class="DocSearch-Search-Icon" viewBox="0 0 20 20">
@@ -22,19 +22,16 @@ const onload = "this.media='all'; this.onload=null;"
     </span>
     <span class="DocSearch-Button-Keys"></span>
   </button>
-</div>
+</docsearch-container>
 
 <link rel="stylesheet" href={modalCss} media="print" onload={onload} />
 
 <script>
-  import { docsearch } from '@adrieldev/esm-wrapper'
   import siteConfig from '@/libs/siteConfig'
 
   const { appId, apiKey, indexName } = siteConfig.search.algoliaConfig
 
   const TRAILING_ELLIPSIS_PATTERN = /\s+…$/
-
-  const docsearchContainer = document.getElementById('docsearch-container')!
 
   function debounce<T extends (...args: any[]) => void>(
     func: T,
@@ -47,52 +44,66 @@ const onload = "this.media='all'; this.onload=null;"
     }
   }
 
-  docsearch({
-    container: docsearchContainer,
-    appId: appId,
-    indexName: indexName,
-    apiKey: apiKey,
-    insights: false,
-    disableUserPersonalization: true,
-    placeholder: 'Search',
-    transformSearchClient: (searchClient) => {
-      const debouncedSearch = debounce(
-        (queries, resolve: (res: any) => void, reject: (err: any) => void) => {
-          searchClient.search(queries).then(resolve).catch(reject)
-        },
-        250
-      )
-      return {
-        ...searchClient,
-        search(queries) {
-          return new Promise((resolve, reject) => {
-            debouncedSearch(queries, resolve, reject)
-          })
-        },
-      }
-    },
-    transformItems: (items) => {
-      return items.map((item) => {
-        // Strip the ellipsis at the end. Add ellipsis via css instead.
-        const snippetValue = item._snippetResult?.content?.value
-        if (snippetValue) {
-          item._snippetResult.content.value = snippetValue.replace(TRAILING_ELLIPSIS_PATTERN, '')
-        }
-        if (item._snippetResult.hierarchy) {
-          for (const value of Object.values(item._snippetResult.hierarchy)) {
-            const hierarchyValue = value.value
-            if (hierarchyValue && typeof hierarchyValue === 'string') {
-              value.value = hierarchyValue.replace(TRAILING_ELLIPSIS_PATTERN, '')
-            }
-          }
-        }
+  class DocSearchContainer extends HTMLElement {
+    constructor() {
+      super()
+      window.addEventListener('DOMContentLoaded', async () => {
+        const { docsearch } = await import('@adrieldev/esm-wrapper')
 
-        const url = new URL(item.url)
-        return {
-          ...item,
-          url: url.pathname + url.hash,
-        }
+        docsearch({
+          container: this,
+          appId: appId,
+          indexName: indexName,
+          apiKey: apiKey,
+          insights: false,
+          disableUserPersonalization: true,
+          placeholder: 'Search',
+          transformSearchClient: (searchClient) => {
+            const debouncedSearch = debounce(
+              (queries, resolve: (res: any) => void, reject: (err: any) => void) => {
+                searchClient.search(queries).then(resolve).catch(reject)
+              },
+              250
+            )
+            return {
+              ...searchClient,
+              search(queries) {
+                return new Promise((resolve, reject) => {
+                  debouncedSearch(queries, resolve, reject)
+                })
+              },
+            }
+          },
+          transformItems: (items) => {
+            return items.map((item) => {
+              // Strip the ellipsis at the end. Add ellipsis via css instead.
+              const snippetValue = item._snippetResult?.content?.value
+              if (snippetValue) {
+                item._snippetResult.content.value = snippetValue.replace(
+                  TRAILING_ELLIPSIS_PATTERN,
+                  ''
+                )
+              }
+              if (item._snippetResult.hierarchy) {
+                for (const value of Object.values(item._snippetResult.hierarchy)) {
+                  const hierarchyValue = value.value
+                  if (hierarchyValue && typeof hierarchyValue === 'string') {
+                    value.value = hierarchyValue.replace(TRAILING_ELLIPSIS_PATTERN, '')
+                  }
+                }
+              }
+
+              const url = new URL(item.url)
+              return {
+                ...item,
+                url: url.pathname + url.hash,
+              }
+            })
+          },
+        })
       })
-    },
-  })
+    }
+  }
+
+  customElements.define('docsearch-container', DocSearchContainer)
 </script>
