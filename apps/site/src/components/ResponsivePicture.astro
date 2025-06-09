@@ -1,20 +1,85 @@
 ---
 import type { ImageMetadata } from 'astro'
 import type { ComponentProps } from 'astro/types'
-import { Picture } from 'astro:assets'
+import { getImage, Picture } from 'astro:assets'
 
 const props = Astro.props as ComponentProps<typeof Picture>
 const imageMetadata = props.src as ImageMetadata
 const originalWidth = imageMetadata.width
 
-// 896px = Tailwind's max-w-5xl, > 896 will be greater than the container
-const potentialSizes = [320, 480, 640, 750, 828, 896, originalWidth]
-const maxSize = Math.min(896, originalWidth)
+// Have a max height so that the image doesn't take up the whole screen
+const maxHeight = 800
+const aspectRatio = imageMetadata.width / imageMetadata.height
+const maxWidthFromAspectRatio = Math.round(maxHeight * aspectRatio)
 
-const widths = potentialSizes.filter((size) => size <= maxSize)
+// section container is styled with max-w-4xl which is 896px
+const maxWidthFromTailwind = 896
+const potentialSizes = [
+  320,
+  480,
+  640,
+  750,
+  828,
+  maxWidthFromTailwind,
+  originalWidth,
+  maxWidthFromAspectRatio,
+]
+
+const maxWidth = Math.min(maxWidthFromTailwind, originalWidth, maxWidthFromAspectRatio)
+const widths = potentialSizes.filter((size) => size <= maxWidth)
 props.widths = widths
 props.sizes = '(min-width: 1280px) 896px, 100vw'
 props.format = 'webp'
+
+// set width and height for the fallback image
+const fallbackWidth = Math.max(...widths)
+const fallbackHeight = Math.round(fallbackWidth / aspectRatio)
+
+props.width = fallbackWidth
+props.height = fallbackHeight
+
+// The image shown when clicking an image on the post
+const optimizedImage = await getImage({
+  src: imageMetadata,
+  width: imageMetadata.width,
+  format: 'webp',
+})
 ---
 
-<Picture {...props} />
+<responsive-picture>
+  <a
+    href={optimizedImage.src}
+    data-pswp-width={imageMetadata.width}
+    data-pswp-height={imageMetadata.height}
+    target="_blank"
+  >
+    <Picture {...props} />
+  </a>
+</responsive-picture>
+
+<script>
+  import type PhotoSwipeLightbox from 'photoswipe/lightbox'
+
+  class ResponsivePicture extends HTMLElement {
+    lightbox?: PhotoSwipeLightbox
+
+    async connectedCallback() {
+      const { default: PhotoSwipeLightbox } = await import('photoswipe/lightbox')
+
+      this.lightbox = new PhotoSwipeLightbox({
+        gallery: this,
+        children: 'a',
+        showHideAnimationType: 'none',
+        zoomAnimationDuration: false,
+        pswpModule: () => import('photoswipe'),
+      })
+      this.lightbox.init()
+    }
+
+    disconnectedCallback() {
+      this.lightbox?.destroy()
+    }
+  }
+
+  customElements.define('responsive-picture', ResponsivePicture)
+</script>
