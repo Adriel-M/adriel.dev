@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@adrieldev/esm-wrapper": "workspace:*",
+    "@docsearch/css": "3.9.0",
     "@fontsource/jetbrains-mono": "5.2.5",
     "photoswipe": "5.4.4",
     "react": "19.1.0",
@@ -28,8 +29,6 @@
     "@astrojs/mdx": "4.3.0",
     "@astrojs/react": "4.3.0",
     "@astrojs/sitemap": "3.4.1",
-    "@docsearch/css": "3.9.0",
-    "@docsearch/js": "3.9.0",
     "@playform/compress": "0.1.9",
     "@svgr/core": "8.1.0",
     "@svgr/plugin-jsx": "8.1.0",
