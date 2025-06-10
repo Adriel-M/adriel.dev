@@ -16,6 +16,7 @@ import remarkGemoji from 'remark-gemoji'
 import { titleCase } from 'title-case'
 import type { Node, Parent } from 'unist'
 import { visit } from 'unist-util-visit'
+import svgr from 'vite-plugin-svgr'
 
 import alertIcon from './src/assets/remix-icons/alert-line.svg?raw'
 import feedbackIcon from './src/assets/remix-icons/feedback-line.svg?raw'
@@ -23,7 +24,6 @@ import hashTagIcon from './src/assets/remix-icons/hashtag.svg?raw'
 import informationIcon from './src/assets/remix-icons/information-line.svg?raw'
 import lightbulbIcon from './src/assets/remix-icons/lightbulb-line.svg?raw'
 import spamIcon from './src/assets/remix-icons/spam-line.svg?raw'
-import SvgReactVitePlugin from './svg-react-vite-plugin'
 
 const remarkTitleCase = () => {
   return (tree: Node) => {
@@ -101,7 +101,7 @@ export default defineConfig({
   trailingSlash: 'never',
 
   vite: {
-    plugins: [SvgReactVitePlugin(), tailwindcss()],
+    plugins: [svgr(), tailwindcss()],
   },
 
   markdown: {
