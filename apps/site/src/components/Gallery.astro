@@ -4,9 +4,10 @@ import { getImage, Image } from 'astro:assets'
 
 interface Props {
   images: Record<string, () => Promise<{ default: ImageMetadata }>>
+  description: string
 }
 
-const { images } = Astro.props
+const { images, description } = Astro.props
 
 const resolvedImages: { default: ImageMetadata }[] = await Promise.all(
   Object.values(images).map((loadFn) => loadFn())
@@ -26,6 +27,8 @@ const optimizedImages: {
     return { original: metadata, optimized }
   })
 )
+
+const imageAlt = `Gallery Preview of ${description}`
 ---
 
 <image-gallery class="grid grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -40,7 +43,7 @@ const optimizedImages: {
         <Image
           src={original}
           height={600}
-          alt="Gallery Preview Image"
+          alt={imageAlt}
           class="not-prose aspect-3/2 object-cover"
         />
       </a>
