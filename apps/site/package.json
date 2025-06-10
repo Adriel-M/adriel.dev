@@ -18,7 +18,7 @@
   "dependencies": {
     "@adrieldev/esm-wrapper": "workspace:*",
     "@docsearch/css": "3.9.0",
-    "@fontsource/jetbrains-mono": "5.2.5",
+    "@fontsource/jetbrains-mono": "5.2.6",
     "photoswipe": "5.4.4",
     "react": "19.1.0",
     "react-dom": "19.1.0",
@@ -29,18 +29,18 @@
     "@astrojs/mdx": "4.3.0",
     "@astrojs/react": "4.3.0",
     "@astrojs/sitemap": "3.4.1",
-    "@playform/compress": "0.1.9",
+    "@playform/compress": "0.2.0",
     "@tailwindcss/typography": "0.5.16",
     "@tailwindcss/vite": "4.1.8",
-    "@types/react": "19.1.6",
+    "@types/react": "19.1.7",
     "@types/react-dom": "19.1.6",
     "@vercel/og": "0.6.8",
-    "astro": "5.9.1",
+    "astro": "5.9.2",
     "astro-robots-txt": "1.0.0",
     "astro-seo": "0.8.4",
     "astro-seo-schema": "5.0.0",
     "compromise": "14.14.4",
-    "fast-xml-parser": "5.2.4",
+    "fast-xml-parser": "5.2.5",
     "feed": "5.1.0",
     "github-slugger": "2.0.0",
     "gray-matter": "4.0.3",
@@ -64,6 +64,6 @@
     "title-case": "4.3.2",
     "unist-util-visit": "5.0.0",
     "vite-plugin-svgr": "4.3.0",
-    "vitest": "3.2.2"
+    "vitest": "3.2.3"
   }
 }
