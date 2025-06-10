@@ -114,6 +114,9 @@ export default defineConfig({
         rehypeAutolinkHeadings,
         {
           behavior: 'prepend',
+          properties: {
+            ariaLabel: 'Link to this section',
+          },
           headingProperties: {
             className: ['content-header'],
           },
