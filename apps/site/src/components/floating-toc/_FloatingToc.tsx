@@ -1,49 +1,17 @@
-import type { MarkdownHeading } from 'astro'
 import { useEffect, useRef, useState } from 'react'
 
 import { throttle } from '@/libs/FunctionUtils.ts'
 
 interface Props {
-  headings: MarkdownHeading[]
+  slugs: string[]
+  entries: TocEntry[]
 }
 
-interface TocEntry {
+export interface TocEntry {
   slug: string
   text: string
   depth: number
   items: TocEntry[]
-}
-
-function generateTocEntry(headings: MarkdownHeading[]): TocEntry[] {
-  const topLevel: TocEntry = {
-    slug: '',
-    text: '',
-    depth: 0,
-    items: [],
-  }
-  const insertTo: TocEntry[] = [topLevel]
-
-  for (const heading of headings) {
-    const entry: TocEntry = {
-      ...heading,
-      items: [],
-    }
-
-    // find out which entry to push into
-    // find the entry that is a depth right above it (currentDepth - 1)
-    const targetDepth = entry.depth - 1
-    while (insertTo[insertTo.length - 1].depth > targetDepth) {
-      insertTo.pop()
-    }
-
-    // add self to that entry
-    insertTo[insertTo.length - 1].items.push(entry)
-
-    // we are now a candidate to have children
-    insertTo.push(entry)
-  }
-
-  return insertTo[0].items
 }
 
 const TocEntryList = ({ activeSlug, entries }: { activeSlug: string; entries: TocEntry[] }) => {
@@ -78,16 +46,16 @@ const TocEntryList = ({ activeSlug, entries }: { activeSlug: string; entries: To
   )
 }
 
-export default function FloatingToc({ headings }: Props) {
-  const [activeSlug, setActiveSlug] = useState(headings[0].slug)
+export default function FloatingToc({ slugs, entries }: Props) {
+  const [activeSlug, setActiveSlug] = useState(slugs[0])
 
   const headerElements = useRef<HTMLElement[]>([])
 
   useEffect(() => {
-    headerElements.current = headings.map((heading) => {
-      return document.getElementById(heading.slug)!
+    headerElements.current = slugs.map((slug) => {
+      return document.getElementById(slug)!
     })
-  }, [headings])
+  }, [slugs])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -111,11 +79,10 @@ export default function FloatingToc({ headings }: Props) {
     }
   }, [])
 
-  const nestedEntries = generateTocEntry(headings)
   return (
     <div className="sticky top-20 float-right hidden h-0 w-toc-xl px-8 text-xs lg:block xl:w-toc-4xl">
       <div className="pb-2 text-sm">Table of Contents</div>
-      <TocEntryList activeSlug={activeSlug} entries={nestedEntries} />
+      <TocEntryList activeSlug={activeSlug} entries={entries} />
     </div>
   )
 }

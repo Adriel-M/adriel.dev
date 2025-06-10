@@ -2,7 +2,7 @@
 import { getCollection, render } from 'astro:content'
 import { Schema } from 'astro-seo-schema'
 
-import FloatingToc from '@/components/FloatingToc'
+import FloatingToc from '@/components/floating-toc/FloatingToc.astro'
 import PostLayout from '@/layouts/PostLayout.astro'
 import componentOverrides from '@/libs/ComponentOverrides'
 import generateSummary from '@/libs/generate-summary'
@@ -42,10 +42,6 @@ const pageSummary = await generateSummary(post.body!)
     }}
   />
 
-  {
-    filteredHeadings.length > 0 && (
-      <FloatingToc headings={filteredHeadings} slot="toc" client:load />
-    )
-  }
+  {filteredHeadings.length > 0 && <FloatingToc headings={filteredHeadings} slot="toc" />}
   <Content components={componentOverrides} />
 </PostLayout>

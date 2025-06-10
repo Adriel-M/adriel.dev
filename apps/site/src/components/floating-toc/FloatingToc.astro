@@ -1,0 +1,49 @@
+---
+import type { MarkdownHeading } from 'astro'
+
+import type { TocEntry } from '@/components/floating-toc/_FloatingToc'
+import FloatingTocReact from '@/components/floating-toc/_FloatingToc'
+
+interface Props {
+  headings: MarkdownHeading[]
+}
+
+function generateTocEntries(headings: MarkdownHeading[]): TocEntry[] {
+  const topLevel: TocEntry = {
+    slug: '',
+    text: '',
+    depth: 0,
+    items: [],
+  }
+  const insertTo: TocEntry[] = [topLevel]
+
+  for (const heading of headings) {
+    const entry: TocEntry = {
+      ...heading,
+      items: [],
+    }
+
+    // find out which entry to push into
+    // find the entry that is a depth right above it (currentDepth - 1)
+    const targetDepth = entry.depth - 1
+    while (insertTo[insertTo.length - 1].depth > targetDepth) {
+      insertTo.pop()
+    }
+
+    // add self to that entry
+    insertTo[insertTo.length - 1].items.push(entry)
+
+    // we are now a candidate to have children
+    insertTo.push(entry)
+  }
+
+  return insertTo[0].items
+}
+
+const { headings } = Astro.props
+
+const slugs = headings.map((heading) => heading.slug)
+const entries = generateTocEntries(headings)
+---
+
+<FloatingTocReact slugs={slugs} entries={entries} client:load />
