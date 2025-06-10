@@ -1,3 +1,5 @@
+@reference "tailwindcss";
+
 :root {
   --docsearch-primary-color: var(--color-primary-500);
   --docsearch-text-color: var(--color-gray-700);
@@ -106,6 +108,18 @@
   }
   .DocSearch-Button-Keys {
     margin-inline-start: auto;
+  }
+}
+
+.DocSearch-NoResults {
+  @apply space-y-2;
+
+  .DocSearch-Title {
+    @apply pb-2;
+  }
+
+  .DocSearch-Screen-Icon {
+    @apply flex justify-center;
   }
 }
 
