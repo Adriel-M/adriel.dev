@@ -54,6 +54,7 @@
     "remark": "15.0.1",
     "remark-gemoji": "8.0.0",
     "remark-mdx": "3.1.0",
+    "retext-diacritics": "5.0.0",
     "retext-english": "5.0.0",
     "retext-indefinite-article": "5.0.0",
     "retext-redundant-acronyms": "5.0.0",

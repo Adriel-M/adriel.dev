@@ -6,6 +6,7 @@ import path from 'path'
 import { remark } from 'remark'
 import remarkMdx from 'remark-mdx'
 import { retext } from 'retext'
+import retextDiacritics from 'retext-diacritics'
 import retextEnglish from 'retext-english'
 import retextIndefiniteArticle from 'retext-indefinite-article'
 import retextRedundantAcronyms from 'retext-redundant-acronyms'
@@ -23,6 +24,7 @@ const proofreadingProcessor = retext()
   .use(retextRedundantAcronyms)
   .use(retextRepeatedWords)
   .use(retextSentenceSpacing)
+  .use(retextDiacritics)
 
 const titleCaseProcessor = remark().use(remarkMdx)
 
