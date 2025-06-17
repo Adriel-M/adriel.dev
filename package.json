@@ -30,7 +30,7 @@
     "@adrieldev/cli": "workspace:*",
     "@adrieldev/eslint-configs": "workspace:*",
     "concurrently": "9.1.2",
-    "eslint": "9.28.0",
+    "eslint": "9.29.0",
     "globals": "16.2.0",
     "husky": "9.1.7",
     "lint-staged": "16.1.0",
