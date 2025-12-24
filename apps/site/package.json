@@ -34,7 +34,7 @@
     "@tailwindcss/vite": "4.1.18",
     "@types/react": "19.1.8",
     "@types/react-dom": "19.1.6",
-    "@vercel/og": "0.6.8",
+    "@vercel/og": "0.8.6",
     "astro": "5.16.6",
     "astro-robots-txt": "1.0.0",
     "astro-seo": "0.8.4",
