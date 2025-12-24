@@ -9,7 +9,7 @@
     "format:fix": "prettier --write ."
   },
   "devDependencies": {
-    "@inquirer/prompts": "7.5.3",
+    "@inquirer/prompts": "7.10.1",
     "github-slugger": "2.0.0",
     "gray-matter": "4.0.3"
   },
