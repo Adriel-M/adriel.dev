@@ -29,7 +29,7 @@
   "devDependencies": {
     "@adrieldev/cli": "workspace:*",
     "@adrieldev/eslint-configs": "workspace:*",
-    "concurrently": "9.2.0",
+    "concurrently": "9.2.1",
     "eslint": "9.39.2",
     "globals": "16.5.0",
     "husky": "9.1.7",
