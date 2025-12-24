@@ -118,7 +118,6 @@ This plugins contains two parts:
 1. `remarkCopyLinkedImages`: The entry point of our plugin where it returns a parser (another function). What the parser
    does here is to only look for `image` nodes and call `processImage` on the imageNode as well as store the promise in a list.
 2. `processImage`: Given an `image` node, do the following:
-
    1. Identify whether the path is an absolute path from the project root or a relative path from where the `mdx` file is
    2. Read the file and hash it. I chose [xxhash64](https://xxhash.com/) as the hashing algorithm since I needed a fast algorithm
       and didn't need a cryptographically secure algorithm.
