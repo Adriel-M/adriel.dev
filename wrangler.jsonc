@@ -5,7 +5,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "adriel-dev",
-  "compatibility_date": "2025-05-28",
+  "compatibility_date": "2025-11-17",
   "assets": {
     "directory": "./apps/site/dist",
     "html_handling": "drop-trailing-slash",
