@@ -1,4 +1,4 @@
-import { rename } from 'node:fs/promises'
+import { readFile, rename, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 
 import { slug } from 'github-slugger'
@@ -14,8 +14,7 @@ class CreatedAt implements UpdatePostCommandInterface {
     const folderPath = join(postsFolder, postName)
     const filePath = join(folderPath, 'index.mdx')
 
-    const file = Bun.file(filePath)
-    const fileContent = await file.text()
+    const fileContent = await readFile(filePath, 'utf-8')
 
     const { content, data } = matter(fileContent)
 
@@ -25,7 +24,7 @@ class CreatedAt implements UpdatePostCommandInterface {
     const nowDateString = getDateString(new Date())
 
     // overwrite original file
-    await Bun.write(filePath, matter.stringify(content, data))
+    await writeFile(filePath, matter.stringify(content, data), 'utf-8')
 
     const targetFolderName = `${nowDateString}-${slug(data.title)}`
     const targetFolderPath = join(postsFolder, targetFolderName)

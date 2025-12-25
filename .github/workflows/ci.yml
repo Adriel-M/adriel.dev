@@ -21,10 +21,14 @@ jobs:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
-      - uses: oven-sh/setup-bun@735343b667d3e6f658f44d0eca948eb6282f2b76 # v2
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: 'pnpm'
 
-      - run: bun install --frozen-lockfile
-      - run: bun run lint
-      - run: bun run format
-      - run: bun run check
-      - run: bun run test
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run lint
+      - run: pnpm run format
+      - run: pnpm run check
+      - run: pnpm run test
