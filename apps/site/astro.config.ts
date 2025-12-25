@@ -155,6 +155,12 @@ export default defineConfig({
     robotsTxt(),
     compress({
       Image: false,
+      HTML: {
+        'html-minifier-terser': {
+          removeAttributeQuotes: false,
+          collapseWhitespace: false,
+        },
+      },
       JavaScript: {
         terser: {
           format: {
