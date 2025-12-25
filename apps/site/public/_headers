@@ -1,5 +1,5 @@
 /*
-    Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' *.adriel.dev *.posthog.com; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data:; connect-src 'self' https://*.adriel.dev https://*.posthog.com https://*.algolia.net https://*.algolianet.com https://*.algolia.io; font-src 'self'; manifest-src 'self'; frame-ancestors 'none'; object-src 'none'; base-uri 'none';
+    Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data:; connect-src 'self' https://*.algolia.net https://*.algolianet.com https://*.algolia.io; font-src 'self'; manifest-src 'self'; frame-ancestors 'none'; object-src 'none'; base-uri 'none';
     Referrer-Policy: strict-origin-when-cross-origin
     X-Frame-Options: DENY
     X-Content-Type-Options: nosniff
