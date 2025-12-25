@@ -4,14 +4,12 @@ import componentOverrides from '@/libs/ComponentOverrides'
 import Content from '@/pages/about/_content.mdx'
 
 export const title = 'About'
-
-const emailAddress = import.meta.env.PUBLIC_EMAIL_ADDRESS
 ---
 
 <SimplePageLayout title={title} tagline="Yup, that's me">
   <article>
     <div class="prose max-w-none pt-10 pb-8">
-      <Content components={componentOverrides} emailAddress={emailAddress} />
+      <Content components={componentOverrides} />
     </div>
   </article>
 </SimplePageLayout>
