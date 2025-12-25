@@ -4,17 +4,24 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**"]
+      "outputs": ["dist/**", ".astro/**"]
     },
     "lint": {},
-    "lint:fix": {},
+    "lint:fix": {
+      "cache": false
+    },
     "format": {},
-    "format:fix": {},
+    "format:fix": {
+      "cache": false
+    },
     "test": {},
     "check": {
       "dependsOn": ["@adrieldev/esm-wrapper#build"]
     }
   },
+  "globalDependencies": [
+    "pnpm-lock.yaml"
+  ],
   "remoteCache": {
     "signature": true
   }
