@@ -3,5 +3,7 @@ packages:
   - packages/*
 
 ignoredBuiltDependencies:
-  - esbuild
   - sharp
+
+onlyBuiltDependencies:
+  - esbuild
