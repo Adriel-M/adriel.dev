@@ -138,18 +138,6 @@
   }
 }
 
-.DocSearch-NoResults {
-  @apply space-y-2;
-
-  .DocSearch-Title {
-    @apply pb-2;
-  }
-
-  .DocSearch-Screen-Icon {
-    @apply flex justify-center;
-  }
-}
-
 /*!* Prevent shifting the page if there's a scrollbar + clicking on docsearch *!*/
 body {
   margin-right: 0 !important;
