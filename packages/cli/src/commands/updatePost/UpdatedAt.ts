@@ -1,3 +1,4 @@
+import { readFile, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 
 import matter from 'gray-matter'
@@ -9,14 +10,13 @@ class UpdatedAt implements UpdatePostCommandInterface {
 
   async run(postsFolder: string, postName: string): Promise<void> {
     const filePath = join(postsFolder, postName, 'index.mdx')
-    const file = Bun.file(filePath)
-    const fileContent = await file.text()
+    const fileContent = await readFile(filePath, 'utf-8')
 
     const { content, data } = matter(fileContent)
 
     data.updatedAt = new Date()
 
-    await Bun.write(filePath, matter.stringify(content, data))
+    await writeFile(filePath, matter.stringify(content, data), 'utf-8')
 
     console.log(`Updated ${postName}`)
   }

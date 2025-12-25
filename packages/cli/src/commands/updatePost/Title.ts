@@ -1,4 +1,4 @@
-import { rename } from 'node:fs/promises'
+import { readFile, rename, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 
 import { input } from '@inquirer/prompts'
@@ -20,14 +20,13 @@ class Title implements UpdatePostCommandInterface {
 
     const folderPath = join(postsFolder, postName)
     const filePath = join(folderPath, 'index.mdx')
-    const file = Bun.file(filePath)
-    const fileContent = await file.text()
+    const fileContent = await readFile(filePath, 'utf-8')
 
     const { content, data } = matter(fileContent)
 
     data.title = newTitle
 
-    await Bun.write(filePath, matter.stringify(content, data))
+    await writeFile(filePath, matter.stringify(content, data), 'utf-8')
 
     const createdAtDateString = getDateString(data.createdAt)
     const targetFolderName = `${createdAtDateString}-${slug(data.title)}`

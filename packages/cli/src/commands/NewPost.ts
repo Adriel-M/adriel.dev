@@ -1,4 +1,4 @@
-import { mkdir } from 'node:fs/promises'
+import { mkdir, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 
 import { input } from '@inquirer/prompts'
@@ -29,7 +29,7 @@ class NewPost implements CommandInterface {
 
     const mdxPath = join(targetFolder, 'index.mdx')
 
-    await Bun.write(mdxPath, matter.stringify('content body', frontMatter))
+    await writeFile(mdxPath, matter.stringify('content body', frontMatter), 'utf-8')
 
     console.log(`Created new post at ${targetFolder}`)
   }
