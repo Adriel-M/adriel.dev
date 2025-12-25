@@ -1,6 +1,6 @@
 @reference "tailwindcss";
 
-/* Variables */
+/* Varibles from https://github.com/algolia/docsearch/blob/main/packages/docsearch-css/src/_variables.css */
 
 :root {
   --docsearch-primary-color: var(--color-primary-500);
