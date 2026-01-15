@@ -42,7 +42,7 @@
     "compromise": "14.14.5",
     "fast-glob": "3.3.3",
     "fast-xml-parser": "5.3.3",
-    "feed": "5.1.0",
+    "feed": "5.2.0",
     "github-slugger": "2.0.0",
     "gray-matter": "4.0.3",
     "hast-util-from-html-isomorphic": "2.0.0",
