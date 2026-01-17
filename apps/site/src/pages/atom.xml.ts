@@ -13,8 +13,6 @@ const author = {
   email: 'contact@websiteDomain',
 }
 
-const XML_CONTENT_TO_REPLACE = '<?xml version="1.0" encoding="utf-8"?>'
-
 export async function GET() {
   const posts = await getPosts()
   const postAndSummaries = await Promise.all(
@@ -41,6 +39,7 @@ export async function GET() {
     },
     author: author,
     copyright: copyrightNotice,
+    stylesheet: '/static/feed/simple-atom.xslt',
   })
 
   for (const postAndSummary of postAndSummaries) {
@@ -60,16 +59,7 @@ export async function GET() {
     })
   }
 
-  const rssString = feed.atom1()
-
-  const styleInstruction = '<?xml-stylesheet href="/static/feed/simple-atom.xslt" type="text/xsl"?>'
-
-  const styled = rssString.replace(
-    XML_CONTENT_TO_REPLACE,
-    XML_CONTENT_TO_REPLACE + '\n' + styleInstruction
-  )
-
-  return new Response(styled, {
+  return new Response(feed.atom1(), {
     headers: {
       'Content-Type': 'application/xml',
     },
