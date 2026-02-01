@@ -66,7 +66,7 @@
     "sharp": "0.34.5",
     "tailwindcss": "4.1.18",
     "title-case": "4.3.2",
-    "unist-util-visit": "5.0.0",
+    "unist-util-visit": "5.1.0",
     "vite-plugin-svgr": "4.5.0",
     "vitest": "4.0.17"
   }
