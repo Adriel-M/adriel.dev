@@ -20,8 +20,8 @@
     "@docsearch/css": "4.5.3",
     "@fontsource/jetbrains-mono": "5.2.8",
     "photoswipe": "5.4.4",
-    "react": "19.2.3",
-    "react-dom": "19.2.3",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
     "react-obfuscate-email": "2.0.4"
   },
   "devDependencies": {
@@ -32,7 +32,7 @@
     "@playform/compress": "0.2.1",
     "@tailwindcss/typography": "0.5.19",
     "@tailwindcss/vite": "4.1.18",
-    "@types/react": "19.2.9",
+    "@types/react": "19.2.10",
     "@types/react-dom": "19.2.3",
     "@vercel/og": "0.8.6",
     "astro": "5.16.12",
