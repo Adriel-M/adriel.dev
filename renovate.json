@@ -15,6 +15,10 @@
       "matchPackageNames": ["/^@types//"]
     },
     {
+      "automerge": true,
+      "matchPackageNames": ["turbo", "pnpm"]
+    },
+    {
       "matchUpdateTypes": ["major", "minor", "patch"],
       "minimumReleaseAge": "3 days",
       "prCreation": "not-pending"
