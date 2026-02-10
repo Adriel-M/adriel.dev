@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "private": true,
-  "packageManager": "pnpm@10.28.2",
+  "packageManager": "pnpm@10.29.1",
   "scripts": {
     "prepare": "husky",
     "cli": "tsx packages/cli/src/index.ts apps/site/src/content/posts",
