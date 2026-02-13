@@ -3,7 +3,6 @@ const siteConfig = {
   author: 'Adriel Martinez',
   description: 'Thinking Emoji 🤔',
   language: 'en-us',
-  siteUrl: 'https://adriel.dev',
   github: 'https://github.com/Adriel-M',
   linkedin: 'https://www.linkedin.com/in/adrielmartinez/',
   locale: 'en-US',
