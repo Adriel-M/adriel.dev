@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "private": true,
-  "packageManager": "pnpm@10.28.2",
+  "packageManager": "pnpm@10.29.2",
   "scripts": {
     "prepare": "husky",
     "cli": "tsx packages/cli/src/index.ts apps/site/src/content/posts",
@@ -26,7 +26,7 @@
     "@adrieldev/cli": "workspace:*",
     "@adrieldev/eslint-configs": "workspace:*",
     "concurrently": "9.2.1",
-    "eslint": "9.39.2",
+    "eslint": "10.0.0",
     "globals": "17.3.0",
     "husky": "9.1.7",
     "lint-staged": "16.2.7",
@@ -34,7 +34,7 @@
     "prettier-plugin-astro": "0.14.1",
     "prettier-plugin-tailwindcss": "0.7.2",
     "tsx": "4.21.0",
-    "turbo": "2.8.1"
+    "turbo": "2.8.3"
   },
   "lint-staged": {
     "*.+(ts|tsx|css|mdx|js|mjs|astro)": [
