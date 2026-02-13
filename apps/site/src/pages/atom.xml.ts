@@ -29,13 +29,13 @@ export async function GET() {
   const feed = new Feed({
     title,
     description: siteConfig.description,
-    id: siteConfig.siteUrl,
-    link: siteConfig.siteUrl,
+    id: import.meta.env.SITE,
+    link: import.meta.env.SITE,
     language: siteConfig.locale,
-    favicon: `${siteConfig.siteUrl}/static/favicons/favicon.ico`,
+    favicon: `${import.meta.env.SITE}/static/favicons/favicon.ico`,
     updated: posts.length > 0 ? posts[0].data.createdAt : undefined,
     feedLinks: {
-      atom: `${siteConfig.siteUrl}${URLS.ATOM}`,
+      atom: `${import.meta.env.SITE}${URLS.ATOM}`,
     },
     author: author,
     copyright: copyrightNotice,
@@ -47,14 +47,14 @@ export async function GET() {
 
     feed.addItem({
       title: post.data.title,
-      id: `${siteConfig.siteUrl}/posts/${post.id}`,
-      link: `${siteConfig.siteUrl}/posts/${post.id}`,
+      id: `${import.meta.env.SITE}/posts/${post.id}`,
+      link: `${import.meta.env.SITE}/posts/${post.id}`,
       description: summary,
       date: post.data.createdAt,
       author: [author],
       category: post.data.tags.map((sluggedTag) => ({
         name: sluggedTag.tag,
-        domain: `${siteConfig.siteUrl}${generateTagsPath(sluggedTag)}`,
+        domain: `${import.meta.env.SITE}${generateTagsPath(sluggedTag)}`,
       })),
     })
   }
