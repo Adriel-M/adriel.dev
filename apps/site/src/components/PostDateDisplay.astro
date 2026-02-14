@@ -2,7 +2,6 @@
 import type { CollectionEntry } from 'astro:content'
 
 import { formatDate } from '../libs/DateUtils'
-import siteConfig from '../libs/siteConfig'
 
 interface Props {
   post: CollectionEntry<'posts'>
@@ -11,16 +10,14 @@ interface Props {
 const { post } = Astro.props
 
 const shouldDisplayUpdatedAt =
-  post.data.updatedAt &&
-  formatDate(post.data.createdAt, siteConfig.locale) !==
-    formatDate(post.data.updatedAt, siteConfig.locale)
+  post.data.updatedAt && formatDate(post.data.createdAt) !== formatDate(post.data.updatedAt)
 ---
 
 <dl class="flex items-center justify-center gap-2 text-base leading-6 font-medium text-gray-500">
   <dt class="sr-only">Published on</dt>
   <dd>
     <time datetime={post.data.createdAt.toISOString()}>
-      {formatDate(post.data.createdAt, siteConfig.locale)}
+      {formatDate(post.data.createdAt)}
     </time>
   </dd>
   {
@@ -30,7 +27,7 @@ const shouldDisplayUpdatedAt =
         <dd>
           <span
             class="cursor-help text-xs text-gray-400 italic"
-            title={`Updated on ${formatDate(post.data.updatedAt!, siteConfig.locale)}`}
+            title={`Updated on ${formatDate(post.data.updatedAt!)}`}
           >
             (updated)
           </span>

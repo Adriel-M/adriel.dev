@@ -2,13 +2,11 @@ const siteConfig = {
   title: 'Adriel Martinez',
   author: 'Adriel Martinez',
   description: 'Thinking Emoji 🤔',
-  language: 'en-us',
   github: 'https://github.com/Adriel-M',
   linkedin: 'https://www.linkedin.com/in/adrielmartinez/',
   locale: 'en-US',
   postSummaryLength: 40,
   search: {
-    provider: 'algolia',
     algoliaConfig: {
       // The application ID provided by Algolia
       appId: '2F6FRLRIAP',
@@ -19,7 +17,6 @@ const siteConfig = {
   },
   postsInFrontPageCount: 5,
   postsInPostsPageCount: 5,
-  bundledImagesFolderName: 'bundled-images',
 }
 
 export default siteConfig
