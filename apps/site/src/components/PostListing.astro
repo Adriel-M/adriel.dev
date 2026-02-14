@@ -6,7 +6,6 @@ import Pagination from '@/components/Pagination.astro'
 import Tag from '@/components/Tag.astro'
 import { generatePostPath, sortTagsByAlpha } from '@/libs/CollectionUtils'
 import { formatDate } from '@/libs/DateUtils'
-import siteConfig from '@/libs/siteConfig'
 
 interface Props {
   posts: CollectionEntry<'posts'>[]
@@ -31,7 +30,7 @@ const { posts, currentPage, totalPages, prev, next } = Astro.props
                 <dt class="sr-only">Published on</dt>
                 <dd class="text-base leading-6 font-medium text-gray-500">
                   <time datetime={createdAt.toISOString()}>
-                    {formatDate(createdAt, siteConfig.locale)}
+                    {formatDate(createdAt)}
                   </time>
                 </dd>
               </dl>
