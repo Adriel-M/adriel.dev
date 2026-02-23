@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "private": true,
-  "packageManager": "pnpm@10.29.2",
+  "packageManager": "pnpm@10.30.0",
   "scripts": {
     "prepare": "husky",
     "cli": "tsx packages/cli/src/index.ts apps/site/src/content/posts",
@@ -34,7 +34,7 @@
     "prettier-plugin-astro": "0.14.1",
     "prettier-plugin-tailwindcss": "0.7.2",
     "tsx": "4.21.0",
-    "turbo": "2.8.4"
+    "turbo": "2.8.10"
   },
   "lint-staged": {
     "*.+(ts|tsx|css|mdx|js|mjs|astro)": [
