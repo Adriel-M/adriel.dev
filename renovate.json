@@ -19,6 +19,10 @@
       "matchPackageNames": ["turbo", "pnpm"]
     },
     {
+      "matchPackageNames": ["@docsearch/*"],
+      "groupName": "@docsearch monorepo"
+    },
+    {
       "matchUpdateTypes": ["major", "minor", "patch"],
       "minimumReleaseAge": "3 days",
       "prCreation": "not-pending"
