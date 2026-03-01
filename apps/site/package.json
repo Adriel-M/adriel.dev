@@ -39,7 +39,7 @@
     "astro-robots-txt": "1.0.0",
     "astro-seo": "1.1.0",
     "astro-seo-schema": "5.2.0",
-    "compromise": "14.14.5",
+    "compromise": "14.15.0",
     "fast-glob": "3.3.3",
     "fast-xml-parser": "5.3.7",
     "feed": "5.2.0",
