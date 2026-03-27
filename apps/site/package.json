@@ -23,7 +23,7 @@
     "photoswipe": "5.4.4",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "react-obfuscate-email": "2.0.4"
+    "react-obfuscate-email": "2.0.5"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.6",
