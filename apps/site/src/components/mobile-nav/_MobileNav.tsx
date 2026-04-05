@@ -34,11 +34,7 @@ const MobileNav = () => {
           <nav className="fixed mt-8 h-full">
             {headerNavLinks.map((link) => (
               <div key={link.title} className="px-6 py-4">
-                <a
-                  href={link.href}
-                  className="text-2xl font-bold tracking-widest"
-                  onClick={onToggleNav}
-                >
+                <a href={link.href} className="text-2xl font-bold tracking-widest">
                   {link.title}
                 </a>
               </div>
