@@ -8,7 +8,6 @@ export const generateTagsPath = (tag: SluggedTag): string => {
 export const URLS = {
   HOME: '/',
   POSTS: '/posts',
-  PROJECTS: '/projects',
   ABOUT: '/about',
   ATOM: '/atom.xml',
 }
