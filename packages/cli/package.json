@@ -14,7 +14,7 @@
     "gray-matter": "4.0.3"
   },
   "peerDependencies": {
-    "typescript": "^5"
+    "typescript": "^5 || ^6.0.0"
   },
   "bin": {
     "cli": "src/index.ts"
