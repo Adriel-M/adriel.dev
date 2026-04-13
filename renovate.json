@@ -19,6 +19,23 @@
       "matchPackageNames": ["turbo", "pnpm"]
     },
     {
+      "automerge": true,
+      "matchPackageNames": ["vitest"]
+    },
+    {
+      "automerge": true,
+      "matchPackageNames": ["fast-xml-parser"]
+    },
+    {
+      "automerge": true,
+      "matchPackageNames": ["@playform/compress"]
+    },
+    {
+      "automerge": true,
+      "matchPackageNames": ["vite-plugin-svgr"]
+    },
+
+    {
       "matchPackageNames": ["@docsearch/*"],
       "groupName": "@docsearch monorepo"
     },
