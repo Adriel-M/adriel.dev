@@ -1,0 +1,107 @@
+FROM debian:bookworm-slim AS builder
+
+RUN apt-get update && apt-get install -y \
+    cpio \
+    curl \
+    gzip \
+    qemu-user-static \
+    && rm -rf /var/lib/apt/lists/*
+
+# Alpine 3.20.5 x86 — pinned so the passwd binary layout stays consistent with the exploit
+ARG ALPINE_MIRROR="https://dl-cdn.alpinelinux.org/alpine"
+ARG MINIROOTFS="alpine-minirootfs-3.20.5-x86.tar.gz"
+ARG MINIROOTFS_SHA256="a250d78b6facfd25edfb8faee7b340d29e62651364eb16651158f569672d9430"
+WORKDIR /build
+
+RUN mkdir -p rootfs \
+    && curl -sLo minirootfs.tar.gz "${ALPINE_MIRROR}/v3.20/releases/x86/${MINIROOTFS}" \
+    && echo "${MINIROOTFS_SHA256}  minirootfs.tar.gz" | sha256sum -c - \
+    && tar xzf minirootfs.tar.gz -C rootfs
+
+RUN cp /etc/resolv.conf rootfs/etc/resolv.conf \
+    && chroot rootfs /sbin/apk add --no-cache python3 shadow \
+    && rm rootfs/etc/resolv.conf \
+    && chroot rootfs /usr/sbin/adduser -D -h /home/demo demo \
+    && echo "demo:demo" | chroot rootfs /usr/sbin/chpasswd
+
+COPY copy_fail.py /build/copy_fail.py
+RUN cp /build/copy_fail.py rootfs/home/demo/copy_fail.py \
+    && chmod +x rootfs/home/demo/copy_fail.py \
+    && chroot rootfs /bin/chown demo:demo /home/demo/copy_fail.py
+
+RUN printf '#!/bin/sh\nmount -t proc proc /proc\nmount -t sysfs sys /sys\nmount -t devtmpfs devtmpfs /dev\nhostname copyfail\nexec /sbin/getty -L ttyS0 115200 vt100\n' > rootfs/init \
+    && chmod +x rootfs/init
+
+# lib-dynload: remove large modules we definitely don't need
+RUN find rootfs/usr/lib/python3.*/lib-dynload -name '*.so' \( \
+    -name 'unicodedata.*' -o \
+    -name '_testcapi.*'   -o \
+    -name '_testclinic.*' -o \
+    -name '_testbuffer.*' -o \
+    -name '_codecs_jp.*'  -o \
+    -name '_codecs_hk.*'  -o \
+    -name '_codecs_cn.*'  -o \
+    -name '_codecs_kr.*'  -o \
+    -name '_codecs_tw.*'  -o \
+    -name '_multibytecodec.*' -o \
+    -name '_decimal.*'    -o \
+    -name '_ssl.*'        -o \
+    -name '_ctypes.*'     -o \
+    -name '_pickle.*'     -o \
+    -name '_sqlite3.*'    -o \
+    -name '_curses.*'     -o \
+    -name '_elementtree.*' -o \
+    -name 'pyexpat.*'     -o \
+    -name '_asyncio.*'    -o \
+    -name '_hashlib.*'    -o \
+    -name '_sha2.*'       -o \
+    -name '_blake2.*'     -o \
+    -name '_lzma.*'       \
+    \) -delete
+
+# Python stdlib: strip everything not needed to run the exploit
+RUN rm -rf rootfs/usr/lib/python3.*/ensurepip \
+    && rm -rf rootfs/usr/lib/python3.*/idlelib \
+    && rm -rf rootfs/usr/lib/python3.*/tkinter \
+    && rm -rf rootfs/usr/lib/python3.*/turtledemo \
+    && rm -rf rootfs/usr/lib/python3.*/distutils \
+    && rm -rf rootfs/usr/lib/python3.*/lib2to3 \
+    && rm -rf rootfs/usr/lib/python3.*/test \
+    && rm -rf rootfs/usr/lib/python3.*/asyncio \
+    && rm -rf rootfs/usr/lib/python3.*/pydoc_data \
+    && rm -rf rootfs/usr/lib/python3.*/email \
+    && rm -rf rootfs/usr/lib/python3.*/xml \
+    && rm -rf rootfs/usr/lib/python3.*/xmlrpc \
+    && rm -rf rootfs/usr/lib/python3.*/html \
+    && rm -rf rootfs/usr/lib/python3.*/http \
+    && rm -rf rootfs/usr/lib/python3.*/urllib \
+    && rm -rf rootfs/usr/lib/python3.*/multiprocessing \
+    && rm -rf rootfs/usr/lib/python3.*/unittest \
+    && rm -rf rootfs/usr/lib/python3.*/logging \
+    && rm -rf rootfs/usr/lib/python3.*/json \
+    && rm -rf rootfs/usr/lib/python3.*/ctypes \
+    && rm -rf rootfs/usr/lib/python3.*/sqlite3 \
+    && rm -rf rootfs/usr/lib/python3.*/curses \
+    && rm -rf rootfs/usr/lib/python3.*/dbm \
+    && rm -rf rootfs/usr/lib/python3.*/zipfile \
+    && rm -rf rootfs/usr/lib/python3.*/config-3.*-linux-musl \
+    && rm -f  rootfs/usr/lib/python3.*/_pydecimal.py \
+    && rm -f  rootfs/usr/lib/python3.*/turtle.py \
+    && rm -f  rootfs/usr/lib/python3.*/tarfile.py \
+    && rm -f  rootfs/usr/lib/python3.*/pydoc.py \
+    && rm -f  rootfs/usr/lib/python3.*/calendar.py \
+    && rm -f  rootfs/usr/lib/python3.*/decimal.py \
+    && rm -f  rootfs/usr/lib/python3.*/difflib.py \
+    && rm -f  rootfs/usr/lib/python3.*/pickle.py \
+    && rm -f  rootfs/usr/lib/python3.*/trace.py \
+    && rm -f  rootfs/usr/lib/python3.*/profile.py \
+    && rm -f  rootfs/usr/lib/python3.*/cProfile.py \
+    && rm -f  rootfs/usr/lib/python3.*/pstats.py \
+    && rm -f  rootfs/usr/lib/python3.*/timeit.py \
+    && find rootfs/usr/lib/python3.* -name '__pycache__' -type d -exec rm -rf {} + 2>/dev/null; true \
+    && find rootfs/usr/lib/python3.* -name '*.pyc' -delete 2>/dev/null; true
+
+RUN ( cd rootfs && find . | cpio -o -H newc | gzip -9 ) > /build/initrd.img
+
+FROM scratch
+COPY --from=builder /build/initrd.img /initrd.img

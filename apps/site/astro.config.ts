@@ -7,16 +7,12 @@ import { defineConfig } from 'astro/config'
 import robotsTxt from 'astro-robots-txt'
 import XMLBuilder from 'fast-xml-builder'
 import { XMLParser } from 'fast-xml-parser'
-import type { Text } from 'hast'
 import { fromHtmlIsomorphic } from 'hast-util-from-html-isomorphic'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import { rehypeGithubAlerts } from 'rehype-github-alerts'
 import rehypePrettyCode from 'rehype-pretty-code'
 import rehypeSlug from 'rehype-slug'
 import remarkGemoji from 'remark-gemoji'
-import { titleCase } from 'title-case'
-import type { Node, Parent } from 'unist'
-import { visit } from 'unist-util-visit'
 import svgr from 'vite-plugin-svgr'
 
 import alertIcon from './src/assets/remix-icons/alert-line.svg?raw'
@@ -25,18 +21,12 @@ import hashTagIcon from './src/assets/remix-icons/hashtag.svg?raw'
 import informationIcon from './src/assets/remix-icons/information-line.svg?raw'
 import lightbulbIcon from './src/assets/remix-icons/lightbulb-line.svg?raw'
 import spamIcon from './src/assets/remix-icons/spam-line.svg?raw'
+import rehypeHideHeading from './src/plugins/rehype-hide-heading'
+import rehypeStripHiddenMarker from './src/plugins/rehype-strip-hidden-marker'
+import remarkIncludeCode from './src/plugins/remark-include-code'
+import remarkTitleCase from './src/plugins/remark-title-case'
 
-const remarkTitleCase = () => {
-  return (tree: Node) => {
-    visit(tree, 'heading', (node: Parent) => {
-      const textNode = node.children.find((n) => n.type === 'text') as Text | undefined
-
-      if (textNode) {
-        textNode.value = titleCase(textNode.value)
-      }
-    })
-  }
-}
+const githubAdmonitionSize = 22
 
 function addDimensionsToSvg(svgString: string, size: number): string {
   const parser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: '' })
@@ -51,8 +41,6 @@ function addDimensionsToSvg(svgString: string, size: number): string {
 
   return builder.build(obj)
 }
-
-const githubAdmonitionSize = 22
 
 const config = {
   alerts: [
@@ -108,8 +96,9 @@ export default defineConfig({
   markdown: {
     gfm: true,
     syntaxHighlight: false,
-    remarkPlugins: [remarkGemoji, remarkTitleCase],
+    remarkPlugins: [remarkIncludeCode, remarkGemoji, remarkTitleCase],
     rehypePlugins: [
+      rehypeStripHiddenMarker,
       rehypeSlug, // needed for rehypeAutolinkHeadings
       [
         rehypeAutolinkHeadings,
@@ -124,6 +113,7 @@ export default defineConfig({
           content: headerIcon,
         },
       ],
+      rehypeHideHeading,
       [
         rehypePrettyCode,
         {

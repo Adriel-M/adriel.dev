@@ -1,0 +1,110 @@
+---
+title: Copy Fail Demo
+createdAt: 2026-05-04T00:17:09.361Z
+tags:
+  - security
+  - linux
+  - tech
+---
+
+import biosUrl from './seabios.bin?url'
+import vgaBiosUrl from './vgabios.bin?url'
+import bzimageUrl from './bzImage.bin?url'
+import initrdUrl from './initrd.img?url'
+
+import V86Terminal from './V86Terminal.astro'
+
+# :hidden Demo
+
+<V86Terminal
+  biosUrl={biosUrl}
+  vgaBiosUrl={vgaBiosUrl}
+  bzimageUrl={bzimageUrl}
+  initrdUrl={initrdUrl}
+/>
+
+**Live Demo Above :arrow_up:. Mess around with it!**
+
+Steps:
+
+1. Start the demo
+2. Login: username: `demo`, password: `demo`
+3. (optional) Play around with the non-root user
+4. Run the exploit script `./copy_fail.py`
+5. Play around with the root user
+
+# Introduction
+
+Honestly, I don't have a security background nor have kernel experience so this post isn't going to be an analysis of the exploit.
+I did however wanted to create a demo since I've used linux for a very long time as a daily driver starting from 2013
+until 2022 where I fully switched to MacOS (on a macbook air + mac mini) when the m-series chips came out.
+
+You can read about the exploit [here](https://copy.fail/) and the actual write up [here](https://xint.io/blog/copy-fail-linux-distributions).
+
+# Demo Setup
+
+> [!CAUTION]
+> This is an active CVE and some distros may have not pushed out the patched kernels.
+> Do not execute this exploit on systems you do not own!
+> This is the purpose of this live demo so you can play around in a sandboxed environment!
+
+## Exploit
+
+This is the original poc. It's obfuscated and contains a compressed payload to meet their 732 bytes headline.
+
+```python file=original_copy_fail_poc.py showLineNumbers
+
+```
+
+I've asked Claude to un-obfuscated it and remove the zlib compressed payload.
+
+```python file=unobfuscated.py showLineNumbers
+
+```
+
+Another round of claude to have a working poc in the demo. It made these changes:
+
+1. Use a 32 bit payload (the v86 library can only handle 32 bit runtime)
+2. Using passwd (couldn't get it working with `su`)
+
+```python file=copy_fail.py showLineNumbers {97,99-105,107-114,116-130,137,147}
+
+```
+
+## WASM-Ed Linux
+
+The [v86](https://github.com/copy/v86) library was used to run an emulated i686 Linux directly in the browser with WASM.
+To ensure the demo worked, these versions were pinned:
+
+1. Alpine: 3.20.5
+2. Kernel: 6.6.136
+
+```
+Welcome to Alpine Linux 3.20
+Kernel 6.6.136 on an i686 (/dev/ttyS0)
+```
+
+The Dockerfile below builds the `bzImage.bin` and the `initrd.img`. It also strips out unncessary python libraries to
+keep the size small and be below the cloudflare size limit.[^CloudflareSizeLimit]
+
+```shell file=Dockerfile
+
+```
+
+```shell file=Dockerfile.rootfs
+
+```
+
+Both the `seabios.bin` and the `vgabios.bin` can be downloaded from [here](https://github.com/copy/v86/tree/master/bios).
+
+# Thoughts
+
+I've longed switched to MacOS as my daily driver but linux holds a special place in my heart. This wouldn't have affected me
+personally since this exploit since all the machines I've used linux on were single-tenent (myself) and would have already
+root access. I guess the concern here is running random scripts and installing software not on the official repos.
+
+I do find it cool that you're able to run an operating system on the browser wtih WASM and by extension, running non javascript
+code on the browser. One thing I want to explore in the future is comparing the performance between javascript and a WASM implementation.
+I want to see what workloads benefits from WASM and what point the extra overhead isn't worth running WASM for.
+
+[^CloudflareSizeLimit]: Max static asset size is 25MB documented [here](https://developers.cloudflare.com/workers/platform/limits/#account-plan-limits).
