@@ -93,6 +93,12 @@ article {
     transition: opacity 0.15s ease;
   }
 
+  .hidden-heading {
+    height: 0;
+    margin: 0;
+    overflow: hidden;
+  }
+
   /* github alerts*/
 
   --rehype-github-alerts-default-color: rgb(89, 99, 110);

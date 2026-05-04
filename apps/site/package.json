@@ -19,11 +19,14 @@
     "@adrieldev/esm-wrapper": "workspace:*",
     "@docsearch/css": "4.6.3",
     "@fontsource/jetbrains-mono": "5.2.8",
+    "@xterm/addon-fit": "^0.11.0",
+    "@xterm/xterm": "^5.5.0",
     "fast-xml-builder": "1.1.5",
     "photoswipe": "5.4.4",
     "react": "19.2.5",
     "react-dom": "19.2.5",
-    "react-obfuscate-email": "2.0.5"
+    "react-obfuscate-email": "2.0.5",
+    "v86": "^0.5.355"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.8",

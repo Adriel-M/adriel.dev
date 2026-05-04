@@ -70,6 +70,7 @@ describe('verify mdx content', async () => {
         })
 
         for (const heading of headings) {
+          if (heading.startsWith(':hidden')) continue
           expect(heading).toBe(titleCase(heading))
         }
       })
