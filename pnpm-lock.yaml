@@ -57,10 +57,10 @@ importers:
         specifier: 5.2.8
         version: 5.2.8
       '@xterm/addon-fit':
-        specifier: ^0.11.0
+        specifier: 0.11.0
         version: 0.11.0
       '@xterm/xterm':
-        specifier: ^5.5.0
+        specifier: 5.5.0
         version: 5.5.0
       fast-xml-builder:
         specifier: 1.1.5
@@ -78,7 +78,7 @@ importers:
         specifier: 2.0.5
         version: 2.0.5(react@19.2.5)
       v86:
-        specifier: ^0.5.355
+        specifier: 0.5.355
         version: 0.5.355
     devDependencies:
       '@astrojs/check':
