@@ -1,0 +1,31 @@
+---
+import type { TocEntry } from '@/components/floating-toc/types'
+
+interface Props {
+  entries: TocEntry[]
+  isNested?: boolean
+}
+
+const { entries, isNested = false } = Astro.props
+
+const borderCss = isNested ? 'pl-2 border-l-2 border-gray-200/25' : ''
+---
+
+{
+  entries.length > 0 && (
+    <ul class={borderCss}>
+      {entries.map((entry: TocEntry) => (
+        <li class="list-inside list-disc">
+          <a
+            class="no-underline hover:text-primary-400"
+            href={`#${entry.slug}`}
+            data-toc-slug={entry.slug}
+          >
+            {entry.text}
+          </a>
+          {entry.items.length > 0 && <Astro.self entries={entry.items} isNested={true} />}
+        </li>
+      ))}
+    </ul>
+  )
+}

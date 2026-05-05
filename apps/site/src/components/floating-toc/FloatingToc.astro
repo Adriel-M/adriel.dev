@@ -1,8 +1,8 @@
 ---
 import type { MarkdownHeading } from 'astro'
 
-import type { TocEntry } from '@/components/floating-toc/_FloatingToc'
-import FloatingTocReact from '@/components/floating-toc/_FloatingToc'
+import TocEntryList from '@/components/floating-toc/TocEntryList.astro'
+import type { TocEntry } from '@/components/floating-toc/types'
 
 interface Props {
   headings: MarkdownHeading[]
@@ -42,8 +42,55 @@ function generateTocEntries(headings: MarkdownHeading[]): TocEntry[] {
 
 const { headings } = Astro.props
 
-const slugs = headings.map((heading) => heading.slug)
 const entries = generateTocEntries(headings)
 ---
 
-<FloatingTocReact slugs={slugs} entries={entries} client:load />
+{
+  entries.length > 0 && (
+    <div class="sticky top-20 float-right hidden h-0 w-toc-xl px-8 text-xs lg:block xl:w-toc-4xl">
+      <div class="pb-2 text-sm">Table of Contents</div>
+      <TocEntryList entries={entries} />
+    </div>
+  )
+}
+
+<script>
+  const links = document.querySelectorAll<HTMLAnchorElement>('[data-toc-slug]')
+
+  if (links.length > 0) {
+    const headers = [...links].map((l) => document.getElementById(l.dataset.tocSlug!))
+    const firstSlug = links[0].dataset.tocSlug
+
+    const setActive = (slug: string | undefined) => {
+      for (const link of links) {
+        link.classList.toggle('text-primary-500', link.dataset.tocSlug === slug)
+      }
+    }
+
+    // Get the initial slug either from the hash (#id) or the firstSlug
+    const hash = window.location.hash.slice(1)
+    const initialSlug =
+      hash && [...links].find((link) => link.dataset.tocSlug === hash) ? hash : firstSlug
+
+    setActive(initialSlug)
+
+    let ticking = false
+
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (ticking) return
+        ticking = true
+        requestAnimationFrame(() => {
+          let active = ''
+          for (const header of headers) {
+            if (header && header.getBoundingClientRect().top <= 10) active = header.id
+          }
+          setActive(active || firstSlug)
+          ticking = false
+        })
+      },
+      { passive: true }
+    )
+  }
+</script>
