@@ -55,6 +55,8 @@ const entries = generateTocEntries(headings)
 }
 
 <script>
+  import { throttle } from '@/libs/FunctionUtils'
+
   const links = document.querySelectorAll<HTMLAnchorElement>('[data-toc-slug]')
 
   if (links.length > 0) {
@@ -74,22 +76,15 @@ const entries = generateTocEntries(headings)
 
     setActive(initialSlug)
 
-    let ticking = false
-
     window.addEventListener(
       'scroll',
-      () => {
-        if (ticking) return
-        ticking = true
-        requestAnimationFrame(() => {
-          let active = ''
-          for (const header of headers) {
-            if (header && header.getBoundingClientRect().top <= 10) active = header.id
-          }
-          setActive(active || firstSlug)
-          ticking = false
-        })
-      },
+      throttle(() => {
+        let active = ''
+        for (const header of headers) {
+          if (header && header.getBoundingClientRect().top <= 10) active = header.id
+        }
+        setActive(active || firstSlug)
+      }),
       { passive: true }
     )
   }
