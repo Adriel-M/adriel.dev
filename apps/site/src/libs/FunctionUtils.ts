@@ -4,12 +4,11 @@ export function throttle(callback: () => void): ThrottledFn {
   let ticking = false
 
   return function throttled() {
-    if (!ticking) {
-      ticking = true
-      requestAnimationFrame(() => {
-        callback()
-        ticking = false
-      })
-    }
+    if (ticking) return
+    ticking = true
+    requestAnimationFrame(() => {
+      callback()
+      ticking = false
+    })
   }
 }
