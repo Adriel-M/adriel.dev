@@ -3,8 +3,7 @@ import Link from '@/components/Link.astro'
 import type { SeoData } from '@/components/SEO.astro'
 import RootLayout from '@/layouts/RootLayout.astro'
 import { getTagCounts } from '@/libs/CollectionUtils'
-import type { SluggedTag } from '@/libs/SluggedTag'
-import { generateSluggedTag } from '@/libs/SluggedTag'
+import { generateSluggedTag, type SluggedTag } from '@/libs/SluggedTag'
 import { generateTagsPath, URLS } from '@/libs/UrlLibs'
 
 interface Props {
@@ -19,45 +18,31 @@ function compareTagsByCountThenAlpha(
   }
 }
 
-const tagCounts = await getTagCounts()
-
-const tagKeys = Object.keys(tagCounts)
-const sortedTags = tagKeys.sort(compareTagsByCountThenAlpha(tagCounts)).map(generateSluggedTag)
-
 const { currentTag } = Astro.props
+
+const tagCounts = await getTagCounts()
+const sortedTags = Object.keys(tagCounts)
+  .sort(compareTagsByCountThenAlpha(tagCounts))
+  .map(generateSluggedTag)
 
 const ON_CURRENT_PAGE = 'text-primary-500 hover:text-primary-400'
 const NOT_CURRENT_PAGE = 'hover:text-primary-400'
 
-let title: string
-let allPostsCss: string
-let description: string
-
-if (currentTag) {
-  allPostsCss = NOT_CURRENT_PAGE
-  title = currentTag.tag[0].toUpperCase() + currentTag.tag.split(' ').join('-').slice(1)
-  description = `All blog posts for ${Astro.site!.toString()} with the tag: ${currentTag.tag}`
-} else {
-  allPostsCss = ON_CURRENT_PAGE
-  title = 'All Posts'
-  description = `All blog posts for ${Astro.site!.toString()}`
-}
-
-let ogPathname
-
-if (currentTag) {
-  ogPathname = `tag/${currentTag.tag}/og.png`
-} else {
-  ogPathname = 'posts/og.png'
-}
-
-const ogUrl = new URL(ogPathname, Astro.url.origin)
+const siteUrl = Astro.site!.toString()
+const allPostsCss = currentTag ? NOT_CURRENT_PAGE : ON_CURRENT_PAGE
+const title = currentTag
+  ? currentTag.tag.charAt(0).toUpperCase() + currentTag.tag.slice(1)
+  : 'All Posts'
+const description = currentTag
+  ? `All blog posts for ${siteUrl} with the tag: ${currentTag.tag}`
+  : `All blog posts for ${siteUrl}`
+const ogPathname = currentTag ? `tag/${currentTag.tag}/og.png` : 'posts/og.png'
 
 const seoData: SeoData = {
   type: 'full',
   title,
-  description: description,
-  ogImage: ogUrl.toString(),
+  description,
+  ogImage: new URL(ogPathname, Astro.url.origin).toString(),
 }
 ---
 

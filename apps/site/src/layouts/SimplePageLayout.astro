@@ -13,19 +13,11 @@ interface Props {
 
 const { title, tagline } = Astro.props
 
-let ogUrl: string
-
-if (Astro.request.url.endsWith('/')) {
-  ogUrl = `${Astro.request.url}og.png`
-} else {
-  ogUrl = `${Astro.request.url}/og.png`
-}
-
 const seoData: SeoData = {
   type: 'full',
   title,
   description: siteConfig.description,
-  ogImage: ogUrl,
+  ogImage: `${Astro.url.toString().replace(/\/$/, '')}/og.png`,
 }
 ---
 
