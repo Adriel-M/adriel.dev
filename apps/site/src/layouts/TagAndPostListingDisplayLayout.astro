@@ -42,7 +42,7 @@ const seoData: SeoData = {
   type: 'full',
   title,
   description,
-  ogImage: new URL(ogPathname, Astro.url.origin).toString(),
+  ogImage: new URL(ogPathname, siteUrl).toString(),
 }
 ---
 
