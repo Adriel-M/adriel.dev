@@ -28,21 +28,20 @@ const sortedTags = Object.keys(tagCounts)
 const ON_CURRENT_PAGE = 'text-primary-500 hover:text-primary-400'
 const NOT_CURRENT_PAGE = 'hover:text-primary-400'
 
-const siteUrl = Astro.site!.toString()
 const allPostsCss = currentTag ? NOT_CURRENT_PAGE : ON_CURRENT_PAGE
 const title = currentTag
   ? currentTag.tag.charAt(0).toUpperCase() + currentTag.tag.slice(1)
   : 'All Posts'
 const description = currentTag
-  ? `All blog posts for ${siteUrl} with the tag: ${currentTag.tag}`
-  : `All blog posts for ${siteUrl}`
+  ? `All blog posts for ${Astro.url.origin} with the tag: ${currentTag.tag}`
+  : `All blog posts for ${Astro.url.origin}`
 const ogPathname = currentTag ? `tag/${currentTag.tag}/og.png` : 'posts/og.png'
 
 const seoData: SeoData = {
   type: 'full',
   title,
   description,
-  ogImage: new URL(ogPathname, siteUrl).toString(),
+  ogImage: new URL(ogPathname, Astro.url.origin).toString(),
 }
 ---
 
