@@ -4,11 +4,10 @@ import '@/css/article-content.css'
 import type { CollectionEntry } from 'astro:content'
 
 import PageTitle from '@/components/PageTitle.astro'
+import PostDateDisplay from '@/components/PostDateDisplay.astro'
+import PostTagList from '@/components/PostTagList.astro'
 import type { SeoData } from '@/components/SEO.astro'
 import RootLayout from '@/layouts/RootLayout.astro'
-
-import PostDateDisplay from '../components/PostDateDisplay.astro'
-import PostTagList from '../components/PostTagList.astro'
 
 interface Props {
   post: CollectionEntry<'posts'>
@@ -21,7 +20,7 @@ const seoData: SeoData = {
   type: 'post',
   title: post.data.title,
   description: summary,
-  ogImage: `${Astro.url.toString()}/og.png`,
+  ogImage: `${Astro.request.url}/og.png`,
   article: {
     publishedTime: post.data.createdAt.toISOString(),
     modifiedTime: post.data.updatedAt?.toISOString(),

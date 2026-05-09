@@ -14,7 +14,7 @@ const { currentPage, totalPages, prev, next } = Astro.props
   <nav class="flex justify-between">
     {
       !prev && (
-        <button class="cursor-auto disabled:opacity-50" disabled={!prev}>
+        <button class="cursor-auto disabled:opacity-50" disabled>
           Previous
         </button>
       )
@@ -31,7 +31,7 @@ const { currentPage, totalPages, prev, next } = Astro.props
     </span>
     {
       !next && (
-        <button class="cursor-auto disabled:opacity-50" disabled={!next}>
+        <button class="cursor-auto disabled:opacity-50" disabled>
           Next
         </button>
       )

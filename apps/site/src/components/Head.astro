@@ -28,7 +28,7 @@ import { URLS } from '@/libs/UrlLibs.ts'
     rel="alternate"
     type="application/atom+xml"
     title={siteConfig.title}
-    href={new URL(URLS.ATOM, Astro.site)}
+    href={new URL(URLS.ATOM, Astro.request.url)}
   />
   <slot />
 </head>
