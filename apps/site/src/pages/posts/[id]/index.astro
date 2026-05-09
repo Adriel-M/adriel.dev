@@ -34,7 +34,7 @@ const pageSummary = await generateSummary(post.body!)
       datePublished: post.data.createdAt.toISOString(),
       dateModified: post.data.updatedAt?.toISOString(),
       description: pageSummary,
-      url: Astro.url.toString(),
+      url: Astro.request.url,
       author: {
         '@type': 'Person',
         name: siteConfig.author,

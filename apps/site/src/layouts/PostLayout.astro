@@ -20,7 +20,7 @@ const seoData: SeoData = {
   type: 'post',
   title: post.data.title,
   description: summary,
-  ogImage: `${Astro.url.toString()}/og.png`,
+  ogImage: `${Astro.request.url}/og.png`,
   article: {
     publishedTime: post.data.createdAt.toISOString(),
     modifiedTime: post.data.updatedAt?.toISOString(),
