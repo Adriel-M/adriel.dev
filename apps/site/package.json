@@ -23,8 +23,8 @@
     "@xterm/xterm": "6.0.0",
     "fast-xml-builder": "1.1.9",
     "photoswipe": "5.4.4",
-    "react": "19.2.5",
-    "react-dom": "19.2.5",
+    "react": "19.2.6",
+    "react-dom": "19.2.6",
     "react-obfuscate-email": "2.0.5",
     "v86": "0.5.357"
   },
