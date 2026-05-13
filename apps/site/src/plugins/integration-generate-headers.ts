@@ -11,7 +11,7 @@ async function getLatestPostDate(postsDir: string): Promise<Date> {
     if (!entry.isDirectory()) continue
     const src = await readFile(join(postsDir, entry.name, 'index.mdx'), 'utf-8')
     const { data } = matter(src)
-    const date: Date = data.updatedAt ?? data.createdAt
+    const date: Date = data.createdAt
     if (date > latest) latest = date
   }
   return latest
@@ -31,7 +31,7 @@ export default function generateHeaders(): AstroIntegration {
       'astro:build:done': async ({ dir }) => {
         const postsDir = new URL('../content/posts', import.meta.url).pathname
         const latest = await getLatestPostDate(postsDir)
-        if (latest.getMilliseconds() > 0) latest.setSeconds(latest.getSeconds() + 1, 0)
+        latest.setMilliseconds(0)
         const lastModified = latest.toUTCString()
 
         const rules = new Map<string, string[]>([

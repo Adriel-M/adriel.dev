@@ -6,6 +6,8 @@ import generateSummary from '@/libs/generate-summary'
 import siteConfig from '@/libs/siteConfig'
 import { URLS } from '@/libs/UrlLibs.ts'
 
+const truncateToSeconds = (date: Date): Date => new Date(Math.floor(date.getTime() / 1000) * 1000)
+
 const copyrightNotice =
   'Copyright Adriel Martinez. Some rights reserved. Licensed under CC BY 4.0: http://creativecommons.org/licenses/by/4.0/'
 
@@ -34,7 +36,7 @@ export async function GET({ request }: { request: Request }) {
     id: siteUrl,
     link: siteUrl,
     language: siteConfig.locale,
-    updated: posts.length > 0 ? posts[0].data.createdAt : undefined,
+    updated: posts.length > 0 ? truncateToSeconds(posts[0].data.createdAt) : undefined,
     feedLinks: {
       atom: `${siteUrl}${URLS.ATOM}`,
     },
@@ -50,7 +52,7 @@ export async function GET({ request }: { request: Request }) {
       id: `${siteUrl}/posts/${post.id}`,
       link: `${siteUrl}/posts/${post.id}`,
       description: summary,
-      date: post.data.createdAt,
+      date: truncateToSeconds(post.data.createdAt),
       author: [author],
     })
   }
