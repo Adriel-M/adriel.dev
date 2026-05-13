@@ -1,4 +1,7 @@
-import siteConfig from '@/libs/siteConfig'
+import siteConfig from './siteConfig'
+
+export const truncateToSeconds = (date: Date): Date =>
+  new Date(Math.floor(date.getTime() / 1000) * 1000)
 
 const localeDateStringOptions: Intl.DateTimeFormatOptions = {
   year: 'numeric',

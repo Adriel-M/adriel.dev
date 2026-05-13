@@ -2,11 +2,10 @@ import { Feed } from 'feed'
 
 import atomStyleUrl from '@/assets/feed/atom-style.js?url'
 import { getPosts } from '@/libs/CollectionUtils'
+import { truncateToSeconds } from '@/libs/DateUtils'
 import generateSummary from '@/libs/generate-summary'
 import siteConfig from '@/libs/siteConfig'
 import { URLS } from '@/libs/UrlLibs.ts'
-
-const truncateToSeconds = (date: Date): Date => new Date(Math.floor(date.getTime() / 1000) * 1000)
 
 const copyrightNotice =
   'Copyright Adriel Martinez. Some rights reserved. Licensed under CC BY 4.0: http://creativecommons.org/licenses/by/4.0/'
@@ -29,6 +28,14 @@ export async function GET({ request }: { request: Request }) {
     })
   )
 
+  const latestUpdate =
+    posts.length > 0
+      ? posts.reduce<Date>((max, post) => {
+          const date = post.data.updatedAt ?? post.data.createdAt
+          return date > max ? date : max
+        }, new Date(0))
+      : undefined
+
   const title = siteConfig.title
   const feed = new Feed({
     title,
@@ -36,7 +43,7 @@ export async function GET({ request }: { request: Request }) {
     id: siteUrl,
     link: siteUrl,
     language: siteConfig.locale,
-    updated: posts.length > 0 ? truncateToSeconds(posts[0].data.createdAt) : undefined,
+    updated: latestUpdate ? truncateToSeconds(latestUpdate) : undefined,
     feedLinks: {
       atom: `${siteUrl}${URLS.ATOM}`,
     },
@@ -52,7 +59,8 @@ export async function GET({ request }: { request: Request }) {
       id: `${siteUrl}/posts/${post.id}`,
       link: `${siteUrl}/posts/${post.id}`,
       description: summary,
-      date: truncateToSeconds(post.data.createdAt),
+      date: truncateToSeconds(post.data.updatedAt ?? post.data.createdAt),
+      published: truncateToSeconds(post.data.createdAt),
       author: [author],
     })
   }
