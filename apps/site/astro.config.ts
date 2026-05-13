@@ -78,7 +78,6 @@ const headerIcon = fromHtmlIsomorphic(
 )
 
 const postsPagePattern = /^\/posts\/page\/\d+$/
-const tagsPagePattern = /^\/tags\/[^/]+\/page\/\d+$/
 
 export default defineConfig({
   site: 'https://adriel.dev',
@@ -140,7 +139,7 @@ export default defineConfig({
       filter: (page) => {
         const url = new URL(page)
         const pathName = url.pathname
-        return !postsPagePattern.test(pathName) && !tagsPagePattern.test(pathName)
+        return !postsPagePattern.test(pathName)
       },
     }),
     robotsTxt(),

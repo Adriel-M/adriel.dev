@@ -1,6 +1,6 @@
 ---
 import PostListing from '@/components/PostListing.astro'
-import TagAndPostListingDisplayLayout from '@/layouts/TagAndPostListingDisplayLayout.astro'
+import PostListingLayout from '@/layouts/PostListingLayout.astro'
 import { getPosts } from '@/libs/CollectionUtils'
 import siteConfig from '@/libs/siteConfig'
 
@@ -9,11 +9,11 @@ const firstPagePosts = posts.slice(0, siteConfig.postsInPostsPageCount)
 const numberOfPages = Math.ceil(posts.length / siteConfig.postsInPostsPageCount)
 ---
 
-<TagAndPostListingDisplayLayout>
+<PostListingLayout>
   <PostListing
     posts={firstPagePosts}
     currentPage={1}
     totalPages={numberOfPages}
     next="/posts/page/2"
   />
-</TagAndPostListingDisplayLayout>
+</PostListingLayout>

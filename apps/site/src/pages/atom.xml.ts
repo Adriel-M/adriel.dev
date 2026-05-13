@@ -3,7 +3,7 @@ import { Feed } from 'feed'
 import { getPosts } from '@/libs/CollectionUtils'
 import generateSummary from '@/libs/generate-summary'
 import siteConfig from '@/libs/siteConfig'
-import { generateTagsPath, URLS } from '@/libs/UrlLibs.ts'
+import { URLS } from '@/libs/UrlLibs.ts'
 
 const copyrightNotice =
   'Copyright Adriel Martinez. Some rights reserved. Licensed under CC BY 4.0: http://creativecommons.org/licenses/by/4.0/'
@@ -52,10 +52,6 @@ export async function GET() {
       description: summary,
       date: post.data.createdAt,
       author: [author],
-      category: post.data.tags.map((sluggedTag) => ({
-        name: sluggedTag.tag,
-        domain: `${import.meta.env.SITE}${generateTagsPath(sluggedTag)}`,
-      })),
     })
   }
 

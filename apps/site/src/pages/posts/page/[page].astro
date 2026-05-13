@@ -2,7 +2,7 @@
 import type { PaginateFunction } from 'astro'
 
 import PostListing from '@/components/PostListing.astro'
-import TagAndPostListingDisplayLayout from '@/layouts/TagAndPostListingDisplayLayout.astro'
+import PostListingLayout from '@/layouts/PostListingLayout.astro'
 import { getPosts } from '@/libs/CollectionUtils'
 import siteConfig from '@/libs/siteConfig'
 
@@ -14,7 +14,7 @@ export async function getStaticPaths(context: { paginate: PaginateFunction }) {
 const { page } = Astro.props
 ---
 
-<TagAndPostListingDisplayLayout>
+<PostListingLayout>
   <PostListing
     posts={page.data}
     currentPage={page.currentPage}
@@ -22,4 +22,4 @@ const { page } = Astro.props
     prev={page.url.prev}
     next={page.url.next}
   />
-</TagAndPostListingDisplayLayout>
+</PostListingLayout>
