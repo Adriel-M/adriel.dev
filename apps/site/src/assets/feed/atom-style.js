@@ -26,7 +26,7 @@ const fallbackLogoUrl = document.currentScript?.dataset.fallbackLogo ?? ''
 
 function safeUrl(url) {
   try {
-    const { protocol } = new URL(url)
+    const { protocol } = new URL(url, window.location.origin)
     return protocol === 'https:' || protocol === 'http:' || protocol === 'data:' ? url : ''
   } catch {
     return ''
@@ -140,7 +140,7 @@ document.onreadystatechange = async function () {
 
     for (const item of items) {
       const itemTitle = item.querySelector('title')?.textContent || '(untitled)'
-      const itemLink = item.querySelector('link').textContent
+      const itemLink = item.querySelector('link')?.getAttribute('href') ?? ''
       const itemPubDate =
         item.querySelector('published')?.textContent ||
         item.querySelector('updated')?.textContent ||
@@ -158,11 +158,8 @@ document.onreadystatechange = async function () {
       summary.appendChild(document.createTextNode(` - ${itemPubDate}`))
       details.appendChild(summary)
       if (itemDesc) {
-        const parsed = new DOMParser().parseFromString(itemDesc, 'text/html')
         const descContainer = document.createElementNS(NS, 'div')
-        for (const node of Array.from(parsed.body.childNodes)) {
-          descContainer.appendChild(document.importNode(node, true))
-        }
+        descContainer.textContent = itemDesc
         details.appendChild(descContainer)
       }
 
