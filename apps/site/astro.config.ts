@@ -21,6 +21,7 @@ import hashTagIcon from './src/assets/remix-icons/hashtag.svg?raw'
 import informationIcon from './src/assets/remix-icons/information-line.svg?raw'
 import lightbulbIcon from './src/assets/remix-icons/lightbulb-line.svg?raw'
 import spamIcon from './src/assets/remix-icons/spam-line.svg?raw'
+import generateHeaders from './src/plugins/integration-generate-headers'
 import rehypeHideHeading from './src/plugins/rehype-hide-heading'
 import rehypeStripHiddenMarker from './src/plugins/rehype-strip-hidden-marker'
 import remarkIncludeCode from './src/plugins/remark-include-code'
@@ -131,6 +132,7 @@ export default defineConfig({
   },
 
   integrations: [
+    generateHeaders(),
     react(),
     mdx(),
     sitemap(),
