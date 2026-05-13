@@ -39,7 +39,6 @@ CI (`.github/workflows/ci.yml`) pins a specific Node version and runs `lint`, `f
 Posts live at `apps/site/src/content/posts/<YYYY-MM-DD>-<slug>/index.mdx`. The collection is declared in `apps/site/src/content/definitions/posts.ts` (loaded via `content.config.ts`) with Zod schema:
 
 - `title` (string)
-- `tags` (`string[]`, duplicates rejected, each transformed through `generateSluggedTag` → `{ tag: slug(tag) }`)
 - `createdAt` (date, required)
 - `updatedAt` (date, optional)
 
@@ -66,11 +65,10 @@ If you add a post with "a API" or "the the", the test will fail — fix the pros
 - ESLint enforces `path-alias/no-relative` — always import site code as `@/libs/...`, `@/components/...`, etc., never relative paths that cross directories. The one exception is files already inside the same subdirectory.
 - `simple-import-sort` is enabled; let `pnpm lint:fix` order imports rather than doing it by hand.
 - Shared helpers to reach for before writing new ones:
-  - `@/libs/CollectionUtils` — `getPosts`, `getPostsByTag`, `generatePostPath`, `getTagCounts`, `sortTagsByAlpha`. Sort order is newest-first by `createdAt`.
-  - `@/libs/SluggedTag` — the `SluggedTag` type and `generateSluggedTag` (github-slugger). Tag routing and `getPostsByTag` compare on the slugged form.
-  - `@/libs/siteConfig` — author, Algolia DocSearch creds, pagination counts (`postsInFrontPageCount`, `postsInPostsPageCount`).
+  - `@/libs/CollectionUtils` — `getPosts`, `generatePostPath`. Sort order is newest-first by `createdAt`.
+  - `@/libs/siteConfig` — author, Algolia DocSearch creds, locale, post summary length.
   - `@/libs/generate-summary`, `@/libs/ComponentOverrides` — used by the `PostLayout`.
-- Pages follow Astro file-based routing: `apps/site/src/pages/posts/[id]/index.astro` uses `getStaticPaths` over `getCollection('posts')`, `posts/page/[page].astro` paginates, `tags/[tag]/...` mirrors that for tag archives. Sitemap config excludes paginated routes (`/posts/page/\d+`, `/tags/*/page/\d+`) via the `filter` callback — add any new paginated paths to that filter too.
+- Pages follow Astro file-based routing: `apps/site/src/pages/posts/[id]/index.astro` uses `getStaticPaths` over `getCollection('posts')`.
 - OG images are generated at request time by `@vercel/og` through `og.png.ts` endpoints (`/og.png`, `/posts/[id]/og.png`).
 
 ## Things that bite
