@@ -2,61 +2,52 @@
 import Link from '@/components/Link.astro'
 import SimplePageLayout from '@/layouts/SimplePageLayout.astro'
 import { generatePostPath, getPosts } from '@/libs/CollectionUtils'
-import { formatDate } from '@/libs/DateUtils'
-import siteConfig from '@/libs/siteConfig'
-import { URLS } from '@/libs/UrlLibs'
+import { formatShortDate } from '@/libs/DateUtils'
 
 const posts = await getPosts()
+
+const postsByYear = posts.reduce<Record<number, typeof posts>>((acc, post) => {
+  const year = post.data.createdAt.getFullYear()
+  if (!acc[year]) acc[year] = []
+  acc[year].push(post)
+  return acc
+}, {})
+
+const years = Object.keys(postsByYear)
+  .map(Number)
+  .sort((a, b) => b - a)
 
 export const title = 'Thinking Emoji 🤔'
 ---
 
-<SimplePageLayout title={title} tagline="Latest posts">
-  <div>
-    <ul>
-      {
-        posts.slice(0, siteConfig.postsInFrontPageCount).map((post) => {
-          return (
-            <li class="py-4">
-              <article>
-                <div class="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
-                  <dl>
-                    <dt class="sr-only">Published on</dt>
-                    <dd class="text-base leading-6 font-medium text-gray-500">
-                      <time datetime={post.data.createdAt.toISOString()}>
-                        {formatDate(post.data.createdAt)}
-                      </time>
-                    </dd>
-                  </dl>
-                  <div class="space-y-5 xl:col-span-3">
-                    <div class="space-y-6">
-                      <div>
-                        <h2 class="text-xl leading-8 font-bold tracking-tight">
-                          <Link
-                            href={generatePostPath(post)}
-                            class="text-gray-900 hover:text-primary-400"
-                          >
-                            {post.data.title}
-                          </Link>
-                        </h2>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </article>
-            </li>
-          )
-        })
-      }
-    </ul>
+<SimplePageLayout title={title} tagline="All posts">
+  <div class="divide-y divide-gray-100">
     {
-      posts.length > siteConfig.postsInFrontPageCount && (
-        <div class="flex justify-end text-base leading-6 font-medium">
-          <Link href={URLS.POSTS} class="hover:text-primary-400" aria-label="All posts">
-            All Posts &rarr;
-          </Link>
-        </div>
-      )
+      years.map((year) => (
+        <section class="py-6">
+          <h2 class="mb-3 text-sm font-semibold tracking-widest text-gray-400 uppercase">
+            {year}
+          </h2>
+          <ul class="space-y-1">
+            {postsByYear[year].map((post) => (
+              <li class="flex items-baseline justify-between gap-4">
+                <Link
+                  href={generatePostPath(post)}
+                  class="text-gray-900 hover:text-primary-400 truncate"
+                >
+                  {post.data.title}
+                </Link>
+                <time
+                  datetime={post.data.createdAt.toISOString()}
+                  class="shrink-0 text-sm text-gray-400 tabular-nums"
+                >
+                  {formatShortDate(post.data.createdAt)}
+                </time>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
     }
   </div>
 </SimplePageLayout>
