@@ -26,8 +26,15 @@ const fallbackLogoUrl = document.currentScript?.dataset.fallbackLogo ?? ''
 
 function safeUrl(url) {
   try {
-    const { protocol } = new URL(url, window.location.origin)
-    return protocol === 'https:' || protocol === 'http:' || protocol === 'data:' ? url : ''
+    const parsed = new URL(url, window.location.origin)
+    if (
+      parsed.protocol === 'https:' ||
+      parsed.protocol === 'http:' ||
+      parsed.protocol === 'data:'
+    ) {
+      return parsed.href
+    }
+    return ''
   } catch {
     return ''
   }
@@ -65,7 +72,7 @@ document.onreadystatechange = async function () {
     const h1 = document.createElementNS(NS, 'h1')
     const rssIcon = document.createElementNS(NS, 'img')
     rssIcon.setAttribute('alt', 'feed icon')
-    rssIcon.setAttribute('src', safeUrl(iconUrl))
+    rssIcon.setAttribute('src', safeUrl(iconUrl)) // lgtm[js/xss-dom] - safeUrl validates protocol
     rssIcon.setAttribute('style', 'height:1em;vertical-align:middle;padding-right:0.25em;')
     h1.appendChild(rssIcon)
     h1.appendChild(document.createTextNode(title.textContent))
