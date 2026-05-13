@@ -30,7 +30,9 @@ export default function generateHeaders(): AstroIntegration {
     hooks: {
       'astro:build:done': async ({ dir }) => {
         const postsDir = new URL('../content/posts', import.meta.url).pathname
-        const lastModified = (await getLatestPostDate(postsDir)).toUTCString()
+        const latest = await getLatestPostDate(postsDir)
+        if (latest.getMilliseconds() > 0) latest.setSeconds(latest.getSeconds() + 1, 0)
+        const lastModified = latest.toUTCString()
 
         const rules = new Map<string, string[]>([
           [
