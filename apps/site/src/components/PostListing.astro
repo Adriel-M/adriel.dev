@@ -3,8 +3,7 @@ import type { CollectionEntry } from 'astro:content'
 
 import Link from '@/components/Link.astro'
 import Pagination from '@/components/Pagination.astro'
-import Tag from '@/components/Tag.astro'
-import { generatePostPath, sortTagsByAlpha } from '@/libs/CollectionUtils'
+import { generatePostPath } from '@/libs/CollectionUtils'
 import { formatDate } from '@/libs/DateUtils'
 
 interface Props {
@@ -22,7 +21,7 @@ const { posts, currentPage, totalPages, prev, next } = Astro.props
   <ul>
     {
       posts.map((post) => {
-        const { createdAt, title, tags } = post.data
+        const { createdAt, title } = post.data
         return (
           <li class="py-5">
             <article class="flex flex-col space-y-2 xl:space-y-0">
@@ -42,11 +41,6 @@ const { posts, currentPage, totalPages, prev, next } = Astro.props
                       {title}
                     </Link>
                   </h2>
-                  <div class="flex flex-wrap">
-                    {sortTagsByAlpha(tags).map((sluggedTag) => (
-                      <Tag sluggedTag={sluggedTag} />
-                    ))}
-                  </div>
                 </div>
               </div>
             </article>

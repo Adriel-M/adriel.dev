@@ -5,7 +5,6 @@ import type { CollectionEntry } from 'astro:content'
 
 import PageTitle from '@/components/PageTitle.astro'
 import PostDateDisplay from '@/components/PostDateDisplay.astro'
-import PostTagList from '@/components/PostTagList.astro'
 import type { SeoData } from '@/components/SEO.astro'
 import RootLayout from '@/layouts/RootLayout.astro'
 
@@ -24,7 +23,6 @@ const seoData: SeoData = {
   article: {
     publishedTime: post.data.createdAt.toISOString(),
     modifiedTime: post.data.updatedAt?.toISOString(),
-    tags: post.data.tags?.map((sluggedTag) => sluggedTag.tag),
   },
 }
 ---
@@ -37,7 +35,6 @@ const seoData: SeoData = {
     <div>
       <header>
         <div class="space-y-1 border-b border-gray-200 pb-10 text-center">
-          <PostTagList tags={post.data.tags} />
           <PageTitle title={post.data.title} />
           <PostDateDisplay post={post} />
         </div>
