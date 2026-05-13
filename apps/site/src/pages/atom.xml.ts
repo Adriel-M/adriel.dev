@@ -1,5 +1,6 @@
 import { Feed } from 'feed'
 
+import atomStyleUrl from '@/assets/feed/atom-style.js?url'
 import { getPosts } from '@/libs/CollectionUtils'
 import generateSummary from '@/libs/generate-summary'
 import siteConfig from '@/libs/siteConfig'
@@ -13,7 +14,8 @@ const author = {
   email: 'contact@websiteDomain',
 }
 
-export async function GET() {
+export async function GET({ request }: { request: Request }) {
+  const siteUrl = new URL(request.url).origin
   const posts = await getPosts()
   const postAndSummaries = await Promise.all(
     posts.map(async (post) => {
@@ -29,17 +31,15 @@ export async function GET() {
   const feed = new Feed({
     title,
     description: siteConfig.description,
-    id: import.meta.env.SITE,
-    link: import.meta.env.SITE,
+    id: siteUrl,
+    link: siteUrl,
     language: siteConfig.locale,
-    favicon: `${import.meta.env.SITE}/static/favicons/favicon.ico`,
     updated: posts.length > 0 ? posts[0].data.createdAt : undefined,
     feedLinks: {
-      atom: `${import.meta.env.SITE}${URLS.ATOM}`,
+      atom: `${siteUrl}${URLS.ATOM}`,
     },
     author: author,
     copyright: copyrightNotice,
-    stylesheet: '/static/feed/simple-atom.xslt',
   })
 
   for (const postAndSummary of postAndSummaries) {
@@ -47,15 +47,22 @@ export async function GET() {
 
     feed.addItem({
       title: post.data.title,
-      id: `${import.meta.env.SITE}/posts/${post.id}`,
-      link: `${import.meta.env.SITE}/posts/${post.id}`,
+      id: `${siteUrl}/posts/${post.id}`,
+      link: `${siteUrl}/posts/${post.id}`,
       description: summary,
       date: post.data.createdAt,
       author: [author],
     })
   }
 
-  return new Response(feed.atom1(), {
+  const xml = feed
+    .atom1()
+    .replace(
+      /(<feed[^>]*>)/,
+      `$1\n<script src="${atomStyleUrl}" data-fallback-logo="/static/feed/RssStyleFavicon.svg" xmlns="http://www.w3.org/1999/xhtml"></script>`
+    )
+
+  return new Response(xml, {
     headers: {
       'Content-Type': 'application/xml',
     },
