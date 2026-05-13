@@ -21,19 +21,17 @@ export const title = 'Thinking Emoji 🤔'
 ---
 
 <SimplePageLayout title={title} tagline="All posts">
-  <div class="divide-y divide-gray-100">
+  <div class="space-y-8 pt-6">
     {
       years.map((year) => (
-        <section class="py-6">
-          <h2 class="mb-3 text-sm font-semibold tracking-widest text-gray-400 uppercase">
-            {year}
-          </h2>
-          <ul class="space-y-1">
+        <section>
+          <h2 class="mb-3 text-sm font-semibold tracking-widest text-gray-400 uppercase">{year}</h2>
+          <ul class="divide-y divide-gray-100">
             {postsByYear[year].map((post) => (
-              <li class="flex items-baseline justify-between gap-4">
+              <li class="flex items-center justify-between gap-4 py-2">
                 <Link
                   href={generatePostPath(post)}
-                  class="text-gray-900 hover:text-primary-400 truncate"
+                  class="text-gray-900 hover:text-primary-400"
                 >
                   {post.data.title}
                 </Link>
