@@ -12,11 +12,11 @@
   },
   "devDependencies": {
     "@docsearch/react": "4.6.3",
-    "@types/react": "19.2.14",
-    "@types/react-dom": "19.2.3",
     "pkgroll": "2.27.0"
   },
   "peerDependencies": {
+    "@types/react": ">=18",
+    "@types/react-dom": ">=18",
     "react": ">=18",
     "react-dom": ">=18",
     "typescript": "^5 || ^6.0.0"
