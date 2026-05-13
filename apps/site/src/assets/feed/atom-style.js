@@ -24,6 +24,15 @@
 /* this is a script to make RSS feeds human-readable in browsers.  See https://www.rss.style/ for details. */
 const fallbackLogoUrl = document.currentScript?.dataset.fallbackLogo ?? ''
 
+function safeUrl(url) {
+  try {
+    const { protocol } = new URL(url)
+    return protocol === 'https:' || protocol === 'http:' || protocol === 'data:' ? url : ''
+  } catch {
+    return ''
+  }
+}
+
 document.onreadystatechange = async function () {
   if (document.readyState === 'complete') {
     const selfLink =
@@ -56,7 +65,7 @@ document.onreadystatechange = async function () {
     const h1 = document.createElementNS(NS, 'h1')
     const rssIcon = document.createElementNS(NS, 'img')
     rssIcon.setAttribute('alt', 'feed icon')
-    rssIcon.setAttribute('src', iconUrl)
+    rssIcon.setAttribute('src', safeUrl(iconUrl))
     rssIcon.setAttribute('style', 'height:1em;vertical-align:middle;padding-right:0.25em;')
     h1.appendChild(rssIcon)
     h1.appendChild(document.createTextNode(title.textContent))
@@ -142,35 +151,19 @@ document.onreadystatechange = async function () {
       const details = document.createElementNS(NS, 'details')
       const summary = document.createElementNS(NS, 'summary')
       const titleLink = document.createElementNS(NS, 'a')
-      titleLink.setAttribute('href', itemLink)
+      titleLink.setAttribute('href', safeUrl(itemLink))
       titleLink.textContent = itemTitle
       summary.appendChild(titleLink)
       summary.style.width = '100%'
       summary.appendChild(document.createTextNode(` - ${itemPubDate}`))
       details.appendChild(summary)
       if (itemDesc) {
-        try {
-          if (itemDesc.indexOf('<') !== -1 && itemDesc.indexOf('>') !== -1) {
-            // Contains unescaped HTML, so slam it in there
-            const descContainer = document.createElementNS(NS, 'div')
-            descContainer.innerHTML = itemDesc
-            details.appendChild(descContainer)
-          } else if (itemDesc.indexOf('&lt;') !== -1 && itemDesc.indexOf('&gt;') !== -1) {
-            // Contains escaped HTML, so unescape first, then slam it in there
-            const decodeArea = document.createElementNS(NS, 'textarea')
-            decodeArea.innerHTML = itemDesc
-            const descContainer = document.createElementNS(NS, 'div')
-            descContainer.innerHTML = decodeArea.value
-            details.appendChild(descContainer)
-          } else {
-            // Plain text???
-            details.appendChild(document.createTextNode(itemDesc))
-          }
-        } catch (e) {
-          // unfortunately, the content needs to be XHTML, so this gets triggered a lot
-          console.log('ERROR: Could not parse item description HTML: ', e)
-          details.appendChild(document.createTextNode(itemDesc))
+        const parsed = new DOMParser().parseFromString(itemDesc, 'text/html')
+        const descContainer = document.createElementNS(NS, 'div')
+        for (const node of Array.from(parsed.body.childNodes)) {
+          descContainer.appendChild(document.importNode(node, true))
         }
+        details.appendChild(descContainer)
       }
 
       body.appendChild(details)
