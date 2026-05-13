@@ -72,7 +72,7 @@ document.onreadystatechange = async function () {
     const h1 = document.createElementNS(NS, 'h1')
     const rssIcon = document.createElementNS(NS, 'img')
     rssIcon.setAttribute('alt', 'feed icon')
-    rssIcon.setAttribute('src', safeUrl(iconUrl)) // lgtm[js/xss-dom] - safeUrl validates protocol
+    rssIcon.setAttribute('src', safeUrl(iconUrl))
     rssIcon.setAttribute('style', 'height:1em;vertical-align:middle;padding-right:0.25em;')
     h1.appendChild(rssIcon)
     h1.appendChild(document.createTextNode(title.textContent))
