@@ -77,7 +77,6 @@ const headerIcon = fromHtmlIsomorphic(
   { fragment: true }
 )
 
-
 export default defineConfig({
   site: 'https://adriel.dev',
 
