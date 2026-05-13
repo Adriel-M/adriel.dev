@@ -15,8 +15,6 @@ const siteConfig = {
       indexName: 'adriel',
     },
   },
-  postsInFrontPageCount: 5,
-  postsInPostsPageCount: 5,
 }
 
 export default siteConfig

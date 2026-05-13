@@ -29,10 +29,7 @@ export const title = 'Thinking Emoji 🤔'
           <ul class="divide-y divide-gray-100">
             {postsByYear[year].map((post) => (
               <li class="flex items-center justify-between gap-4 py-2">
-                <Link
-                  href={generatePostPath(post)}
-                  class="text-gray-900 hover:text-primary-400"
-                >
+                <Link href={generatePostPath(post)} class="text-gray-900 hover:text-primary-400">
                   {post.data.title}
                 </Link>
                 <time

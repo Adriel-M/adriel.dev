@@ -77,7 +77,6 @@ const headerIcon = fromHtmlIsomorphic(
   { fragment: true }
 )
 
-const postsPagePattern = /^\/posts\/page\/\d+$/
 
 export default defineConfig({
   site: 'https://adriel.dev',
@@ -135,13 +134,7 @@ export default defineConfig({
   integrations: [
     react(),
     mdx(),
-    sitemap({
-      filter: (page) => {
-        const url = new URL(page)
-        const pathName = url.pathname
-        return !postsPagePattern.test(pathName)
-      },
-    }),
+    sitemap(),
     robotsTxt(),
     compress({
       Image: false,
