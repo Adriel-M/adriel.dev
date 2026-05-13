@@ -24,7 +24,6 @@ class NewPost implements CommandInterface {
     const frontMatter = {
       title,
       createdAt: now,
-      tags: ['tag'],
     }
 
     const mdxPath = join(targetFolder, 'index.mdx')
