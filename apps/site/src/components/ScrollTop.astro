@@ -2,27 +2,23 @@
 import ArrowUp from '@/assets/remix-icons/arrow-up-line.svg'
 ---
 
-<div id="scroll-top" class="fixed right-8 bottom-8 hidden flex-col gap-3 md:hidden">
-  <button
-    aria-label="Scroll To Top"
-    class="rounded-full bg-gray-200 p-2 text-gray-500 transition-all hover:bg-gray-300"
-  >
-    <ArrowUp class="size-6" />
-  </button>
-</div>
+<button
+  id="scroll-top"
+  aria-label="Scroll To Top"
+  class="fixed right-8 bottom-8 hidden rounded-full bg-gray-200 p-2 text-gray-500 transition-all hover:bg-gray-300"
+>
+  <ArrowUp class="size-6" />
+</button>
 
 <script>
   import { throttle } from '@/libs/FunctionUtils.ts'
 
-  const el = document.getElementById('scroll-top')!
-  const btn = el.querySelector('button')!
+  const btn = document.getElementById('scroll-top')!
 
   const update = () => {
-    const visible = window.scrollY > 50
-    el.classList.toggle('md:hidden', !visible)
-    el.classList.toggle('md:flex', visible)
+    btn.classList.toggle('md:block', window.scrollY > 50)
   }
   update()
-  window.addEventListener('scroll', throttle(update))
+  window.addEventListener('scroll', throttle(update), { passive: true })
   btn.addEventListener('click', () => window.scrollTo({ top: 0 }))
 </script>
