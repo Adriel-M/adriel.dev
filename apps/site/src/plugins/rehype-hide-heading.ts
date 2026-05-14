@@ -9,8 +9,7 @@ function rehypeHideHeading() {
       if (!HEADING_TAGS.has(node.tagName)) return
       if (node.properties?.dataHidden === undefined) return
 
-      const classes = (node.properties?.className as string[] | undefined) ?? []
-      node.properties = node.properties ?? {}
+      const classes = (node.properties.className as string[] | undefined) ?? []
       node.properties.className = [...classes, 'hidden-heading']
     })
   }
