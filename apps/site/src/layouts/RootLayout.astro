@@ -2,9 +2,6 @@
 import '@/css/global.css'
 import '@fontsource/jetbrains-mono/latin-500.css'
 
-import { Schema } from 'astro-seo-schema'
-import type { BlogPosting, WithContext } from 'schema-dts'
-
 import Footer from '@/components/footer/Footer.astro'
 import Head from '@/components/Head.astro'
 import Header from '@/components/Header.astro'
@@ -14,17 +11,16 @@ import SEO from '@/components/SEO.astro'
 
 interface Props {
   seoData: SeoData
-  jsonLd?: WithContext<BlogPosting>
 }
 
-const { seoData, jsonLd } = Astro.props
+const { seoData } = Astro.props
 ---
 
 <!doctype html>
 <html lang="en" class="scroll-smooth">
   <Head>
     <SEO seoData={seoData} />
-    {jsonLd && <Schema item={jsonLd} />}
+    <slot name="jsonLd" />
   </Head>
   <body class="bg-white pl-[calc(100vw-100%)] font-mono text-black antialiased">
     <section class="mx-auto max-w-xl px-6 md:px-1 xl:max-w-4xl">
