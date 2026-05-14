@@ -9,7 +9,6 @@ import Footer from '@/components/footer/Footer.astro'
 import Head from '@/components/Head.astro'
 import Header from '@/components/Header.astro'
 import ScrollTop from '@/components/ScrollTop.astro'
-import SectionContainer from '@/components/SectionContainer.astro'
 import type { SeoData } from '@/components/SEO.astro'
 import SEO from '@/components/SEO.astro'
 
@@ -28,7 +27,7 @@ const { seoData, jsonLd } = Astro.props
     {jsonLd && <Schema item={jsonLd} />}
   </Head>
   <body class="bg-white pl-[calc(100vw-100%)] font-mono text-black antialiased">
-    <SectionContainer>
+    <section class="mx-auto max-w-xl px-6 md:px-1 xl:max-w-4xl">
       <div class="flex h-screen flex-col justify-between">
         <Header />
         <main class="mb-auto">
@@ -37,6 +36,6 @@ const { seoData, jsonLd } = Astro.props
         </main>
         <Footer />
       </div>
-    </SectionContainer>
+    </section>
   </body>
 </html>
