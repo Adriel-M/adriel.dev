@@ -1,7 +1,6 @@
 ---
 import Link from '@/components/Link.astro'
 import Logo from '@/components/Logo.astro'
-import MobileNav from '@/components/mobile-nav/MobileNav.astro'
 import Search from '@/components/search/Search.astro'
 import headerNavLinks from '@/libs/headerNavLinks'
 import siteConfig from '@/libs/siteConfig'
@@ -22,12 +21,11 @@ import { URLS } from '@/libs/UrlLibs'
   <div class="flex items-center space-x-4 leading-5 sm:space-x-6">
     {
       headerNavLinks.map((link) => (
-        <Link href={link.href} class="hidden font-medium hover:text-primary-400 sm:block">
+        <Link href={link.href} class="font-medium hover:text-primary-400">
           {link.title}
         </Link>
       ))
     }
     <Search />
-    <MobileNav />
   </div>
 </header>
