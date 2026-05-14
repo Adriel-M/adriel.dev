@@ -51,9 +51,7 @@ export async function GET({ request }: { request: Request }) {
     copyright: copyrightNotice,
   })
 
-  for (const postAndSummary of postAndSummaries) {
-    const { post, summary } = postAndSummary
-
+  for (const { post, summary } of postAndSummaries) {
     feed.addItem({
       title: post.data.title,
       id: `${siteUrl}/posts/${post.id}`,
