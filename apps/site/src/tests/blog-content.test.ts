@@ -1,5 +1,4 @@
-import fg from 'fast-glob'
-import fs from 'fs/promises'
+import fs, { glob } from 'fs/promises'
 import matter from 'gray-matter'
 import type { Heading } from 'mdast'
 import path from 'path'
@@ -29,10 +28,10 @@ const proofreadingProcessor = retext()
 const titleCaseProcessor = remark().use(remarkMdx)
 
 describe('verify mdx content', async () => {
-  const mdxFiles = await fg('**/*.mdx', {
-    cwd: path.resolve(__dirname, POSTS_PATH),
-    absolute: true,
-  })
+  const postsDir = path.resolve(__dirname, POSTS_PATH)
+  const mdxFiles = (await Array.fromAsync(glob('**/*.mdx', { cwd: postsDir }))).map((file) =>
+    path.join(postsDir, file)
+  )
   for (const filePath of mdxFiles) {
     const pathSplit = filePath.split('/')
     const slug = pathSplit[pathSplit.length - 2]
