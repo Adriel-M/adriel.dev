@@ -65,7 +65,7 @@ const entries = generateTocEntries(headings)
 
     const setActive = (slug: string | undefined) => {
       for (const link of links) {
-        link.classList.toggle('text-primary-500', link.dataset.tocSlug === slug)
+        link.classList.toggle('text-primary-600', link.dataset.tocSlug === slug)
       }
     }
 

@@ -10,7 +10,7 @@ import { URLS } from '@/libs/UrlLibs'
 <header class="flex items-center justify-between py-10">
   <div>
     <Link href={URLS.HOME} aria-label={siteConfig.title}>
-      <div class="flex items-center justify-between hover:text-primary-400">
+      <div class="flex items-center justify-between hover:text-primary-600">
         <div class="mr-5">
           <Logo />
         </div>
@@ -21,7 +21,7 @@ import { URLS } from '@/libs/UrlLibs'
   <div class="flex items-center space-x-4 leading-5 sm:space-x-6">
     {
       headerNavLinks.map((link) => (
-        <Link href={link.href} class="font-medium hover:text-primary-400">
+        <Link href={link.href} class="font-medium hover:text-primary-600">
           {link.title}
         </Link>
       ))
