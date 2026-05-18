@@ -19,7 +19,7 @@ article {
       color: var(--color-primary-600);
 
       &:hover {
-        color: var(--color-primary-400);
+        background-color: var(--color-primary-100);
       }
     }
 
@@ -79,7 +79,7 @@ article {
     transition: opacity 0.15s ease;
 
     &:hover {
-      color: var(--color-primary-400);
+      color: var(--color-primary-700);
     }
 
     svg {
