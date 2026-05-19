@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
 
-@config '../../tailwind.config.mjs';
+@plugin './toc-plugin.ts';
 
 @theme {
   --font-mono: 'JetBrains Mono', monospace;
