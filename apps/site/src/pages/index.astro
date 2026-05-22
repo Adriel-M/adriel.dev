@@ -25,16 +25,16 @@ export const title = 'Thinking Emoji 🤔'
     {
       years.map((year) => (
         <section>
-          <h2 class="mb-3 text-sm font-semibold tracking-widest text-gray-400 uppercase">{year}</h2>
+          <h2 class="mb-3 text-sm font-semibold tracking-widest text-gray-500 uppercase">{year}</h2>
           <ul class="divide-y divide-gray-100">
             {postsByYear[year].map((post) => (
               <li class="flex items-center justify-between gap-8 py-2">
-                <Link href={generatePostPath(post)} class="text-gray-900 hover:text-primary-600">
+                <Link href={generatePostPath(post)} class="text-gray-700 hover:text-primary-600">
                   {post.data.title}
                 </Link>
                 <time
                   datetime={post.data.createdAt.toISOString()}
-                  class="shrink-0 text-sm text-gray-400 tabular-nums"
+                  class="shrink-0 text-sm text-gray-500 tabular-nums"
                 >
                   {formatShortDate(post.data.createdAt)}
                 </time>
