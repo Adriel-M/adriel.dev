@@ -75,8 +75,8 @@ importers:
         specifier: 2.0.5
         version: 2.0.5(react@19.2.6)
       v86:
-        specifier: 0.5.357
-        version: 0.5.357
+        specifier: 0.5.359
+        version: 0.5.359
     devDependencies:
       '@astrojs/check':
         specifier: 0.9.9
@@ -4954,8 +4954,8 @@ packages:
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
-  v86@0.5.357:
-    resolution: {integrity: sha512-3wRERiyQIq3/nH15Ho2K1oBPGMOBZ+S2Tt0lFkFiHB2IbueRgzGDxS9tJnlWt2KxDlrTwnMCjdAZ0OgYdNDlig==}
+  v86@0.5.359:
+    resolution: {integrity: sha512-FeIho4j6LqM09ioCEwzVjYhoPjgCymCloLJLCRYztqIcf9b9sywE4H/B7id1BdMjnW9wLRzrSPpPKNCsixytrA==}
 
   valid-filename@4.0.0:
     resolution: {integrity: sha512-VEYTpTVPMgO799f2wI7zWf0x2C54bPX6NAfbZ2Z8kZn76p+3rEYCTYVYzMUcVSMvakxMQTriBf24s3+WeXJtEg==}
@@ -10828,7 +10828,7 @@ snapshots:
 
   util-deprecate@1.0.2: {}
 
-  v86@0.5.357: {}
+  v86@0.5.359: {}
 
   valid-filename@4.0.0:
     dependencies:
