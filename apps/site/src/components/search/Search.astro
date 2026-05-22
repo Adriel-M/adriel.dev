@@ -52,9 +52,8 @@ const onload = "this.media='all'; this.onload=null;"
   }
 
   class DocSearchContainer extends HTMLElement {
-    constructor() {
-      super()
-      window.addEventListener('DOMContentLoaded', async () => {
+    connectedCallback() {
+      const init = async () => {
         const { docsearch } = await import('@adrieldev/esm-wrapper')
 
         docsearch({
@@ -108,7 +107,13 @@ const onload = "this.media='all'; this.onload=null;"
             })
           },
         })
-      })
+      }
+
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(init)
+      } else {
+        setTimeout(init, 0)
+      }
     }
   }
 
