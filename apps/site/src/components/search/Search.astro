@@ -54,7 +54,12 @@ const onload = "this.media='all'; this.onload=null;"
   class DocSearchContainer extends HTMLElement {
     connectedCallback() {
       const init = async () => {
-        const { docsearch } = await import('@adrieldev/esm-wrapper')
+        // @vite-ignore prevents Vite from statically analyzing this import,
+        // which stops it from emitting <link rel="modulepreload"> tags for the
+        // esm-wrapper chunks (~175 KiB) in the page HTML. Without it, those
+        // chunks are fetched immediately on page load regardless of when this
+        // code actually runs.
+        const { docsearch } = await import(/* @vite-ignore */ '@adrieldev/esm-wrapper')
 
         docsearch({
           container: this,
