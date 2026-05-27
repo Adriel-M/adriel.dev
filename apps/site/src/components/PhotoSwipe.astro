@@ -1,0 +1,93 @@
+---
+const { class: className } = Astro.props
+---
+
+<photo-swipe class={className}>
+  <slot />
+</photo-swipe>
+
+<script>
+  import type PhotoSwipeLightbox from 'photoswipe/lightbox'
+  import photoSwipeCssUrl from 'photoswipe/style.css?url'
+
+  let pswpStylePromise: Promise<void> | null = null
+
+  const loadPswpStylesheet = () => {
+    if (!pswpStylePromise) {
+      pswpStylePromise = new Promise((resolve, reject) => {
+        if (document.querySelector('link[data-pswp-style]')) {
+          resolve()
+          return
+        }
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = photoSwipeCssUrl
+        link.setAttribute('data-pswp-style', '')
+        link.onload = () => resolve()
+        link.onerror = () => reject(new Error('Failed to load PhotoSwipe CSS'))
+        document.head.appendChild(link)
+      })
+    }
+    return pswpStylePromise
+  }
+
+  const rootMargin = 400
+
+  class PhotoSwipeElement extends HTMLElement {
+    lightbox?: PhotoSwipeLightbox
+    observer?: IntersectionObserver
+    initialized = false
+
+    connectedCallback() {
+      const tryInit = () => {
+        if (this.initialized) return
+        this.initialized = true
+        this.init()
+      }
+
+      this.observer = new IntersectionObserver(
+        (entries, observer) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              tryInit()
+              observer.disconnect()
+            }
+          }
+        },
+        { rootMargin: `${rootMargin}px` }
+      )
+
+      this.observer.observe(this)
+
+      const rect = this.getBoundingClientRect()
+      const alreadyIntersecting =
+        rect.bottom > -rootMargin && rect.top < window.innerHeight + rootMargin
+
+      if (alreadyIntersecting) {
+        tryInit()
+        this.observer.disconnect()
+      }
+    }
+
+    async init() {
+      const { default: PhotoSwipeLightbox } = await import('photoswipe/lightbox')
+      loadPswpStylesheet()
+      this.lightbox = new PhotoSwipeLightbox({
+        gallery: this,
+        children: 'a',
+        showHideAnimationType: 'none',
+        zoomAnimationDuration: false,
+        pswpModule: () => import('photoswipe'),
+        openPromise: () => loadPswpStylesheet(),
+      })
+      this.lightbox.init()
+    }
+
+    disconnectedCallback() {
+      this.lightbox?.destroy()
+      this.observer?.disconnect()
+    }
+  }
+
+  customElements.define('photo-swipe', PhotoSwipeElement)
+</script>
