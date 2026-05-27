@@ -2,6 +2,8 @@
 import type { GetImageResult, ImageMetadata } from 'astro'
 import { getImage, Image } from 'astro:assets'
 
+import PhotoSwipe from '@/components/PhotoSwipe.astro'
+
 interface Props {
   images: Record<string, () => Promise<{ default: ImageMetadata }>>
   description: string
@@ -31,7 +33,7 @@ const optimizedImages: {
 const imageAlt = `Gallery Preview of ${description}`
 ---
 
-<image-gallery class="grid grid-cols-2 gap-4 lg:grid-cols-3">
+<PhotoSwipe class="grid grid-cols-2 gap-4 lg:grid-cols-3">
   {
     optimizedImages.map(({ original, optimized }) => (
       <a
@@ -49,9 +51,4 @@ const imageAlt = `Gallery Preview of ${description}`
       </a>
     ))
   }
-</image-gallery>
-
-<script>
-  import { generateClass } from '@/libs/PhotoSwipeElement.ts'
-  customElements.define('image-gallery', generateClass())
-</script>
+</PhotoSwipe>
