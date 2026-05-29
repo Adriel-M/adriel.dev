@@ -1,6 +1,6 @@
 ---
 import '@/css/global.css'
-import '@fontsource/jetbrains-mono/latin-500.css'
+import '@fontsource-variable/jetbrains-mono/wght.css'
 
 import Footer from '@/components/footer/Footer.astro'
 import Head from '@/components/Head.astro'
@@ -22,7 +22,7 @@ const { seoData } = Astro.props
     <SEO seoData={seoData} />
     <slot name="jsonLd" />
   </Head>
-  <body class="bg-white pl-[calc(100vw-100%)] font-mono text-black antialiased">
+  <body class="bg-white pl-[calc(100vw-100%)] font-mono font-medium text-black antialiased">
     <section class="mx-auto max-w-xl px-6 md:px-1 xl:max-w-4xl">
       <div class="flex h-screen flex-col justify-between">
         <Header />
