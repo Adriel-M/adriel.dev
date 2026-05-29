@@ -7,12 +7,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 pnpm workspace monorepo orchestrated by Turborepo (`turbo.json`). Packages:
 
 - `apps/site` — the Astro site at adriel.dev. Content collection, pages, components, vitest suite.
-- `packages/cli` — interactive CLI (`tsx`-run, `@inquirer/prompts`) to scaffold/edit blog posts.
-- `packages/esm-wrapper` — `tsup`-built ESM shim around `@docsearch/react` so Astro's SSR can consume it. **`apps/site` imports this as `@adrieldev/esm-wrapper` and requires it to be built first** — `pnpm dev` runs `predev` to build it once then `dev:esm` (`tsup --watch`) + `dev:site` concurrently, and `turbo run check` declares `@adrieldev/esm-wrapper#build` as a dependency. If you see missing-module errors from site code, rebuild esm-wrapper.
+- `packages/cli` — interactive CLI (`pkgroll`-built, `@inquirer/prompts`) to scaffold/edit blog posts. `pnpm cli` builds it (`precli`) then runs `node packages/cli/dist/index.js`.
+- `packages/esm-wrapper` — `pkgroll`-built ESM shim around `@docsearch/react` so Astro's SSR can consume it. **`apps/site` imports this as `@adrieldev/esm-wrapper` and requires it to be built first** — `pnpm dev` runs `predev` to build it once then `dev:esm` (`pkgroll --watch`) + `dev:site` concurrently, and `turbo run check` declares `@adrieldev/esm-wrapper#build` as a dependency. If you see missing-module errors from site code, rebuild esm-wrapper.
 - `packages/eslint-configs` — shared flat ESLint config (`@adrieldev/eslint-configs`) consumed by every package.
 - `packages/mdx-rs-demo` — leftover artifact directory, no `package.json`, ignore.
 
-Deploy target is Cloudflare Workers static assets (`wrangler.jsonc` serves `apps/site/dist`, `trailingSlash: 'never'` + `drop-trailing-slash` are paired — don't add trailing slashes in links).
+Deploy target is Cloudflare Workers static assets (`wrangler.jsonc` serves `apps/site/dist`, `trailingSlash: 'never'` + `drop-trailing-slash` are paired — don't add trailing slashes in links). A custom Astro integration `apps/site/src/plugins/integration-generate-headers.ts` emits the Cloudflare `_headers` file at build time (cache-control keyed off the most recent post's `updatedAt`/`createdAt`).
 
 ## Common commands
 
@@ -42,7 +42,7 @@ Posts live at `apps/site/src/content/posts/<YYYY-MM-DD>-<slug>/index.mdx`. The c
 - `createdAt` (date, required)
 - `updatedAt` (date, optional)
 
-Use `pnpm cli` → "New Post" to scaffold — it names the folder `<date>-<slug>` and writes valid frontmatter. Don't hand-roll directories.
+Use `pnpm cli` → "New Post" to scaffold — it names the folder `<date>-<slug>` and writes valid frontmatter. Don't hand-roll directories. A post folder can colocate its own `.astro` components beside `index.mdx` and import them from the MDX (e.g. `2026-05-04-copy-fail-demo/V86Terminal.astro`).
 
 Markdown is configured in `apps/site/astro.config.ts`:
 
@@ -50,6 +50,9 @@ Markdown is configured in `apps/site/astro.config.ts`:
 - `remarkTitleCase` rewrites every heading to Title Case at build time via `title-case`.
 - `rehypeAutolinkHeadings` prepends a hash icon to headings (class `content-header`), so heading markup in the DOM has an extra anchor child.
 - `rehypeGithubAlerts` renders GFM alerts (`> [!NOTE]`, `[!IMPORTANT]`, `[!WARNING]`, `[!TIP]`, `[!CAUTION]`) with custom `remix-icons` SVGs — those icons need their `width`/`height` injected at build time (`addDimensionsToSvg`), that's why they're imported `?raw` and re-parsed.
+- `remarkIncludeCode` (custom, `src/plugins/`): a code fence with a `file=./relative/path` meta (e.g. ```` ```ts file=./snippet.ts ````) replaces its body with that file's contents, resolved relative to the MDX file, and auto-adds `title="<basename>"` if no `title` is set.
+- `remarkGemoji` enables GitHub `:shortcode:` emoji.
+- `:hidden` heading convention (custom `rehypeStripHiddenMarker` + `rehypeHideHeading`): a heading whose text starts with `:hidden` (e.g. `## :hidden Notes`) has the marker stripped and gains `data-hidden` + a `hidden-heading` class — visually hidden but still slugged so it can anchor the floating TOC.
 
 `apps/site/src/tests/blog-content.test.ts` is the content gate — it runs over every `.mdx` in the collection and fails CI when any of these hold:
 
@@ -67,7 +70,7 @@ If you add a post with "a API" or "the the", the test will fail — fix the pros
 - Shared helpers to reach for before writing new ones:
   - `@/libs/CollectionUtils` — `getPosts`, `generatePostPath`. Sort order is newest-first by `createdAt`.
   - `@/libs/siteConfig` — author, Algolia DocSearch creds, locale, post summary length.
-  - `@/libs/generate-summary`, `@/libs/ComponentOverrides` — used by the `PostLayout`.
+  - `@/libs/generate-summary`, `@/libs/ComponentOverrides` — used by the `PostLayout` (and `atom.xml.ts`). `ComponentOverrides` remaps MDX elements: `img`→`ResponsivePicture`, `a`→`Link`, `table`→`TableWrapper`, plus a `<Gallery>` component (PhotoSwipe lightbox, see `Gallery.astro`/`PhotoSwipe.astro`). `ObfuscatedEmail.tsx` (react-obfuscate-email) is the way to render email addresses.
 - Pages follow Astro file-based routing: `apps/site/src/pages/posts/[id]/index.astro` uses `getStaticPaths` over `getCollection('posts')`.
 - OG images are generated at request time by `@vercel/og` through `og.png.ts` endpoints (`/og.png`, `/posts/[id]/og.png`).
 
