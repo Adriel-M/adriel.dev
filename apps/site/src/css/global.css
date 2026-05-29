@@ -4,7 +4,7 @@
 @plugin './toc-plugin.ts';
 
 @theme {
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-mono: 'JetBrains Mono Variable', monospace;
   --color-primary-50: var(--color-blue-50);
   --color-primary-100: var(--color-blue-100);
   --color-primary-200: var(--color-blue-200);

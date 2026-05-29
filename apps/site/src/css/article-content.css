@@ -32,6 +32,20 @@ article {
       font-weight: 600;
     }
 
+    strong {
+      font-weight: 800;
+    }
+
+    /* Code block */
+    code {
+      font-weight: 500;
+    }
+
+    /* Inline code */
+    span[data-rehype-pretty-code-figure] code {
+      font-weight: 800;
+    }
+
     h1,
     h2,
     h3,
