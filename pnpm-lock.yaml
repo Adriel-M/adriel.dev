@@ -236,8 +236,8 @@ importers:
         specifier: 4.0.3
         version: 4.0.3
       pkgroll:
-        specifier: 2.27.0
-        version: 2.27.0(typescript@6.0.3)(vite@7.3.3(@types/node@25.6.2)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.46.1)(yaml@2.8.4))
+        specifier: 2.27.1
+        version: 2.27.1(typescript@6.0.3)(vite@7.3.3(@types/node@25.6.2)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.46.1)(yaml@2.8.4))
 
   packages/eslint-configs:
     devDependencies:
@@ -291,8 +291,8 @@ importers:
         specifier: 4.6.3
         version: 4.6.3(@algolia/client-search@5.52.1)(@types/react@19.2.14)(algoliasearch@5.52.1)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(search-insights@2.17.3)
       pkgroll:
-        specifier: 2.27.0
-        version: 2.27.0(typescript@6.0.3)(vite@7.3.3(@types/node@25.6.2)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.46.1)(yaml@2.8.4))
+        specifier: 2.27.1
+        version: 2.27.1(typescript@6.0.3)(vite@7.3.3(@types/node@25.6.2)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.46.1)(yaml@2.8.4))
 
 packages:
 
@@ -4036,8 +4036,8 @@ packages:
     resolution: {integrity: sha512-QP88BAKvMam/3NxH6vj2o21R6MjxZUAd6nlwAS/pnGvN9IVLocLHxGYIzFhg6fUQ+5th6P4dv4eW9jX3DSIj7A==}
     engines: {node: '>=12'}
 
-  pkgroll@2.27.0:
-    resolution: {integrity: sha512-Huw5ZRxWTWeQ0PbNNKdbkAl52bPMy009RXdB4u3qjb47AMEBLG5VVF0V6oOD+YYiZaHaFxvjEeX+A2T9ckaClQ==}
+  pkgroll@2.27.1:
+    resolution: {integrity: sha512-Iqw4Y23NRoT3juVogTwzjd8YO1jFtxUlua0biQC0E79nIBbbKRGtQp0hf7lnscF0didwyRsXFLUcyD1ekeQmIA==}
     engines: {node: '>=18'}
     hasBin: true
     peerDependencies:
@@ -9730,7 +9730,7 @@ snapshots:
 
   picomatch@4.0.4: {}
 
-  pkgroll@2.27.0(typescript@6.0.3)(vite@7.3.3(@types/node@25.6.2)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.46.1)(yaml@2.8.4)):
+  pkgroll@2.27.1(typescript@6.0.3)(vite@7.3.3(@types/node@25.6.2)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.46.1)(yaml@2.8.4)):
     dependencies:
       '@rollup/plugin-alias': 6.0.0(rollup@4.60.3)
       '@rollup/plugin-commonjs': 29.0.2(rollup@4.60.3)

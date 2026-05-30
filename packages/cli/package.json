@@ -13,7 +13,7 @@
     "@inquirer/prompts": "8.5.0",
     "github-slugger": "2.0.0",
     "gray-matter": "4.0.3",
-    "pkgroll": "2.27.0"
+    "pkgroll": "2.27.1"
   },
   "peerDependencies": {
     "typescript": "^5 || ^6.0.0"

@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "@docsearch/react": "4.6.3",
-    "pkgroll": "2.27.0"
+    "pkgroll": "2.27.1"
   },
   "peerDependencies": {
     "@types/react": ">=18",
