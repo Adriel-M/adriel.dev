@@ -89,6 +89,10 @@ export default defineConfig({
 
   vite: {
     plugins: [svgr(), tailwindcss()],
+    build: {
+      // Prevent font subsets from being inlined as data URIs, which would violate font-src 'self' CSP
+      assetsInlineLimit: (filePath) => (filePath.includes('.woff') ? false : undefined),
+    },
   },
 
   markdown: {
