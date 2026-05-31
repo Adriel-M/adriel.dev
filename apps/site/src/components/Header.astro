@@ -2,9 +2,13 @@
 import Link from '@/components/Link.astro'
 import Logo from '@/components/Logo.astro'
 import Search from '@/components/search/Search.astro'
-import headerNavLinks from '@/libs/headerNavLinks'
 import siteConfig from '@/libs/siteConfig'
 import { URLS } from '@/libs/UrlLibs'
+
+const headerNavLinks = [
+  { href: URLS.HOME, title: 'Home' },
+  { href: URLS.ABOUT, title: 'About' },
+]
 ---
 
 <header class="flex items-center justify-between py-10">

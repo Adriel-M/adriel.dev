@@ -1,3 +1,15 @@
-import posts from '@/content/definitions/posts.ts'
+import { glob } from 'astro/loaders'
+import { z } from 'astro/zod'
+import { defineCollection } from 'astro:content'
 
-export const collections = { posts }
+export const collections = {
+  posts: defineCollection({
+    loader: glob({ pattern: '**/*.mdx', base: './src/content/posts' }),
+    schema: () =>
+      z.object({
+        title: z.string(),
+        createdAt: z.date(),
+        updatedAt: z.date().optional(),
+      }),
+  }),
+}
