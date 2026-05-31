@@ -215,8 +215,10 @@ article {
   .footnotes {
     @apply mt-12 border-t border-gray-200;
 
-    ol > li:target {
-      animation: highlight-footer 3s;
+    @media (prefers-reduced-motion: no-preference) {
+      ol > li:target {
+        animation: highlight-footer 3s;
+      }
     }
   }
 

@@ -6,6 +6,7 @@ import siteConfig from '@/libs/siteConfig'
 type BasicData = {
   type: 'basic'
   title: string
+  noindex?: boolean
 }
 
 type FullData = {
@@ -36,7 +37,7 @@ const titleTemplate = `%s | ${siteConfig.title}`
 
 {
   seoData.type === 'basic' ? (
-    <Seo title={seoData.title} titleTemplate={titleTemplate} />
+    <Seo title={seoData.title} titleTemplate={titleTemplate} noindex={seoData.noindex} />
   ) : (
     <Seo
       title={seoData.title}
