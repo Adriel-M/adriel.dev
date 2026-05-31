@@ -32,6 +32,7 @@ const widths = potentialSizes.filter((size) => size <= maxWidth)
 props.widths = widths
 props.sizes = '(min-width: 1280px) 896px, 100vw'
 props.format = 'webp'
+props.loading = 'lazy'
 
 // set width and height for the fallback image
 const fallbackWidth = Math.max(...widths)
