@@ -1,3 +1,4 @@
+import { unified } from '@astrojs/markdown-remark'
 import mdx from '@astrojs/mdx'
 import react from '@astrojs/react'
 import sitemap from '@astrojs/sitemap'
@@ -96,39 +97,41 @@ export default defineConfig({
   },
 
   markdown: {
-    gfm: true,
     syntaxHighlight: false,
-    remarkPlugins: [remarkIncludeCode, remarkGemoji, remarkTitleCase],
-    rehypePlugins: [
-      rehypeStripHiddenMarker,
-      rehypeSlug, // needed for rehypeAutolinkHeadings
-      [
-        rehypeAutolinkHeadings,
-        {
-          behavior: 'prepend',
-          properties: {
-            ariaLabel: 'Link to this section',
+    processor: unified({
+      gfm: true,
+      remarkPlugins: [remarkIncludeCode, remarkGemoji, remarkTitleCase],
+      rehypePlugins: [
+        rehypeStripHiddenMarker,
+        rehypeSlug, // needed for rehypeAutolinkHeadings
+        [
+          rehypeAutolinkHeadings,
+          {
+            behavior: 'prepend',
+            properties: {
+              ariaLabel: 'Link to this section',
+            },
+            headingProperties: {
+              className: ['content-header'],
+            },
+            content: headerIcon,
           },
-          headingProperties: {
-            className: ['content-header'],
+        ],
+        rehypeHideHeading,
+        [
+          rehypePrettyCode,
+          {
+            keepBackground: false,
+            defaultLang: {
+              block: 'ts',
+              inline: 'console',
+            },
+            theme: 'one-light',
           },
-          content: headerIcon,
-        },
+        ],
+        [rehypeGithubAlerts, config],
       ],
-      rehypeHideHeading,
-      [
-        rehypePrettyCode,
-        {
-          keepBackground: false,
-          defaultLang: {
-            block: 'ts',
-            inline: 'console',
-          },
-          theme: 'one-light',
-        },
-      ],
-      [rehypeGithubAlerts, config],
-    ],
+    }),
   },
 
   build: {
