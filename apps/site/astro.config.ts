@@ -89,6 +89,9 @@ export default defineConfig({
 
   vite: {
     plugins: [svgr(), tailwindcss()],
+    build: {
+      assetsInlineLimit: (filePath) => (filePath.includes('.woff') ? 0 : 4096),
+    },
   },
 
   markdown: {
