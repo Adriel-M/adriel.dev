@@ -4,8 +4,7 @@ packages:
 
 allowBuilds:
   esbuild: true
-  sharp: true
-
-ignoredBuiltDependencies:
-  - esbuild
-  - sharp
+  # sharp ships prebuilt binaries via its @img/sharp-* optional deps, so its
+  # install script must not run — letting it run makes node-gyp build from
+  # source and fail ("Please add node-addon-api"). Keep this false.
+  sharp: false
