@@ -1,6 +1,7 @@
+import waterCssUrl from '@adrieldev/atom-style/water.light.css?url'
+import atomStyleUrl from '@adrieldev/atom-style?url'
 import { Feed } from 'feed'
 
-import atomStyleUrl from '@/assets/feed/atom-style.js?url'
 import { getPosts } from '@/libs/CollectionUtils'
 import { truncateToSeconds } from '@/libs/DateUtils'
 import generateSummary from '@/libs/generate-summary'
@@ -67,7 +68,7 @@ export async function GET({ request }: { request: Request }) {
     .atom1()
     .replace(
       /(<feed[^>]*>)/,
-      `$1\n<script src="${atomStyleUrl}" data-fallback-logo="/static/feed/RssStyleFavicon.svg" xmlns="http://www.w3.org/1999/xhtml"></script>`
+      `$1\n<script src="${atomStyleUrl}" data-water-css="${waterCssUrl}" xmlns="http://www.w3.org/1999/xhtml"></script>`
     )
 
   return new Response(xml, {
