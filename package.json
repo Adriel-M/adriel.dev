@@ -8,7 +8,7 @@
     "prepare": "husky",
     "precli": "turbo run build --filter=@adrieldev/cli",
     "cli": "node packages/cli/dist/index.js apps/site/src/content/posts",
-    "predev": "pnpm --filter @adrieldev/esm-wrapper build",
+    "predev": "pnpm --filter @adrieldev/esm-wrapper --filter @adrieldev/atom-style build",
     "dev": "concurrently \"pnpm run dev:esm\" \"pnpm run dev:site\"",
     "dev:esm": "pnpm --filter @adrieldev/esm-wrapper dev",
     "dev:site": "pnpm --filter site dev",

@@ -1,0 +1,23 @@
+{
+  "name": "@adrieldev/atom-style",
+  "module": "./dist/atom-style.js",
+  "type": "module",
+  "scripts": {
+    "build": "pkgroll",
+    "dev": "pkgroll --watch",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write ."
+  },
+  "devDependencies": {
+    "pkgroll": "2.27.1"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/atom-style.d.ts",
+      "import": "./dist/atom-style.js"
+    },
+    "./water.light.css": "./assets/water.light.css"
+  }
+}
