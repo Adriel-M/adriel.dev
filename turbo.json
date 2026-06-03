@@ -20,7 +20,9 @@
     }
   },
   "globalDependencies": [
-    "pnpm-lock.yaml"
+    "pnpm-lock.yaml",
+    "prettier.config.js",
+    "eslint.config.js"
   ],
   "remoteCache": {
     "signature": true
