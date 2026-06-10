@@ -28,7 +28,6 @@
     "@adrieldev/eslint-configs": "workspace:*",
     "concurrently": "10.0.3",
     "eslint": "10.4.1",
-    "globals": "17.6.0",
     "husky": "9.1.7",
     "lint-staged": "17.0.7",
     "prettier": "3.8.3",
