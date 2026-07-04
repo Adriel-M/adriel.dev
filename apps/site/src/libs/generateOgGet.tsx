@@ -63,8 +63,7 @@ function OgImage({ title, logoBase64 }: Props) {
 }
 
 type TitleInput =
-  | string
-  | ((params: Record<string, string | undefined>) => string | Promise<string>)
+  string | ((params: Record<string, string | undefined>) => string | Promise<string>)
 
 export function generateGet(titleInput: TitleInput) {
   const GET: APIRoute = async ({ params }) => {
