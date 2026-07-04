@@ -2,7 +2,7 @@ import { resolve } from 'node:path'
 
 import js from '@eslint/js'
 import markdown from '@eslint/markdown'
-import astroParser from 'astro-eslint-parser'
+import * as astroParser from 'astro-eslint-parser'
 import { defineConfig, globalIgnores } from 'eslint/config'
 import eslintConfigPrettier from 'eslint-config-prettier/flat'
 import eslintPluginAstro from 'eslint-plugin-astro'
