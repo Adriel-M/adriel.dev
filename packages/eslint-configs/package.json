@@ -10,7 +10,7 @@
   "devDependencies": {
     "@eslint/js": "10.0.1",
     "@eslint/markdown": "8.0.3",
-    "astro-eslint-parser": "2.1.0",
+    "astro-eslint-parser": "3.0.0",
     "eslint-config-prettier": "10.1.8",
     "eslint-plugin-astro": "2.1.1",
     "eslint-plugin-path-alias": "2.1.0",
