@@ -12,7 +12,7 @@
     "@eslint/markdown": "8.0.3",
     "astro-eslint-parser": "3.0.0",
     "eslint-config-prettier": "10.1.8",
-    "eslint-plugin-astro": "2.1.1",
+    "eslint-plugin-astro": "3.0.0",
     "eslint-plugin-path-alias": "2.1.0",
     "eslint-plugin-react": "7.37.5",
     "eslint-plugin-simple-import-sort": "13.0.0",
