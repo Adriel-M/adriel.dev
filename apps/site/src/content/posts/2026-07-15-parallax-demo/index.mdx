@@ -1,0 +1,45 @@
+---
+title: Parallax Demo
+createdAt: 2026-07-15T00:00:00.000Z
+---
+
+import Parallax from './Parallax.astro'
+import archway from './facade.jpg'
+import lake from './lake.jpg'
+import sailboat from './sailboat.jpg'
+import tokyo from './tokyo.jpg'
+
+# Demo
+
+Saw this [post](https://news.ycombinator.com/item?id=48368291) on Hacker News and wanted to have a quick demo.
+Images fetched from [Unsplash](https://unsplash.com) with this [license](https://unsplash.com/license).
+Scroll down to see the picture below and the parallax effect.
+
+<Parallax src={sailboat} alt="A sailboat on calm water with a snow-capped mountain at sunset">
+  Photo by [Rafael Peier](https://unsplash.com/@rafaelpeier) on [Unsplash](https://unsplash.com/)
+</Parallax>
+
+<Parallax src={lake} alt="A lake surrounded by forested mountains under a blue sky">
+  Photo by [Daniel J. Schwarz](https://unsplash.com/@danieljschwarz) on
+  [Unsplash](https://unsplash.com/)
+</Parallax>
+
+<Parallax src={archway} alt="An arched building façade with a teal and gold patterned interior">
+  Photo by [Alexander Kaufmann](https://unsplash.com/@alexander_kaufmann) on
+  [Unsplash](https://unsplash.com/)
+</Parallax>
+
+<Parallax src={tokyo} alt="A neon-lit Tokyo street at night with a blurred car and crowds">
+  Photo by [Darwin Vegher](https://unsplash.com/@darwiiiin) on [Unsplash](https://unsplash.com/)
+</Parallax>
+
+# Browser Compatability
+
+Not all browsers support the native parallax css. Check if your browser supports it [here](https://caniuse.com/mdn-css_properties_animation-timeline).
+If it doesn't, there is a javascript fallback to have the same effect.
+
+# Source
+
+```astro file=Parallax.astro showLineNumbers
+
+```
