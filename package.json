@@ -33,7 +33,7 @@
     "prettier": "3.9.5",
     "prettier-plugin-astro": "0.14.1",
     "prettier-plugin-tailwindcss": "0.8.0",
-    "turbo": "2.10.4"
+    "turbo": "2.10.5"
   },
   "lint-staged": {
     "*.+(ts|tsx|css|mdx|js|mjs|astro)": [
