@@ -93,6 +93,11 @@ export default defineConfig({
     build: {
       // Prevent font subsets from being inlined as data URIs, which would violate font-src 'self' CSP
       assetsInlineLimit: (filePath) => (filePath.includes('.woff') ? false : undefined),
+      // Vite 8's esbuild CSS minifier strips Tailwind v4's responsive @media
+      // rules from the build (dev is unaffected), dropping every sm:/md:/lg:/xl:
+      // utility. Skip Vite's minify and let @playform/compress (csso) minify the
+      // CSS instead — it preserves the media queries.
+      cssMinify: false,
     },
   },
 
