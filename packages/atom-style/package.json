@@ -14,10 +14,7 @@
     "tsdown": "0.22.12"
   },
   "exports": {
-    ".": {
-      "types": "./dist/atom-style.d.ts",
-      "import": "./dist/atom-style.js"
-    },
+    ".": "./dist/atom-style.js",
     "./water.light.css": "./assets/water.light.css"
   }
 }
