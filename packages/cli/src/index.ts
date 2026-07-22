@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { select, Separator } from '@inquirer/prompts'
 
 import Exit from './commands/Exit.ts'

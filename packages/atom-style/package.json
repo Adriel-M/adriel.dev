@@ -3,15 +3,15 @@
   "module": "./dist/atom-style.js",
   "type": "module",
   "scripts": {
-    "build": "pkgroll",
-    "dev": "pkgroll --watch",
+    "build": "tsdown",
+    "dev": "tsdown --watch",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "format": "prettier --check .",
     "format:fix": "prettier --write ."
   },
   "devDependencies": {
-    "pkgroll": "2.27.1"
+    "tsdown": "0.22.12"
   },
   "exports": {
     ".": {
