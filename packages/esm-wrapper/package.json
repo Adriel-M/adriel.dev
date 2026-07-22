@@ -3,8 +3,8 @@
   "module": "./dist/index.js",
   "type": "module",
   "scripts": {
-    "build": "pkgroll",
-    "dev": "pkgroll --watch",
+    "build": "tsdown",
+    "dev": "tsdown --watch",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "format": "prettier --check .",
@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "@docsearch/react": "4.6.3",
-    "pkgroll": "2.27.1"
+    "tsdown": "0.22.12"
   },
   "peerDependencies": {
     "@types/react": ">=18",
