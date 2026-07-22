@@ -4,16 +4,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository layout
 
-pnpm workspace monorepo orchestrated by Turborepo (`turbo.json`). Packages:
+pnpm workspace monorepo orchestrated by Turborepo (`turbo.json`). **pnpm is the required package manager** (npm/yarn won't resolve the `workspace:*` deps): the version is pinned via `packageManager` in the root `package.json` (`pnpm@11.15.0`), the workspace globs (`apps/*`, `packages/*`) and build allow-list live in `pnpm-workspace.yaml`, and CI installs with `pnpm install --frozen-lockfile`. Packages:
 
 - `apps/site` — the Astro site at adriel.dev. Content collection, pages, components, vitest suite.
 - `packages/cli` — interactive CLI (`tsdown`-built, `@inquirer/prompts`) to scaffold/edit blog posts. `pnpm cli` builds it (`precli`) then runs `node packages/cli/dist/index.js`. The `bin` entry needs a `#!/usr/bin/env node` shebang; it lives at the top of `src/index.ts` so tsdown preserves it (and grants the executable bit) in `dist/index.js`.
 - `packages/esm-wrapper` — `tsdown`-built ESM shim around `@docsearch/react` so Astro's SSR can consume it. **`apps/site` imports this as `@adrieldev/esm-wrapper` and requires it to be built first** — `pnpm dev` runs `predev` to build it once then `dev:esm` (`tsdown --watch`) + `dev:site` concurrently, and `turbo run check` declares `@adrieldev/esm-wrapper#build` as a dependency. If you see missing-module errors from site code, rebuild esm-wrapper.
 - `packages/atom-style` — `tsdown`-built client script (`@adrieldev/atom-style`, MIT, from [rss.style](https://github.com/fileformat/rss.style)) that makes `/atom.xml` human-readable in browsers. `apps/site/src/pages/atom.xml.ts` imports the **built** `dist/atom-style.js` with `?url` (`@adrieldev/atom-style?url`) and injects a **classic** `<script src>` (no `type="module"`) into the feed, so it ships as its own hashed asset rather than being bundled. Authored in TS but consumed as transpiled JS — a `.ts?url` import would emit raw, un-transpiled TS. **The tsdown build must target `format: 'iife'`, not `esm`**: an ESM build appends `export {}`, which is a syntax error in a classic script and silently kills the entire feed page (the script also reads `document.currentScript`, which is `null` in module scripts). The config also sets `outputOptions.entryFileNames: 'atom-style.js'` so the iife bundle keeps that name instead of tsdown's default `atom-style.iife.js`. Built first via `^build`; `predev` also builds it for `pnpm dev`. The RSS.style logo is inlined directly in `atom-style.ts` as a hardcoded `data:` URI string rather than imported as a `.svg`/`.txt`/`?raw` asset, so the markup lives in the source. The stylesheet, being larger, is served separately: `water.light.css` (in `assets/`, exported as `@adrieldev/atom-style/water.light.css`) is imported `?url` by `atom.xml.ts` and handed to the script via a `data-water-css` attribute, read at module top-level (`document.currentScript` is null inside the script's `onreadystatechange` callback). `packages/atom-style/assets/` is `.prettierignore`d (vendored).
 - `packages/eslint-configs` — shared flat ESLint config (`@adrieldev/eslint-configs`) consumed by every package.
-- `packages/mdx-rs-demo` — leftover artifact directory, no `package.json`, ignore.
 
-Deploy target is Cloudflare Workers static assets (`wrangler.jsonc` serves `apps/site/dist`, `trailingSlash: 'never'` + `drop-trailing-slash` are paired — don't add trailing slashes in links). A custom Astro integration `apps/site/src/plugins/integration-generate-headers.ts` emits the Cloudflare `_headers` file at build time (cache-control keyed off the most recent post's `updatedAt`/`createdAt`).
+Deploy target is Cloudflare Workers static assets (`wrangler.jsonc` serves `apps/site/dist`, `trailingSlash: 'never'` + `drop-trailing-slash` are paired — don't add trailing slashes in links). A custom Astro integration `apps/site/src/plugins/integration-generate-headers.ts` emits the Cloudflare `_headers` file at build time (`astro:build:done`). This is where the site's **Content-Security-Policy** and other security headers live (applied to `/*`), alongside immutable `cache-control` for `/_astro/*` + `/static/*` and a `Last-Modified` on `/atom.xml` derived from the newest post's `updatedAt ?? createdAt`. Allow-listing a new external host (script/style/img/connect/font source) means editing the CSP here — e.g. Algolia is under `connect-src`, and the `font-src 'self'` rule is why `.woff` files must not be inlined (see the Vite `assetsInlineLimit` in `astro.config.ts`).
 
 ## Common commands
 
@@ -37,7 +36,7 @@ CI (`.github/workflows/ci.yml`) pins a specific Node version and runs `lint`, `f
 
 ## Content pipeline (read this before editing posts or the markdown config)
 
-Posts live at `apps/site/src/content/posts/<YYYY-MM-DD>-<slug>/index.mdx`. The collection is declared in `apps/site/src/content/definitions/posts.ts` (loaded via `content.config.ts`) with Zod schema:
+Posts live at `apps/site/src/content/posts/<YYYY-MM-DD>-<slug>/index.mdx`. The collection is declared inline in `apps/site/src/content.config.ts` — a `glob` loader over `**/*.mdx` under `src/content/posts`, with this Zod schema:
 
 - `title` (string)
 - `createdAt` (date, required)
@@ -68,12 +67,13 @@ If you add a post with "a API" or "the the", the test will fail — fix the pros
 - `apps/site/tsconfig.json` extends `astro/tsconfigs/strict`, sets `"paths": { "@/*": ["./src/*"] }`, and uses `jsx: "react-jsx"` with `jsxImportSource: "react"`.
 - ESLint enforces `path-alias/no-relative` — always import site code as `@/libs/...`, `@/components/...`, etc., never relative paths that cross directories. The one exception is files already inside the same subdirectory.
 - `simple-import-sort` is enabled; let `pnpm lint:fix` order imports rather than doing it by hand.
+- Styling is **Tailwind CSS v4** via `@tailwindcss/vite` (no `tailwind.config.js` — configured in-CSS). Entry is `src/css/global.css`; other global sheets sit in `src/css/` (`article-content.css`, `docsearch.css`). SVGs import as React components through `vite-plugin-svgr` (`import Icon from './x.svg?react'`, typed in `src/types/svgReact.d.ts`) or inline with `?raw`.
 - Shared helpers to reach for before writing new ones:
   - `@/libs/CollectionUtils` — `getPosts`, `generatePostPath`. Sort order is newest-first by `createdAt`.
   - `@/libs/siteConfig` — author, Algolia DocSearch creds, locale, post summary length.
   - `@/libs/generate-summary`, `@/libs/ComponentOverrides` — used by the `PostLayout` (and `atom.xml.ts`). `ComponentOverrides` remaps MDX elements: `img`→`ResponsivePicture`, `a`→`Link`, `table`→`TableWrapper`, plus a `<Gallery>` component (PhotoSwipe lightbox, see `Gallery.astro`/`PhotoSwipe.astro`). `ObfuscatedEmail.tsx` (react-obfuscate-email) is the way to render email addresses.
 - Pages follow Astro file-based routing: `apps/site/src/pages/posts/[id]/index.astro` uses `getStaticPaths` over `getCollection('posts')`.
-- OG images are generated at request time by `@vercel/og` through `og.png.ts` endpoints (`/og.png`, `/posts/[id]/og.png`).
+- OG images are generated at **build time** (the site is a static Astro build — no SSR adapter, no `main` worker in `wrangler.jsonc`) by `@vercel/og` through prerendered `og.png.ts` endpoints that use `getStaticPaths` and share `@/libs/generateOgGet` (`/og.png`, `/about/og.png`, `/license/og.png`, `/posts/[id]/og.png`).
 
 ## Things that bite
 
@@ -81,4 +81,6 @@ If you add a post with "a API" or "the the", the test will fail — fix the pros
 - When changing the markdown pipeline, run `pnpm test` afterward: the proofreading/title-case assertions parse MDX through `remark`/`retext` independently of Astro, so a regression in one pipeline won't necessarily surface in the other.
 - Cloudflare `html_handling: drop-trailing-slash` + Astro `trailingSlash: 'never'` must stay in sync. If you flip one, flip the other.
 - `build.inlineStylesheets: 'never'` is intentional (keeps CSS cacheable) — don't "optimize" it away.
+- `vite.build.cssMinify: false` is deliberate: Vite 8's esbuild CSS minifier strips Tailwind v4's responsive `@media` utilities (every `sm:`/`md:`/`lg:`/`xl:`), so CSS minification is delegated to `@playform/compress` (csso). Don't re-enable Vite's `cssMinify`.
+- `vite.build.assetsInlineLimit` forces `.woff` fonts to stay external assets (never data-URI-inlined) to satisfy the `font-src 'self'` CSP in `_headers`.
 - `.node-version` (`24.18.0`) pins the Node used by both the Cloudflare deploy build and (matching) GitHub CI. Don't remove it or drop below Node 22.18: tsdown loads its `tsdown.config.ts` files via native TS type-stripping, and on older Node its config loader falls back to the optional `unrun` peer dep (not installed), failing the build with "Failed to import module unrun". Cloudflare's build image defaults to Node 22.16.0, which hit exactly this — the pin is what avoids it. Note GitHub CI only runs `lint`/`format`/`check`/`test` and `check` builds only esm-wrapper (often a turbo remote-cache hit), so a broken tsdown build can stay green on GitHub and only fail in the Cloudflare deploy — verify build changes with a clean `pnpm build`.
