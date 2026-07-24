@@ -220,8 +220,8 @@ importers:
   packages/atom-style:
     devDependencies:
       tsdown:
-        specifier: 0.22.12
-        version: 0.22.12(@volar/typescript@2.4.28)(typescript@7.0.2)
+        specifier: 0.22.13
+        version: 0.22.13(@volar/typescript@2.4.28)(typescript@7.0.2)
 
   packages/cli:
     dependencies:
@@ -239,8 +239,8 @@ importers:
         specifier: 4.0.3
         version: 4.0.3
       tsdown:
-        specifier: 0.22.12
-        version: 0.22.12(@volar/typescript@2.4.28)(typescript@7.0.2)
+        specifier: 0.22.13
+        version: 0.22.13(@volar/typescript@2.4.28)(typescript@7.0.2)
 
   packages/eslint-configs:
     devDependencies:
@@ -297,8 +297,8 @@ importers:
         specifier: 4.6.3
         version: 4.6.3(@algolia/client-search@5.56.0)(@types/react@19.2.17)(algoliasearch@5.56.0)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(search-insights@2.17.3)
       tsdown:
-        specifier: 0.22.12
-        version: 0.22.12(@volar/typescript@2.4.28)(typescript@7.0.2)
+        specifier: 0.22.13
+        version: 0.22.13(@volar/typescript@2.4.28)(typescript@7.0.2)
 
 packages:
 
@@ -5154,14 +5154,14 @@ packages:
     peerDependencies:
       typescript: '>=4.8.4'
 
-  tsdown@0.22.12:
-    resolution: {integrity: sha512-IzGRfGwSsufXJWOcQ0tmECKMG/dbxhUwDOySTS7JE1AM8pkB9+bpcTPs8bTxxSNrSvGocSczrBlOh97tZObq9Q==}
+  tsdown@0.22.13:
+    resolution: {integrity: sha512-XaYFhtiKRUvTpXv/YAehsHdbEb3LN/iMlzjSINbjlaATtXN2zVPKox2STKhcyFPlh++8Zg7suNN27E679IfAUA==}
     engines: {node: ^22.18.0 || >=24.11.0}
     hasBin: true
     peerDependencies:
       '@arethetypeswrong/core': ^0.18.1
-      '@tsdown/css': 0.22.12
-      '@tsdown/exe': 0.22.12
+      '@tsdown/css': 0.22.13
+      '@tsdown/exe': 0.22.13
       '@vitejs/devtools': '*'
       publint: ^0.3.8
       tsx: '*'
@@ -11254,7 +11254,7 @@ snapshots:
     dependencies:
       typescript: 6.0.3
 
-  tsdown@0.22.12(@volar/typescript@2.4.28)(typescript@7.0.2):
+  tsdown@0.22.13(@volar/typescript@2.4.28)(typescript@7.0.2):
     dependencies:
       ansis: 4.3.1
       cac: 7.0.0
