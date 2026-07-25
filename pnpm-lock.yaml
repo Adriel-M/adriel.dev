@@ -243,7 +243,7 @@ importers:
         version: 0.22.13(@volar/typescript@2.4.28)(typescript@7.0.2)
 
   packages/eslint-configs:
-    devDependencies:
+    dependencies:
       '@eslint/js':
         specifier: 10.0.1
         version: 10.0.1(eslint@10.7.0(jiti@2.7.0)(supports-color@10.2.2))
@@ -253,6 +253,9 @@ importers:
       astro-eslint-parser:
         specifier: 3.0.0
         version: 3.0.0(@emnapi/core@1.11.2)(@emnapi/runtime@1.11.2)(supports-color@10.2.2)
+      eslint:
+        specifier: '>=9'
+        version: 10.7.0(jiti@2.7.0)(supports-color@10.2.2)
       eslint-config-prettier:
         specifier: 10.1.8
         version: 10.1.8(eslint@10.7.0(jiti@2.7.0)(supports-color@10.2.2))
@@ -274,6 +277,10 @@ importers:
       typescript-eslint:
         specifier: 8.65.0
         version: 8.65.0(eslint@10.7.0(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3)
+    devDependencies:
+      tsdown:
+        specifier: 0.22.13
+        version: 0.22.13(@volar/typescript@2.4.28)(typescript@6.0.3)
 
   packages/esm-wrapper:
     dependencies:
@@ -10725,6 +10732,21 @@ snapshots:
 
   reusify@1.1.0: {}
 
+  rolldown-plugin-dts@0.27.12(@volar/typescript@2.4.28)(rolldown@1.2.0)(typescript@6.0.3):
+    dependencies:
+      dts-resolver: 3.0.0
+      get-tsconfig: 5.0.0-beta.5
+      obug: 2.1.4
+      rolldown: 1.2.0
+      yuku-ast: 0.7.0
+      yuku-codegen: 0.7.0
+      yuku-parser: 0.7.0
+    optionalDependencies:
+      '@volar/typescript': 2.4.28
+      typescript: 6.0.3
+    transitivePeerDependencies:
+      - oxc-resolver
+
   rolldown-plugin-dts@0.27.12(@volar/typescript@2.4.28)(rolldown@1.2.0)(typescript@7.0.2):
     dependencies:
       dts-resolver: 3.0.0
@@ -11269,6 +11291,31 @@ snapshots:
   ts-api-utils@2.5.0(typescript@6.0.3):
     dependencies:
       typescript: 6.0.3
+
+  tsdown@0.22.13(@volar/typescript@2.4.28)(typescript@6.0.3):
+    dependencies:
+      ansis: 4.3.1
+      cac: 7.0.0
+      defu: 6.1.7
+      empathic: 2.0.1
+      hookable: 6.1.1
+      import-without-cache: 0.4.0
+      obug: 2.1.4
+      picomatch: 4.0.5
+      rolldown: 1.2.0
+      rolldown-plugin-dts: 0.27.12(@volar/typescript@2.4.28)(rolldown@1.2.0)(typescript@6.0.3)
+      tinyexec: 1.2.4
+      tinyglobby: 0.2.17
+      tree-kill: 1.2.2
+      unconfig-core: 7.5.0
+      verkit: 0.1.2
+    optionalDependencies:
+      typescript: 6.0.3
+    transitivePeerDependencies:
+      - '@typescript/native-preview'
+      - '@volar/typescript'
+      - oxc-resolver
+      - vue-tsc
 
   tsdown@0.22.13(@volar/typescript@2.4.28)(typescript@7.0.2):
     dependencies:

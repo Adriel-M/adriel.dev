@@ -1,13 +1,15 @@
 {
   "name": "@adrieldev/eslint-configs",
-  "module": "index.js",
+  "module": "./dist/index.js",
   "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown --watch",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "format": "prettier --check .",
     "format:fix": "prettier --write ."
   },
-  "devDependencies": {
+  "dependencies": {
     "@eslint/js": "10.0.1",
     "@eslint/markdown": "8.0.3",
     "astro-eslint-parser": "3.0.0",
@@ -19,9 +21,16 @@
     "globals": "17.7.0",
     "typescript-eslint": "8.65.0"
   },
+  "peerDependencies": {
+    "eslint": ">=9"
+  },
+  "devDependencies": {
+    "tsdown": "0.22.13"
+  },
   "exports": {
     ".": {
-      "import": "./index.js"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
     }
   },
   "type": "module"

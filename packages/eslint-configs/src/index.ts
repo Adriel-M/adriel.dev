@@ -3,6 +3,7 @@ import { resolve } from 'node:path'
 import js from '@eslint/js'
 import markdown from '@eslint/markdown'
 import * as astroParser from 'astro-eslint-parser'
+import type { Linter } from 'eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 import eslintConfigPrettier from 'eslint-config-prettier/flat'
 import eslintPluginAstro from 'eslint-plugin-astro'
@@ -12,7 +13,7 @@ import simpleImportSort from 'eslint-plugin-simple-import-sort'
 import globals from 'globals'
 import tseslint from 'typescript-eslint'
 
-export default defineConfig([
+const config: Linter.Config[] = defineConfig([
   globalIgnores(['**/dist/*', '**/.astro/*']),
   { files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'], plugins: { js }, extends: ['js/recommended'] },
   {
@@ -31,8 +32,11 @@ export default defineConfig([
           paths: {
             // It's recommended to resolve path alias directories as
             // relative paths will be resolved relative to cwd. This
-            // may cause unexpected behavior in monorepo setups
-            '@': resolve(import.meta.dirname, './src'),
+            // may cause unexpected behavior in monorepo setups.
+            // This file is bundled to `dist/index.js`, so `../src`
+            // resolves to the same package-relative path the previous
+            // `index.js` (at the package root) produced with `./src`.
+            '@': resolve(import.meta.dirname, '../src'),
           },
           exceptions: [],
         },
@@ -77,4 +81,6 @@ export default defineConfig([
     },
   },
   eslintConfigPrettier,
-])
+]) as Linter.Config[]
+
+export default config

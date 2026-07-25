@@ -1,4 +1,6 @@
-export default {
+import type { Config } from 'prettier'
+
+const config: Config = {
   semi: false,
   singleQuote: true,
   printWidth: 100,
@@ -9,3 +11,5 @@ export default {
   plugins: ['prettier-plugin-astro', 'prettier-plugin-tailwindcss'],
   tailwindStylesheet: './apps/site/src/css/global.css',
 }
+
+export default config
