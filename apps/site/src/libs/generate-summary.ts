@@ -39,10 +39,8 @@ const extractFirstSectionText = () => {
       }
     })
 
-    if (paragraphNodes) {
-      tree.type = 'root'
-      tree.children = paragraphNodes
-    }
+    tree.type = 'root'
+    tree.children = paragraphNodes
   }
 }
 
