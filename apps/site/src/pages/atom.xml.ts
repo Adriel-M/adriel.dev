@@ -13,7 +13,6 @@ const copyrightNotice =
 
 const author = {
   name: siteConfig.author,
-  email: 'contact@websiteDomain',
 }
 
 export async function GET({ request }: { request: Request }) {
