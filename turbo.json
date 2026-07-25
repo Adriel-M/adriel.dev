@@ -6,9 +6,12 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".astro/**"]
     },
-    "lint": {},
+    "lint": {
+      "dependsOn": ["@adrieldev/eslint-configs#build"]
+    },
     "lint:fix": {
-      "cache": false
+      "cache": false,
+      "dependsOn": ["@adrieldev/eslint-configs#build"]
     },
     "format": {},
     "format:fix": {
@@ -21,8 +24,8 @@
   },
   "globalDependencies": [
     "pnpm-lock.yaml",
-    "prettier.config.js",
-    "eslint.config.js"
+    "prettier.config.ts",
+    "eslint.config.ts"
   ],
   "remoteCache": {
     "signature": true
