@@ -9,7 +9,10 @@
     "format": "prettier --check .",
     "format:fix": "prettier --write ."
   },
-  "dependencies": {
+  "peerDependencies": {
+    "eslint": ">=9"
+  },
+  "devDependencies": {
     "@eslint/js": "10.0.1",
     "@eslint/markdown": "8.0.3",
     "astro-eslint-parser": "3.0.0",
@@ -19,13 +22,8 @@
     "eslint-plugin-react": "7.37.5",
     "eslint-plugin-simple-import-sort": "14.0.0",
     "globals": "17.7.0",
+    "tsdown": "0.22.13",
     "typescript-eslint": "8.65.0"
-  },
-  "peerDependencies": {
-    "eslint": ">=9"
-  },
-  "devDependencies": {
-    "tsdown": "0.22.13"
   },
   "exports": {
     ".": {
