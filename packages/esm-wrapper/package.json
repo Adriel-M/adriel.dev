@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "@docsearch/react": "4.6.3",
-    "tsdown": "0.22.13"
+    "tsdown": "0.22.14"
   },
   "peerDependencies": {
     "@types/react": ">=18",

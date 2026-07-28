@@ -11,7 +11,7 @@
     "format:fix": "prettier --write ."
   },
   "devDependencies": {
-    "tsdown": "0.22.13"
+    "tsdown": "0.22.14"
   },
   "exports": {
     ".": "./dist/atom-style.js",

@@ -22,7 +22,7 @@
     "eslint-plugin-react": "7.37.5",
     "eslint-plugin-simple-import-sort": "14.0.0",
     "globals": "17.7.0",
-    "tsdown": "0.22.13",
+    "tsdown": "0.22.14",
     "typescript-eslint": "8.65.0"
   },
   "exports": {
