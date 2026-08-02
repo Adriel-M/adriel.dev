@@ -22,6 +22,7 @@ import informationIcon from './src/assets/remix-icons/information-line.svg?raw'
 import lightbulbIcon from './src/assets/remix-icons/lightbulb-line.svg?raw'
 import spamIcon from './src/assets/remix-icons/spam-line.svg?raw'
 import generateHeaders from './src/plugins/integration-generate-headers'
+import { getPostDates } from './src/plugins/post-dates'
 import rehypeHideHeading from './src/plugins/rehype-hide-heading'
 import rehypeStripHiddenMarker from './src/plugins/rehype-strip-hidden-marker'
 import remarkIncludeCode from './src/plugins/remark-include-code'
@@ -72,6 +73,9 @@ const config = {
     },
   ],
 }
+
+// Read once at config load rather than per-entry inside serialize()
+const postDates = await getPostDates()
 
 const headerIcon = fromHtmlIsomorphic(
   `<span class="content-header-link-placeholder">${addDimensionsToSvg(hashTagIcon, 24)}</span>`,
@@ -146,7 +150,13 @@ export default defineConfig({
     generateHeaders(),
     react(),
     mdx(),
-    sitemap(),
+    sitemap({
+      serialize: (item) => {
+        const id = new URL(item.url).pathname.match(/^\/posts\/(.+)$/)?.[1]
+        const date = id ? postDates.get(id) : undefined
+        return date ? { ...item, lastmod: date.toISOString() } : item
+      },
+    }),
     robotsTxt(),
     compress({
       Image: false,

@@ -1,23 +1,9 @@
-import { readdir, readFile, writeFile } from 'node:fs/promises'
-import { join } from 'node:path'
+import { writeFile } from 'node:fs/promises'
 
 import type { AstroIntegration } from 'astro'
-import matter from 'gray-matter'
 
 import { truncateToSeconds } from '../libs/DateUtils'
-
-async function getLatestPostDate(postsDir: string): Promise<Date> {
-  const entries = await readdir(postsDir, { withFileTypes: true })
-  let latest = new Date(0)
-  for (const entry of entries) {
-    if (!entry.isDirectory()) continue
-    const src = await readFile(join(postsDir, entry.name, 'index.mdx'), 'utf-8')
-    const { data } = matter(src)
-    const date: Date = data.updatedAt ?? data.createdAt
-    if (date > latest) latest = date
-  }
-  return latest
-}
+import { getLatestPostDate } from './post-dates'
 
 function serializeHeaders(rules: Map<string, string[]>): string {
   return [...rules.entries()]
@@ -31,8 +17,7 @@ export default function generateHeaders(): AstroIntegration {
     name: 'generate-headers',
     hooks: {
       'astro:build:done': async ({ dir }) => {
-        const postsDir = new URL('../content/posts', import.meta.url).pathname
-        const lastModified = truncateToSeconds(await getLatestPostDate(postsDir)).toUTCString()
+        const lastModified = truncateToSeconds(await getLatestPostDate()).toUTCString()
 
         const rules = new Map<string, string[]>([
           [
