@@ -14,7 +14,6 @@ import { rehypeGithubAlerts } from 'rehype-github-alerts'
 import rehypePrettyCode from 'rehype-pretty-code'
 import rehypeSlug from 'rehype-slug'
 import remarkGemoji from 'remark-gemoji'
-import svgr from 'vite-plugin-svgr'
 
 import alertIcon from './src/assets/remix-icons/alert-line.svg?raw'
 import feedbackIcon from './src/assets/remix-icons/feedback-line.svg?raw'
@@ -89,7 +88,7 @@ export default defineConfig({
   trailingSlash: 'never',
 
   vite: {
-    plugins: [svgr(), tailwindcss()],
+    plugins: [tailwindcss()],
     build: {
       // Prevent font subsets from being inlined as data URIs, which would violate font-src 'self' CSP
       assetsInlineLimit: (filePath) => (filePath.includes('.woff') ? false : undefined),
