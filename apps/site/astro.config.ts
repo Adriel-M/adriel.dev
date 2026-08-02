@@ -4,7 +4,7 @@ import react from '@astrojs/react'
 import sitemap from '@astrojs/sitemap'
 import compress from '@playform/compress'
 import tailwindcss from '@tailwindcss/vite'
-import { defineConfig } from 'astro/config'
+import { defineConfig, fontProviders } from 'astro/config'
 import robotsTxt from 'astro-robots-txt'
 import XMLBuilder from 'fast-xml-builder'
 import { XMLParser } from 'fast-xml-parser'
@@ -91,11 +91,22 @@ export default defineConfig({
 
   trailingSlash: 'never',
 
+  fonts: [
+    {
+      provider: fontProviders.fontsource(),
+      name: 'JetBrains Mono',
+      cssVariable: '--font-jetbrains-mono',
+      // Variable font: one file spans the whole range, so this is not 8 downloads
+      weights: ['100 800'],
+      styles: ['normal'],
+      subsets: ['latin'],
+      fallbacks: ['monospace'],
+    },
+  ],
+
   vite: {
     plugins: [tailwindcss()],
     build: {
-      // Prevent font subsets from being inlined as data URIs, which would violate font-src 'self' CSP
-      assetsInlineLimit: (filePath) => (filePath.includes('.woff') ? false : undefined),
       // Vite 8's esbuild CSS minifier strips Tailwind v4's responsive @media
       // rules from the build (dev is unaffected), dropping every sm:/md:/lg:/xl:
       // utility. Skip Vite's minify and let @playform/compress (csso) minify the

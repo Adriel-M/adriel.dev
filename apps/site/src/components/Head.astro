@@ -1,5 +1,5 @@
 ---
-import jetbrainsMonoLatinVariableWoff2 from '@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2?url'
+import { Font } from 'astro:assets'
 
 import siteConfig from '@/libs/siteConfig'
 import { URLS } from '@/libs/UrlLibs.ts'
@@ -18,13 +18,7 @@ import { URLS } from '@/libs/UrlLibs.ts'
   <meta name="generator" content={Astro.generator} />
   <link rel="sitemap" href="/sitemap-index.xml" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link
-    rel="preload"
-    as="font"
-    type="font/woff2"
-    href={jetbrainsMonoLatinVariableWoff2}
-    crossorigin="anonymous"
-  />
+  <Font cssVariable="--font-jetbrains-mono" preload />
   <link
     rel="alternate"
     type="application/atom+xml"
