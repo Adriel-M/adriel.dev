@@ -8,7 +8,6 @@ pnpm workspace monorepo orchestrated by Turborepo (`turbo.json`). **pnpm is the 
 
 - `apps/site` — the Astro site at adriel.dev. Content collection, pages, components, vitest suite.
 - `packages/cli` — interactive CLI (`tsdown`-built, `@inquirer/prompts`) to scaffold/edit blog posts. `pnpm cli` builds it (`precli`) then runs `node packages/cli/dist/index.js`. The `bin` entry needs a `#!/usr/bin/env node` shebang; it lives at the top of `src/index.ts` so tsdown preserves it (and grants the executable bit) in `dist/index.js`.
-- `packages/esm-wrapper` — `tsdown`-built ESM shim around `@docsearch/react` so Astro's SSR can consume it. **`apps/site` imports this as `@adrieldev/esm-wrapper` and requires it to be built first** — `pnpm dev` runs `predev` to build it once then `dev:esm` (`tsdown --watch`) + `dev:site` concurrently, and `turbo run check` declares `@adrieldev/esm-wrapper#build` as a dependency. If you see missing-module errors from site code, rebuild esm-wrapper.
 - `packages/atom-style` — `tsdown`-built client script (`@adrieldev/atom-style`, MIT, from [rss.style](https://github.com/fileformat/rss.style)) that makes `/atom.xml` human-readable in browsers. `apps/site/src/pages/atom.xml.ts` imports the **built** `dist/atom-style.js` with `?url` (`@adrieldev/atom-style?url`) and injects a **classic** `<script src>` (no `type="module"`) into the feed, so it ships as its own hashed asset rather than being bundled. Authored in TS but consumed as transpiled JS — a `.ts?url` import would emit raw, un-transpiled TS. **The tsdown build must target `format: 'iife'`, not `esm`**: an ESM build appends `export {}`, which is a syntax error in a classic script and silently kills the entire feed page (the script also reads `document.currentScript`, which is `null` in module scripts). The config also sets `outputOptions.entryFileNames: 'atom-style.js'` so the iife bundle keeps that name instead of tsdown's default `atom-style.iife.js`. Built first via `^build`; `predev` also builds it for `pnpm dev`. The RSS.style logo is inlined directly in `atom-style.ts` as a hardcoded `data:` URI string rather than imported as a `.svg`/`.txt`/`?raw` asset, so the markup lives in the source. The stylesheet, being larger, is served separately: `water.light.css` (in `assets/`, exported as `@adrieldev/atom-style/water.light.css`) is imported `?url` by `atom.xml.ts` and handed to the script via a `data-water-css` attribute, read at module top-level (`document.currentScript` is null inside the script's `onreadystatechange` callback). `packages/atom-style/assets/` is `.prettierignore`d (vendored).
 - `packages/eslint-configs` — shared flat ESLint config (`@adrieldev/eslint-configs`) consumed by every package. Authored in TS (`src/index.ts`) and `tsdown`-built to `dist/index.js` (+ `dist/index.d.ts`), consumed via the `exports` map like the other packages. **The ESLint plugins it composes stay in `devDependencies`, and `tsdown.config.ts` sets `deps: { neverBundle: true }` to externalize them** — tsdown only auto-externalizes `dependencies`/`peerDependencies`, so without this it would inline every plugin into a ~16 MB `index.js`. They are deliberately _not_ promoted to `dependencies`: this package is workspace-internal (never published, so its devDeps are always installed), and moving the plugins to prod deps drags their transitive tree (e.g. `eslint-plugin-path-alias` → `unset-value`) into the production security scan (Snyk), failing CI. `eslint` itself is a `peerDependency`. Because the config is now consumed from `dist`, `turbo run lint`/`lint:fix` declare `@adrieldev/eslint-configs#build` as a dependency (so a fresh checkout must build it before linting works). `dts` generation had to annotate the default export as `Linter.Config[]` — without the explicit type, rolldown-dts tries to inline `@eslint/config-helpers`' types and fails on a missing `.d.cts`.
 
@@ -18,17 +17,17 @@ Deploy target is Cloudflare Workers static assets (`wrangler.jsonc` serves `apps
 
 Run from repo root unless noted:
 
-| Command                           | What it does                                                                                                                                                                          |
-| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `pnpm dev`                        | Build esm-wrapper and atom-style, then run esm-wrapper in watch mode + `astro dev` concurrently. Use this, not `pnpm --filter site dev` (dev-time site imports stale dist otherwise). |
-| `pnpm build`                      | `turbo run build` across the workspace.                                                                                                                                               |
-| `pnpm preview`                    | `astro preview` on the built `apps/site/dist`.                                                                                                                                        |
-| `pnpm check`                      | `astro check` (type-checks `.astro` + TS). Depends on esm-wrapper build.                                                                                                              |
-| `pnpm lint` / `pnpm lint:fix`     | ESLint (flat config) across all packages.                                                                                                                                             |
-| `pnpm format` / `pnpm format:fix` | Prettier across all packages.                                                                                                                                                         |
-| `pnpm test`                       | `vitest run` in `apps/site` (the only package with tests).                                                                                                                            |
-| `pnpm test:watch`                 | `vitest` watch mode in `apps/site`.                                                                                                                                                   |
-| `pnpm cli`                        | Launches the post CLI pointed at `apps/site/src/content/posts`.                                                                                                                       |
+| Command                           | What it does                                                    |
+| --------------------------------- | --------------------------------------------------------------- |
+| `pnpm dev`                        | Build atom-style, then run the Astro development server.        |
+| `pnpm build`                      | `turbo run build` across the workspace.                         |
+| `pnpm preview`                    | `astro preview` on the built `apps/site/dist`.                  |
+| `pnpm check`                      | `astro check` (type-checks `.astro` + TS).                      |
+| `pnpm lint` / `pnpm lint:fix`     | ESLint (flat config) across all packages.                       |
+| `pnpm format` / `pnpm format:fix` | Prettier across all packages.                                   |
+| `pnpm test`                       | `vitest run` in `apps/site` (the only package with tests).      |
+| `pnpm test:watch`                 | `vitest` watch mode in `apps/site`.                             |
+| `pnpm cli`                        | Launches the post CLI pointed at `apps/site/src/content/posts`. |
 
 Running a single test: `pnpm --filter site exec vitest run path/to/file.test.ts` or `… -t 'partial test name'`. Watch a single file with `pnpm --filter site exec vitest path/to/file.test.ts`.
 
@@ -85,7 +84,6 @@ If you add a post with "a API" or "the the", the test will fail — fix the pros
 
 ## Things that bite
 
-- Don't edit `packages/esm-wrapper/dist` or expect `apps/site` to pick up source changes automatically outside of `pnpm dev` — the site consumes the built `dist/index.js`.
 - When changing the markdown pipeline, run `pnpm test` afterward: the proofreading/title-case assertions parse MDX through `remark`/`retext` independently of Astro, so a regression in one pipeline won't necessarily surface in the other.
 - Cloudflare `html_handling: drop-trailing-slash` + Astro `trailingSlash: 'never'` must stay in sync. If you flip one, flip the other.
 - `build.inlineStylesheets: 'never'` is intentional (keeps CSS cacheable) — don't "optimize" it away.

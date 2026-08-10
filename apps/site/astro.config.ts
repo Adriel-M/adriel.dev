@@ -110,18 +110,6 @@ export default defineConfig({
       // Coder's preview subdomain host is per-workspace; skip Vite's host check.
       allowedHosts: true,
     },
-    optimizeDeps: {
-      // The workspace ESM wrapper keeps these ESM packages external. Vite's
-      // Rolldown optimizer currently invalidates React's JSX runtime when it
-      // discovers them on the first request, so serve their native ESM instead.
-      exclude: [
-        '@docsearch/core',
-        '@docsearch/react/button',
-        '@docsearch/react/modal',
-        '@docsearch/react/version',
-      ],
-      include: ['use-sync-external-store/shim', 'use-sync-external-store/shim/with-selector'],
-    },
     build: {
       // Vite 8's esbuild CSS minifier strips Tailwind v4's responsive @media
       // rules from the build (dev is unaffected), dropping every sm:/md:/lg:/xl:
