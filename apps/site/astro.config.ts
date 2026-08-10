@@ -110,6 +110,17 @@ export default defineConfig({
       // Coder's preview subdomain host is per-workspace; skip Vite's host check.
       allowedHosts: true,
     },
+    optimizeDeps: {
+      // The workspace ESM wrapper keeps DocSearch's React packages external.
+      // Pre-optimize them together so Vite does not invalidate React's JSX
+      // runtime during the first dev-server request.
+      include: [
+        '@docsearch/core',
+        '@docsearch/react/button',
+        '@docsearch/react/modal',
+        '@docsearch/react/version',
+      ],
+    },
     build: {
       // Vite 8's esbuild CSS minifier strips Tailwind v4's responsive @media
       // rules from the build (dev is unaffected), dropping every sm:/md:/lg:/xl:
