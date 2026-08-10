@@ -1,1 +1,1 @@
-export * from './docsearch/docsearch-wrapper.tsx'
+export * from './docsearch/docsearch-wrapper.ts'

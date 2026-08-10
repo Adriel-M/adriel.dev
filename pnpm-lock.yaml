@@ -294,7 +294,7 @@ importers:
         specifier: ^5 || ^6.0.0 || ^7.0.0
         version: 7.0.2
     devDependencies:
-      '@docsearch/react':
+      '@docsearch/js':
         specifier: 5.0.0
         version: 5.0.0(@algolia/client-search@5.56.0)(@types/react@19.2.17)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(search-insights@2.17.3)
       tsdown:
@@ -718,6 +718,9 @@ packages:
 
   '@docsearch/css@5.0.0':
     resolution: {integrity: sha512-KlCnJI+uZeTEYnPD1vjDj++PJ6oXcyga0J7B9eUDk38wmILI/Vfsl3tDd8arUzrZatxyF5S5HlKflGI99Axd7w==}
+
+  '@docsearch/js@5.0.0':
+    resolution: {integrity: sha512-xGG9PIKf/YxdfHsYAc9B6yt6qznX58tuD8fpYAPPvydzaMGq1R0IRKsHyMhfJZ50fxjfJiTykemlctSxGRxlrg==}
 
   '@docsearch/react@5.0.0':
     resolution: {integrity: sha512-7bnRy0XKkARW4D+oQUbnqhu+hY+MU+n50P7MegKdyOFcn8RjeMeK44ZMZw5mb97MoRkeomAVEDNLNIxbvNI/3w==}
@@ -6158,6 +6161,19 @@ snapshots:
       react-dom: 19.2.8(react@19.2.8)
 
   '@docsearch/css@5.0.0': {}
+
+  '@docsearch/js@5.0.0(@algolia/client-search@5.56.0)(@types/react@19.2.17)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(search-insights@2.17.3)':
+    dependencies:
+      '@docsearch/core': 5.0.0(@types/react@19.2.17)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      '@docsearch/react': 5.0.0(@algolia/client-search@5.56.0)(@types/react@19.2.17)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(search-insights@2.17.3)
+    transitivePeerDependencies:
+      - '@algolia/client-search'
+      - '@date-fns/tz'
+      - '@types/react'
+      - date-fns
+      - react
+      - react-dom
+      - search-insights
 
   '@docsearch/react@5.0.0(@algolia/client-search@5.56.0)(@types/react@19.2.17)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(search-insights@2.17.3)':
     dependencies:

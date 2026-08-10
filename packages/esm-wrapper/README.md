@@ -1,6 +1,7 @@
 # esm-wrapper
 
-An ESM shim around `@docsearch/react` (`@adrieldev/esm-wrapper`) so Astro's SSR can consume it.
+An ESM shim around the keyword-only `@docsearch/js/docsearch` entry
+(`@adrieldev/esm-wrapper`) so Astro's SSR can consume it without bundling Ask AI.
 Authored in TypeScript and built with `tsdown` into `dist/index.js`, consumed via the package
 `exports` map.
 
