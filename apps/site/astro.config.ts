@@ -111,15 +111,16 @@ export default defineConfig({
       allowedHosts: true,
     },
     optimizeDeps: {
-      // The workspace ESM wrapper keeps DocSearch's React packages external.
-      // Pre-optimize them together so Vite does not invalidate React's JSX
-      // runtime during the first dev-server request.
-      include: [
+      // The workspace ESM wrapper keeps these ESM packages external. Vite's
+      // Rolldown optimizer currently invalidates React's JSX runtime when it
+      // discovers them on the first request, so serve their native ESM instead.
+      exclude: [
         '@docsearch/core',
         '@docsearch/react/button',
         '@docsearch/react/modal',
         '@docsearch/react/version',
       ],
+      include: ['use-sync-external-store/shim', 'use-sync-external-store/shim/with-selector'],
     },
     build: {
       // Vite 8's esbuild CSS minifier strips Tailwind v4's responsive @media
