@@ -58,7 +58,7 @@ const onload = "this.media='all'; this.onload=null;"
       docsearch({
         container: this,
         appId: appId,
-        indexName: indexName,
+        indices: [indexName],
         apiKey: apiKey,
         insights: false,
         disableUserPersonalization: true,
