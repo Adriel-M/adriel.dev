@@ -9,6 +9,7 @@ const onload = "this.media='all'; this.onload=null;"
 <docsearch-container>
   <button type="button" class="DocSearch DocSearch-Button" aria-label="search">
     <span class="DocSearch-Button-Container">
+      <!-- SearchIcon from @docsearch/react/src/icons/SearchIcon.tsx (not exported from the built package) -->
       <svg
         width="20"
         height="20"
@@ -56,9 +57,9 @@ const onload = "this.media='all'; this.onload=null;"
 
       docsearch({
         container: this,
-        appId,
+        appId: appId,
         indices: [indexName],
-        apiKey,
+        apiKey: apiKey,
         insights: false,
         disableUserPersonalization: true,
         placeholder: 'Search',
@@ -80,7 +81,7 @@ const onload = "this.media='all'; this.onload=null;"
         },
         transformItems: (items) => {
           return items.map((item) => {
-            // Strip the ellipsis at the end. Add ellipsis via CSS instead.
+            // Strip the ellipsis at the end. Add ellipsis via css instead.
             const snippetValue = item._snippetResult?.content?.value
             if (snippetValue) {
               item._snippetResult.content.value = snippetValue.replace(
