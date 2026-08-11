@@ -106,6 +106,10 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()],
+    server: {
+      // Coder's preview subdomain host is per-workspace; skip Vite's host check.
+      allowedHosts: true,
+    },
     build: {
       // Vite 8's esbuild CSS minifier strips Tailwind v4's responsive @media
       // rules from the build (dev is unaffected), dropping every sm:/md:/lg:/xl:
