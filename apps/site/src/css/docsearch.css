@@ -29,6 +29,7 @@
   /* modal */
   --docsearch-modal-width: 800px;
   --docsearch-modal-height: 600px;
+  --docsearch-modal-radius: var(--docsearch-border-radius);
   --docsearch-modal-variable-height: 60dvh;
   --docsearch-modal-background: var(--color-neutral-100);
   --docsearch-modal-shadow:
@@ -47,6 +48,7 @@
   --docsearch-hit-height: 56px;
   --docsearch-hit-color: var(--color-gray-700);
   --docsearch-hit-highlight-color: var(--color-primary-100);
+  --docsearch-hit-focus-background: var(--docsearch-hit-highlight-color);
   --docsearch-hit-background: var(--color-white);
 
   /* footer */
