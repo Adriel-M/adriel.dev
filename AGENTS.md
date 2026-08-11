@@ -1,16 +1,16 @@
-# CLAUDE.md
+# AGENTS.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to coding agents working in this repository.
 
 ## Repository layout
 
-pnpm workspace monorepo orchestrated by Turborepo (`turbo.json`). **pnpm is the required package manager** (npm/yarn won't resolve the `workspace:*` deps): the version is pinned via `packageManager` in the root `package.json` (`pnpm@11.15.0`), the workspace globs (`apps/*`, `packages/*`) and build allow-list live in `pnpm-workspace.yaml`, and CI installs with `pnpm install --frozen-lockfile`. Packages:
+pnpm workspace monorepo orchestrated by Turborepo (`turbo.json`). **pnpm is the required package manager** (npm/yarn won't resolve the `workspace:*` deps): the version is pinned via `packageManager` in the root `package.json` (`pnpm@11.20.0`), the workspace globs (`apps/*`, `packages/*`) and build allow-list live in `pnpm-workspace.yaml`, and CI installs with `pnpm install --frozen-lockfile`. Packages:
 
 - `apps/site` — the Astro site at adriel.dev. Content collection, pages, components, vitest suite.
 - `packages/cli` — interactive CLI (`tsdown`-built, `@inquirer/prompts`) to scaffold/edit blog posts. `pnpm cli` builds it (`precli`) then runs `node packages/cli/dist/index.js`. The `bin` entry needs a `#!/usr/bin/env node` shebang; it lives at the top of `src/index.ts` so tsdown preserves it (and grants the executable bit) in `dist/index.js`.
 - `packages/esm-wrapper` — `tsdown`-built ESM shim around `@docsearch/react` so Astro's SSR can consume it. **`apps/site` imports this as `@adrieldev/esm-wrapper` and requires it to be built first** — `pnpm dev` runs `predev` to build it once then `dev:esm` (`tsdown --watch`) + `dev:site` concurrently, and `turbo run check` declares `@adrieldev/esm-wrapper#build` as a dependency. If you see missing-module errors from site code, rebuild esm-wrapper.
 - `packages/atom-style` — `tsdown`-built client script (`@adrieldev/atom-style`, MIT, from [rss.style](https://github.com/fileformat/rss.style)) that makes `/atom.xml` human-readable in browsers. `apps/site/src/pages/atom.xml.ts` imports the **built** `dist/atom-style.js` with `?url` (`@adrieldev/atom-style?url`) and injects a **classic** `<script src>` (no `type="module"`) into the feed, so it ships as its own hashed asset rather than being bundled. Authored in TS but consumed as transpiled JS — a `.ts?url` import would emit raw, un-transpiled TS. **The tsdown build must target `format: 'iife'`, not `esm`**: an ESM build appends `export {}`, which is a syntax error in a classic script and silently kills the entire feed page (the script also reads `document.currentScript`, which is `null` in module scripts). The config also sets `outputOptions.entryFileNames: 'atom-style.js'` so the iife bundle keeps that name instead of tsdown's default `atom-style.iife.js`. Built first via `^build`; `predev` also builds it for `pnpm dev`. The RSS.style logo is inlined directly in `atom-style.ts` as a hardcoded `data:` URI string rather than imported as a `.svg`/`.txt`/`?raw` asset, so the markup lives in the source. The stylesheet, being larger, is served separately: `water.light.css` (in `assets/`, exported as `@adrieldev/atom-style/water.light.css`) is imported `?url` by `atom.xml.ts` and handed to the script via a `data-water-css` attribute, read at module top-level (`document.currentScript` is null inside the script's `onreadystatechange` callback). `packages/atom-style/assets/` is `.prettierignore`d (vendored).
-- `packages/eslint-configs` — shared flat ESLint config (`@adrieldev/eslint-configs`) consumed by every package. Authored in TS (`src/index.ts`) and `tsdown`-built to `dist/index.js` (+ `dist/index.d.ts`), consumed via the `exports` map like the other packages. **The ESLint plugins it composes stay in `devDependencies`, and `tsdown.config.ts` sets `deps: { neverBundle: true }` to externalize them** — tsdown only auto-externalizes `dependencies`/`peerDependencies`, so without this it would inline every plugin into a ~16 MB `index.js`. They are deliberately *not* promoted to `dependencies`: this package is workspace-internal (never published, so its devDeps are always installed), and moving the plugins to prod deps drags their transitive tree (e.g. `eslint-plugin-path-alias` → `unset-value`) into the production security scan (Snyk), failing CI. `eslint` itself is a `peerDependency`. Because the config is now consumed from `dist`, `turbo run lint`/`lint:fix` declare `@adrieldev/eslint-configs#build` as a dependency (so a fresh checkout must build it before linting works). `dts` generation had to annotate the default export as `Linter.Config[]` — without the explicit type, rolldown-dts tries to inline `@eslint/config-helpers`' types and fails on a missing `.d.cts`.
+- `packages/eslint-configs` — shared flat ESLint config (`@adrieldev/eslint-configs`) consumed by every package. Authored in TS (`src/index.ts`) and `tsdown`-built to `dist/index.js` (+ `dist/index.d.ts`), consumed via the `exports` map like the other packages. **The ESLint plugins it composes stay in `devDependencies`, and `tsdown.config.ts` sets `deps: { neverBundle: true }` to externalize them** — tsdown only auto-externalizes `dependencies`/`peerDependencies`, so without this it would inline every plugin into a ~16 MB `index.js`. They are deliberately _not_ promoted to `dependencies`: this package is workspace-internal (never published, so its devDeps are always installed), and moving the plugins to prod deps drags their transitive tree (e.g. `eslint-plugin-path-alias` → `unset-value`) into the production security scan (Snyk), failing CI. `eslint` itself is a `peerDependency`. Because the config is now consumed from `dist`, `turbo run lint`/`lint:fix` declare `@adrieldev/eslint-configs#build` as a dependency (so a fresh checkout must build it before linting works). `dts` generation had to annotate the default export as `Linter.Config[]` — without the explicit type, rolldown-dts tries to inline `@eslint/config-helpers`' types and fails on a missing `.d.cts`.
 
 Deploy target is Cloudflare Workers static assets (`wrangler.jsonc` serves `apps/site/dist`, `trailingSlash: 'never'` + `drop-trailing-slash` are paired — don't add trailing slashes in links). A custom Astro integration `apps/site/src/plugins/integration-generate-headers.ts` emits the Cloudflare `_headers` file at build time (`astro:build:done`). This is where the site's **Content-Security-Policy** and other security headers live (applied to `/*`), alongside immutable `cache-control` for `/_astro/*` + `/static/*` and a `Last-Modified` on `/atom.xml` derived from the newest post's `updatedAt ?? createdAt`. Allow-listing a new external host (script/style/img/connect/font source) means editing the CSP here — e.g. Algolia is under `connect-src`. The `font-src 'self'` rule is satisfied because Astro's Fonts API self-hosts font files under `/_astro/fonts/`; if you ever import a `.woff` through Vite directly, make sure it isn't data-URI-inlined.
 
@@ -18,21 +18,29 @@ Deploy target is Cloudflare Workers static assets (`wrangler.jsonc` serves `apps
 
 Run from repo root unless noted:
 
-| Command | What it does |
-| --- | --- |
-| `pnpm dev` | Build esm-wrapper, then run it in watch + `astro dev` concurrently. Use this, not `pnpm --filter site dev` (dev-time site imports stale dist otherwise). |
-| `pnpm build` | `turbo run build` across the workspace. |
-| `pnpm preview` | `astro preview` on the built `apps/site/dist`. |
-| `pnpm check` | `astro check` (type-checks `.astro` + TS). Depends on esm-wrapper build. |
-| `pnpm lint` / `pnpm lint:fix` | ESLint (flat config) across all packages. |
-| `pnpm format` / `pnpm format:fix` | Prettier across all packages. |
-| `pnpm test` | `vitest run` in `apps/site` (the only package with tests). |
-| `pnpm test:watch` | `vitest` watch mode in `apps/site`. |
-| `pnpm cli` | Launches the post CLI pointed at `apps/site/src/content/posts`. |
+| Command                           | What it does                                                                                                                                                                          |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `pnpm dev`                        | Build esm-wrapper and atom-style, then run esm-wrapper in watch mode + `astro dev` concurrently. Use this, not `pnpm --filter site dev` (dev-time site imports stale dist otherwise). |
+| `pnpm build`                      | `turbo run build` across the workspace.                                                                                                                                               |
+| `pnpm preview`                    | `astro preview` on the built `apps/site/dist`.                                                                                                                                        |
+| `pnpm check`                      | `astro check` (type-checks `.astro` + TS). Depends on esm-wrapper build.                                                                                                              |
+| `pnpm lint` / `pnpm lint:fix`     | ESLint (flat config) across all packages.                                                                                                                                             |
+| `pnpm format` / `pnpm format:fix` | Prettier across all packages.                                                                                                                                                         |
+| `pnpm test`                       | `vitest run` in `apps/site` (the only package with tests).                                                                                                                            |
+| `pnpm test:watch`                 | `vitest` watch mode in `apps/site`.                                                                                                                                                   |
+| `pnpm cli`                        | Launches the post CLI pointed at `apps/site/src/content/posts`.                                                                                                                       |
 
 Running a single test: `pnpm --filter site exec vitest run path/to/file.test.ts` or `… -t 'partial test name'`. Watch a single file with `pnpm --filter site exec vitest path/to/file.test.ts`.
 
 CI (`.github/workflows/ci.yml`) pins a specific Node version and runs `lint`, `format`, `check`, `test` in order — mirror that locally before pushing. Husky pre-commit runs `lint-staged` (eslint --fix + prettier --write on staged `ts/tsx/css/mdx/js/mjs/astro`).
+
+## Git workflow
+
+- Do not make feature or fix changes directly on `main`. Create a dedicated branch for each change.
+- Keep history linear: rebase the working branch onto the latest `main`. Do not merge `main` into the working branch and do not create merge commits.
+- Normal pushes must be fast-forward updates. If a rebase rewrites a remote feature branch, use `git push --force-with-lease --force-if-includes`; never use plain `--force`.
+- Never force-push `main`.
+- When a change should be integrated, push the branch and open a pull request targeting `main`.
 
 ## Content pipeline (read this before editing posts or the markdown config)
 
@@ -50,7 +58,7 @@ Markdown is configured in `apps/site/astro.config.ts`:
 - `remarkTitleCase` rewrites every heading to Title Case at build time via `title-case`.
 - `rehypeAutolinkHeadings` prepends a hash icon to headings (class `content-header`), so heading markup in the DOM has an extra anchor child.
 - `rehypeGithubAlerts` renders GFM alerts (`> [!NOTE]`, `[!IMPORTANT]`, `[!WARNING]`, `[!TIP]`, `[!CAUTION]`) with custom `remix-icons` SVGs — those icons need their `width`/`height` injected at build time (`addDimensionsToSvg`), that's why they're imported `?raw` and re-parsed.
-- `remarkIncludeCode` (custom, `src/plugins/`): a code fence with a `file=./relative/path` meta (e.g. ```` ```ts file=./snippet.ts ````) replaces its body with that file's contents, resolved relative to the MDX file, and auto-adds `title="<basename>"` if no `title` is set.
+- `remarkIncludeCode` (custom, `src/plugins/`): a code fence with a `file=./relative/path` meta (e.g. ` ```ts file=./snippet.ts `) replaces its body with that file's contents, resolved relative to the MDX file, and auto-adds `title="<basename>"` if no `title` is set.
 - `remarkGemoji` enables GitHub `:shortcode:` emoji.
 - `:hidden` heading convention (custom `rehypeStripHiddenMarker` + `rehypeHideHeading`): a heading whose text starts with `:hidden` (e.g. `## :hidden Notes`) has the marker stripped and gains `data-hidden` + a `hidden-heading` class — visually hidden but still slugged so it can anchor the floating TOC.
 
@@ -58,7 +66,7 @@ Markdown is configured in `apps/site/astro.config.ts`:
 
 1. `retext` proofreading flags anything (indefinite-article, redundant-acronyms, repeated-words, sentence-spacing, diacritics, English).
 2. Frontmatter `title` is not already `titleCase(title)`.
-3. Any markdown heading is not `titleCase(heading)`.
+3. Any markdown heading other than a `:hidden` heading is not `titleCase(heading)`.
 
 If you add a post with "a API" or "the the", the test will fail — fix the prose, don't loosen the test.
 
@@ -67,7 +75,7 @@ If you add a post with "a API" or "the the", the test will fail — fix the pros
 - `apps/site/tsconfig.json` extends `astro/tsconfigs/strict`, sets `"paths": { "@/*": ["./src/*"] }`, and uses `jsx: "react-jsx"` with `jsxImportSource: "react"`.
 - ESLint enforces `path-alias/no-relative` — always import site code as `@/libs/...`, `@/components/...`, etc., never relative paths that cross directories. The one exception is files already inside the same subdirectory.
 - `simple-import-sort` is enabled; let `pnpm lint:fix` order imports rather than doing it by hand.
-- Styling is **Tailwind CSS v4** via `@tailwindcss/vite` (no `tailwind.config.js` — configured in-CSS). Entry is `src/css/global.css`; other global sheets sit in `src/css/` (`article-content.css`, `docsearch.css`). SVGs are imported bare in `.astro` files and rendered via Astro's built-in SVG component support (`import Icon from '@/assets/…/x.svg'` → `<Icon class="…" />`, see `SocialIcon.astro`), or inline with `?raw` when the markup itself must be manipulated at build time (the `rehypeGithubAlerts` icons). There is deliberately **no** `vite-plugin-svgr` / `?react` path: it existed only so React islands could render icons, and was removed once `ScrollTop.tsx` and `_MobileNav.tsx` were rewritten as `.astro`. If a future island needs an icon, re-add svgr rather than assuming `?react` still resolves.
+- Styling is **Tailwind CSS v4** via `@tailwindcss/vite` (no `tailwind.config.js` — configured in-CSS). Entry is `src/css/global.css`; other global sheets sit in `src/css/` (`article-content.css`, `docsearch.css`). SVGs are imported bare in `.astro` files and rendered via Astro's built-in SVG component support (`import Icon from '@/assets/…/x.svg'` → `<Icon class="…" />`, see `SocialIcon.astro`), or inline with `?raw` when the markup itself must be manipulated at build time (the `rehypeGithubAlerts` icons). There is deliberately **no** `vite-plugin-svgr` / `?react` path. If a future React island needs an icon, re-add svgr rather than assuming `?react` resolves.
 - Shared helpers to reach for before writing new ones:
   - `@/libs/CollectionUtils` — `getPosts`, `generatePostPath`. Sort order is newest-first by `createdAt`.
   - `@/libs/siteConfig` — author, Algolia DocSearch creds, locale, post summary length.
@@ -83,4 +91,4 @@ If you add a post with "a API" or "the the", the test will fail — fix the pros
 - `build.inlineStylesheets: 'never'` is intentional (keeps CSS cacheable) — don't "optimize" it away.
 - `vite.build.cssMinify: false` is deliberate: Vite 8's esbuild CSS minifier strips Tailwind v4's responsive `@media` utilities (every `sm:`/`md:`/`lg:`/`xl:`), so CSS minification is delegated to `@playform/compress` (csso). Don't re-enable Vite's `cssMinify`.
 - Fonts go through **Astro's built-in Fonts API** (top-level `fonts` in `astro.config.ts`, `fontProviders.fontsource()`), not `@fontsource-*` packages. Astro downloads JetBrains Mono at build time and self-hosts it under `/_astro/fonts/` (so `font-src 'self'` and the immutable `/_astro/*` cache rule both cover it), and generates a metric-matched fallback to limit CLS. `<Font cssVariable="--font-jetbrains-mono" preload />` in `Head.astro` emits both the `@font-face` block and the preload link — don't hand-write either. Tailwind's `--font-mono` in `global.css` points at that variable. The old `vite.build.assetsInlineLimit` `.woff` guard was removed with the migration: font files no longer pass through Vite's asset pipeline at all.
-- `.node-version` (`24.18.0`) pins the Node used by both the Cloudflare deploy build and (matching) GitHub CI. Don't remove it or drop below Node 22.18: tsdown loads its `tsdown.config.ts` files via native TS type-stripping, and on older Node its config loader falls back to the optional `unrun` peer dep (not installed), failing the build with "Failed to import module unrun". Cloudflare's build image defaults to Node 22.16.0, which hit exactly this — the pin is what avoids it. Note GitHub CI only runs `lint`/`format`/`check`/`test` and `check` builds only esm-wrapper (often a turbo remote-cache hit), so a broken tsdown build can stay green on GitHub and only fail in the Cloudflare deploy — verify build changes with a clean `pnpm build`.
+- `.node-version` (`24.19.0`) pins the Node used by local version managers and the Cloudflare deploy build. GitHub CI pins Node separately in `.github/workflows/ci.yml`; keep both pins aligned when changing them. Don't remove the pin or drop below Node 22.18: tsdown loads its `tsdown.config.ts` files via native TS type-stripping, and on older Node its config loader falls back to the optional `unrun` peer dep (not installed), failing the build with "Failed to import module unrun". An older Cloudflare build image triggered exactly this failure; the pin prevents it. GitHub CI does not run the full workspace build, so a broken tsdown build can stay green and fail only during deployment — verify build changes with a clean `pnpm build`.
