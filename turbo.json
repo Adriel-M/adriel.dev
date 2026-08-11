@@ -18,9 +18,15 @@
       "cache": false
     },
     "test": {},
-    "check": {}
+    "check": {
+      "dependsOn": ["@adrieldev/esm-wrapper#build"]
+    }
   },
-  "globalDependencies": ["pnpm-lock.yaml", "prettier.config.ts", "eslint.config.ts"],
+  "globalDependencies": [
+    "pnpm-lock.yaml",
+    "prettier.config.ts",
+    "eslint.config.ts"
+  ],
   "remoteCache": {
     "signature": true
   }
