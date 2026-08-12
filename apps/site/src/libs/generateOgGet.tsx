@@ -75,8 +75,6 @@ export function generateGet(titleInput: TitleInput) {
     const fontPath = path.resolve('./src/assets/JetBrainsMono-Bold.ttf')
     const fontData = await fs.readFile(fontPath)
 
-    // @vercel/og@1's runtime returns a Fetch Response, but its bundled type
-    // declaration does not extend Response.
     return new ImageResponse(OgImage({ title, logoBase64 }), {
       width: 1200,
       height: 630,
@@ -88,7 +86,7 @@ export function generateGet(titleInput: TitleInput) {
           weight: 900,
         },
       ],
-    }) as unknown as Response
+    })
   }
 
   return { GET }
