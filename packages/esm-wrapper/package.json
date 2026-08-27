@@ -11,8 +11,8 @@
     "format:fix": "prettier --write ."
   },
   "devDependencies": {
-    "@docsearch/core": "5.0.3",
-    "@docsearch/react": "5.0.3",
+    "@docsearch/core": "5.0.4",
+    "@docsearch/react": "5.0.4",
     "tsdown": "0.22.14"
   },
   "peerDependencies": {
