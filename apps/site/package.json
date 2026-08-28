@@ -32,7 +32,7 @@
   "devDependencies": {
     "@astrojs/check": "0.9.10",
     "@astrojs/markdown-remark": "7.2.4",
-    "@astrojs/mdx": "7.0.7",
+    "@astrojs/mdx": "7.0.8",
     "@astrojs/react": "6.0.4",
     "@astrojs/sitemap": "3.7.3",
     "@playform/compress": "0.2.5",
@@ -44,7 +44,7 @@
     "@types/react-dom": "19.2.5",
     "@types/unist": "3.0.3",
     "@vercel/og": "1.0.1",
-    "astro": "7.2.4",
+    "astro": "7.2.7",
     "astro-robots-txt": "1.0.0",
     "astro-seo": "1.1.0",
     "astro-seo-schema": "7.0.0",
