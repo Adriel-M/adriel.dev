@@ -10,7 +10,7 @@
     "format:fix": "prettier --write ."
   },
   "devDependencies": {
-    "@inquirer/prompts": "8.6.0",
+    "@inquirer/prompts": "8.7.0",
     "github-slugger": "2.0.0",
     "gray-matter": "4.0.3",
     "tsdown": "0.22.14"
