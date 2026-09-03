@@ -27,7 +27,7 @@
     "react-dom": "19.2.8",
     "react-obfuscate-email": "2.0.5",
     "use-sync-external-store": "1.6.0",
-    "v86": "0.5.441"
+    "v86": "0.5.451"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.10",
