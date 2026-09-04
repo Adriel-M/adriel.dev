@@ -43,7 +43,7 @@
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.5",
     "@types/unist": "3.0.3",
-    "@vercel/og": "1.0.1",
+    "@vercel/og": "1.0.2",
     "astro": "7.2.10",
     "astro-robots-txt": "1.0.0",
     "astro-seo": "1.2.0",
