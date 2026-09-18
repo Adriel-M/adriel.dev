@@ -17,13 +17,11 @@ const hasCaption = Astro.slots.has('default')
   <div class="parallax">
     <ResponsivePicture src={src} alt={alt} />
   </div>
-  {
-    hasCaption && (
-      <figcaption class="parallax-caption mt-2 text-right text-sm text-gray-500">
-        <slot />
-      </figcaption>
-    )
-  }
+  {hasCaption && (
+    <figcaption class="parallax-caption mt-2 text-right text-sm text-gray-500">
+      <slot />
+    </figcaption>
+  )}
 </figure>
 
 <style>

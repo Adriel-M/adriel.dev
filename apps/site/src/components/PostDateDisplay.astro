@@ -16,23 +16,19 @@ const shouldDisplayUpdatedAt =
 <dl class="flex items-center justify-center gap-2 text-base leading-6 font-medium text-gray-500">
   <dt class="sr-only">Published on</dt>
   <dd>
-    <time datetime={post.data.createdAt.toISOString()}>
-      {formatDate(post.data.createdAt)}
-    </time>
+    <time datetime={post.data.createdAt.toISOString()}>{formatDate(post.data.createdAt)}</time>
   </dd>
-  {
-    shouldDisplayUpdatedAt && (
-      <>
-        <dt class="sr-only">Updated on</dt>
-        <dd>
-          <span
-            class="cursor-help text-xs text-gray-400 italic"
-            title={`Updated on ${formatDate(post.data.updatedAt!)}`}
-          >
-            (updated)
-          </span>
-        </dd>
-      </>
-    )
-  }
+  {shouldDisplayUpdatedAt && (
+    <>
+      <dt class="sr-only">Updated on</dt>
+      <dd>
+        <span
+          class="cursor-help text-xs text-gray-400 italic"
+          title={`Updated on ${formatDate(post.data.updatedAt!)}`}
+        >
+          (updated)
+        </span>
+      </dd>
+    </>
+  )}
 </dl>

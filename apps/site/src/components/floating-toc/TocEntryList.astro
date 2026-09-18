@@ -11,21 +11,19 @@ const { entries, isNested = false } = Astro.props
 const borderCss = isNested ? 'pl-2 border-l-2 border-gray-200/25' : ''
 ---
 
-{
-  entries.length > 0 && (
-    <ul class={borderCss}>
-      {entries.map((entry: TocEntry) => (
-        <li class="list-inside list-disc">
-          <a
-            class="rounded px-1 no-underline hover:bg-primary-100"
-            href={`#${entry.slug}`}
-            data-toc-slug={entry.slug}
-          >
-            {entry.text}
-          </a>
-          {entry.items.length > 0 && <Astro.self entries={entry.items} isNested={true} />}
-        </li>
-      ))}
-    </ul>
-  )
-}
+{entries.length > 0 && (
+  <ul class={borderCss}>
+    {entries.map((entry: TocEntry) => (
+      <li class="list-inside list-disc">
+        <a
+          class="rounded px-1 no-underline hover:bg-primary-100"
+          href={`#${entry.slug}`}
+          data-toc-slug={entry.slug}
+        >
+          {entry.text}
+        </a>
+        {entry.items.length > 0 && <Astro.self entries={entry.items} isNested={true} />}
+      </li>
+    ))}
+  </ul>
+)}

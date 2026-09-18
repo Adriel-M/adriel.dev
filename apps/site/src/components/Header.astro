@@ -23,13 +23,11 @@ const headerNavLinks = [
     </Link>
   </div>
   <div class="flex items-center space-x-4 leading-5 sm:space-x-6">
-    {
-      headerNavLinks.map((link) => (
-        <Link href={link.href} class="font-medium hover:text-primary-600">
-          {link.title}
-        </Link>
-      ))
-    }
+    {headerNavLinks.map((link) => (
+      <Link href={link.href} class="font-medium hover:text-primary-600">
+        {link.title}
+      </Link>
+    ))}
     <Search />
   </div>
 </header>
