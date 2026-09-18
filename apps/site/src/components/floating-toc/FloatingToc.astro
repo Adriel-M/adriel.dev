@@ -45,14 +45,12 @@ const { headings } = Astro.props
 const entries = generateTocEntries(headings)
 ---
 
-{
-  entries.length > 0 && (
-    <div class="sticky top-20 float-right hidden h-0 w-toc-xl px-8 text-xs lg:block xl:w-toc-4xl">
-      <div class="pb-2 text-sm">Table of Contents</div>
-      <TocEntryList entries={entries} />
-    </div>
-  )
-}
+{entries.length > 0 && (
+  <div class="sticky top-20 float-right hidden h-0 w-toc-xl px-8 text-xs lg:block xl:w-toc-4xl">
+    <div class="pb-2 text-sm">Table of Contents</div>
+    <TocEntryList entries={entries} />
+  </div>
+)}
 
 <script>
   import { throttle } from '@/libs/FunctionUtils'

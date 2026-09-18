@@ -16,5 +16,7 @@ const isExternal = !isInternalLink && !isAnchorLink
   {...rest}
   href={href}
   target={isExternal ? '_blank' : undefined}
-  rel={isExternal ? 'noopener noreferrer' : undefined}><slot /></a
+  rel={isExternal ? 'noopener noreferrer' : undefined}
 >
+  <slot />
+</a>

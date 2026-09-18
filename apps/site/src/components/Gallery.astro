@@ -34,21 +34,14 @@ const imageAlt = `Gallery Preview of ${description}`
 ---
 
 <PhotoSwipe class="grid grid-cols-2 gap-4 lg:grid-cols-3">
-  {
-    optimizedImages.map(({ original, optimized }) => (
-      <a
-        href={optimized.src}
-        data-pswp-width={original.width}
-        data-pswp-height={original.height}
-        target="_blank"
-      >
-        <Image
-          src={original}
-          height={600}
-          alt={imageAlt}
-          class="not-prose aspect-3/2 object-cover"
-        />
-      </a>
-    ))
-  }
+  {optimizedImages.map(({ original, optimized }) => (
+    <a
+      href={optimized.src}
+      data-pswp-width={original.width}
+      data-pswp-height={original.height}
+      target="_blank"
+    >
+      <Image src={original} height={600} alt={imageAlt} class="not-prose aspect-3/2 object-cover" />
+    </a>
+  ))}
 </PhotoSwipe>

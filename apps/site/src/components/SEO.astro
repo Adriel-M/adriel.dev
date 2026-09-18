@@ -35,22 +35,20 @@ const { seoData } = Astro.props
 const titleTemplate = `%s | ${siteConfig.title}`
 ---
 
-{
-  seoData.type === 'basic' ? (
-    <Seo title={seoData.title} titleTemplate={titleTemplate} noindex={seoData.noindex} />
-  ) : (
-    <Seo
-      title={seoData.title}
-      titleTemplate={titleTemplate}
-      description={seoData.description}
-      openGraph={{
-        basic: {
-          title: seoData.title,
-          type: seoData.type === 'post' ? 'article' : 'website',
-          image: seoData.ogImage,
-        },
-        ...(seoData.type === 'post' ? { article: seoData.article } : {}),
-      }}
-    />
-  )
-}
+{seoData.type === 'basic' ? (
+  <Seo title={seoData.title} titleTemplate={titleTemplate} noindex={seoData.noindex} />
+) : (
+  <Seo
+    title={seoData.title}
+    titleTemplate={titleTemplate}
+    description={seoData.description}
+    openGraph={{
+      basic: {
+        title: seoData.title,
+        type: seoData.type === 'post' ? 'article' : 'website',
+        image: seoData.ogImage,
+      },
+      ...(seoData.type === 'post' ? { article: seoData.article } : {}),
+    }}
+  />
+)}
