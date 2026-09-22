@@ -27,8 +27,8 @@ const hasCaption = Astro.slots.has('default')
 <style>
   .parallax-figure {
     margin: 0;
-    /* Space the caption off the next band so its attribution doesn't read
-       as a label for the image below it. */
+    /* Space the caption off the next band so its attribution doesn't read */
+    /* as a label for the image below it. */
     margin-block-end: 2.5rem;
   }
 
@@ -58,8 +58,8 @@ const hasCaption = Astro.slots.has('default')
     height: 100%;
     object-fit: cover;
 
-    /* Oversize the layer so the drift never exposes an empty edge. The scale
-       must be at least 1 + 2·offset/100, so 1.4x covers the ±20% translate. */
+    /* Oversize the layer so the drift never exposes an empty edge. The scale */
+    /* must be at least 1 + 2·offset/100, so 1.4x covers the ±20% translate. */
     scale: 1.4;
   }
 
