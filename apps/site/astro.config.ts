@@ -176,7 +176,7 @@ export default defineConfig({
 
   integrations: [
     generateHeaders(),
-    react(),
+    react({ compiler: true }),
     mdx(),
     sitemap({
       serialize: (item) => {
