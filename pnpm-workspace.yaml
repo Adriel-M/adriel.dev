@@ -9,3 +9,13 @@ allowBuilds:
   # install script must not run — letting it run makes node-gyp build from
   # source and fail ("Please add node-addon-api"). Keep this false.
   sharp: false
+
+minimumReleaseAgeExclude:
+  - '@typescript/typescript-darwin-arm64@7.1.0-dev.20261005.1'
+  - '@typescript/typescript-darwin-x64@7.1.0-dev.20261005.1'
+  - '@typescript/typescript-linux-arm64@7.1.0-dev.20261005.1'
+  - '@typescript/typescript-linux-arm@7.1.0-dev.20261005.1'
+  - '@typescript/typescript-linux-x64@7.1.0-dev.20261005.1'
+  - '@typescript/typescript-win32-arm64@7.1.0-dev.20261005.1'
+  - '@typescript/typescript-win32-x64@7.1.0-dev.20261005.1'
+  - typescript@7.1.0-dev.20261005.1

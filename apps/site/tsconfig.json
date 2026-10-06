@@ -6,9 +6,14 @@
     "strictNullChecks": true, // add if using `base` template
     "jsx": "react-jsx",
     "jsxImportSource": "react",
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }
-  }
+  },
+  "contentMappers": [
+    {
+      "package": "@astrojs/ts-content-mapper",
+      "extensions": [".astro"]
+    }
+  ]
 }

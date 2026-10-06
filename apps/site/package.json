@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "check": "astro check",
+    "check": "node scripts/check.mjs",
     "preview": "astro preview",
     "astro": "astro",
     "test": "vitest run",
@@ -30,11 +30,11 @@
     "v86": "0.5.469"
   },
   "devDependencies": {
-    "@astrojs/check": "0.9.10",
     "@astrojs/markdown-remark": "7.3.1",
-    "@astrojs/mdx": "8.0.1",
+    "@astrojs/mdx": "8.0.2",
     "@astrojs/react": "7.0.0",
     "@astrojs/sitemap": "3.7.4",
+    "@astrojs/ts-content-mapper": "0.2.0",
     "@playform/compress": "0.2.5",
     "@tailwindcss/typography": "0.5.20",
     "@tailwindcss/vite": "4.3.3",
@@ -44,7 +44,7 @@
     "@types/react-dom": "19.3.0",
     "@types/unist": "3.0.3",
     "@vercel/og": "1.0.1",
-    "astro": "7.3.3",
+    "astro": "7.3.5",
     "astro-robots-txt": "1.0.0",
     "astro-seo": "1.2.0",
     "astro-seo-schema": "7.0.0",
@@ -73,6 +73,7 @@
     "sharp": "0.35.5",
     "tailwindcss": "4.3.3",
     "title-case": "4.3.2",
+    "typescript": "7.1.0-dev.20261005.1",
     "unist-util-visit": "5.1.0",
     "vfile": "6.0.3",
     "vitest": "5.0.3"
