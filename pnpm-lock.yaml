@@ -209,8 +209,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/esm-wrapper
       '@docsearch/css':
-        specifier: 5.1.1
-        version: 5.1.1
+        specifier: 5.1.2
+        version: 5.1.2
       '@xterm/addon-fit':
         specifier: 0.11.0
         version: 0.11.0
@@ -462,11 +462,11 @@ importers:
         version: 7.0.2
     devDependencies:
       '@docsearch/core':
-        specifier: 5.1.1
-        version: 5.1.1(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+        specifier: 5.1.2
+        version: 5.1.2(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       '@docsearch/react':
-        specifier: 5.1.1
-        version: 5.1.1(@algolia/client-search@5.59.0)(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(search-insights@2.17.3)
+        specifier: 5.1.2
+        version: 5.1.2(@algolia/client-search@5.59.0)(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(search-insights@2.17.3)
       tsdown:
         specifier: 0.23.0
         version: 0.23.0(@volar/typescript@2.4.28(typescript@7.0.2))(typescript@7.0.2)
@@ -867,8 +867,8 @@ packages:
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
     engines: {node: '>=12'}
 
-  '@docsearch/core@5.1.1':
-    resolution: {integrity: sha512-/WlSUS5hrTIsmqbx+l7YU3zECHXV1cb6plH9/ZybCSIDIUl/FKeDZUKUlg901qiZIJwSUtuQDhmddkili8P37g==}
+  '@docsearch/core@5.1.2':
+    resolution: {integrity: sha512-6PG51N+eimQIgfO2cUTHNvjy3iWVmzxz7fyqHT6CwkFFb6Wz/w2F6UtZL/bxSYy1WAl52Q8b08O/akFZjh3F7A==}
     peerDependencies:
       '@types/react': '>= 16.8.0 < 20.0.0'
       react: '>= 16.8.0 < 20.0.0'
@@ -881,11 +881,11 @@ packages:
       react-dom:
         optional: true
 
-  '@docsearch/css@5.1.1':
-    resolution: {integrity: sha512-+sPTcGV9QVTB7m9KRl2uym1lY3N3lwV2Y4KRttdZF7MPrS3Wd/Dkp5LarZTk81IpqF3hXxxyxhkl5vwQZGuGUQ==}
+  '@docsearch/css@5.1.2':
+    resolution: {integrity: sha512-zPkSBM8y6XbMfRwq4DeDSRyE0Jsx/phd2KYRgug7PvoZd9cYLqwf6nb2na4whprxCYe4NB6M5RL84C7NgRv0XA==}
 
-  '@docsearch/react@5.1.1':
-    resolution: {integrity: sha512-Awh49X+8YJc7nGND5bHBML83JT1khGW9sgCy5kSxTcMLSngNQp8z+l7YTEkyGB7ZkPrIrKRYLNQp2RDguYYGrA==}
+  '@docsearch/react@5.1.2':
+    resolution: {integrity: sha512-on36SOMQxU4/5zfdtrv9pR/0SOhfD/TFKHoIjjAZSW9bW1xPsgiot+hfGXzHnJo/7O5bmmIN0kYZ0iokrUcKmw==}
     peerDependencies:
       '@types/react': '>= 16.8.0 < 20.0.0'
       react: '>= 16.8.0 < 20.0.0'
@@ -6778,21 +6778,21 @@ snapshots:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
 
-  '@docsearch/core@5.1.1(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
+  '@docsearch/core@5.1.2(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
     optionalDependencies:
       '@types/react': 19.3.0
       react: 19.3.0
       react-dom: 19.3.0(react@19.3.0)
 
-  '@docsearch/css@5.1.1': {}
+  '@docsearch/css@5.1.2': {}
 
-  '@docsearch/react@5.1.1(@algolia/client-search@5.59.0)(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(search-insights@2.17.3)':
+  '@docsearch/react@5.1.2(@algolia/client-search@5.59.0)(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)(search-insights@2.17.3)':
     dependencies:
       '@ai-sdk/react': 3.0.288(react@19.3.0)(zod@4.6.5)
       '@algolia/autocomplete-core': 1.19.2(@algolia/client-search@5.59.0)(algoliasearch@5.59.0)(search-insights@2.17.3)
       '@base-ui/react': 1.8.0(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
-      '@docsearch/core': 5.1.1(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
-      '@docsearch/css': 5.1.1
+      '@docsearch/core': 5.1.2(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+      '@docsearch/css': 5.1.2
       ai: 6.0.285(zod@4.6.5)
       algoliasearch: 5.59.0
       marked: 16.4.2
