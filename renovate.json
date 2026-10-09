@@ -16,7 +16,7 @@
     },
     {
       "automerge": true,
-      "matchPackageNames": ["turbo", "pnpm"]
+      "matchPackageNames": ["turbo", "pnpm", "wrangler"]
     },
     {
       "automerge": true,
