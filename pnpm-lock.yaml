@@ -291,8 +291,8 @@ importers:
         specifier: 1.2.0
         version: 1.2.0
       astro-seo-schema:
-        specifier: 7.0.0
-        version: 7.0.0(astro@7.3.3(@astrojs/markdown-remark@7.3.1(supports-color@10.2.2))(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.2)(yaml@2.9.1))(schema-dts@2.1.0)
+        specifier: 7.0.1
+        version: 7.0.1(astro@7.3.3(@astrojs/markdown-remark@7.3.1(supports-color@10.2.2))(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.2)(yaml@2.9.1))(schema-dts@2.1.0)
       compromise:
         specifier: 14.18.0
         version: 14.18.0
@@ -2750,8 +2750,8 @@ packages:
   astro-robots-txt@1.0.0:
     resolution: {integrity: sha512-6JQSLid4gMhoWjOm85UHLkgrw0+hHIjnJVIUqxjU2D6feKlVyYukMNYjH44ZDZBK1P8hNxd33PgWlHzCASvedA==}
 
-  astro-seo-schema@7.0.0:
-    resolution: {integrity: sha512-icG6vL2pKNf7WBI03JxZYn6gQiLASxq/U3JVv27roaPJ+WH0p3sats9mMInzp6x40G1mVdLLoAEUObmKY1If+A==}
+  astro-seo-schema@7.0.1:
+    resolution: {integrity: sha512-JkPW+0ww5JGfpN67rodL4OrT2X3hDurNFcBIGRP9CnQIDfa/PD+jPBB+ZQPH6q+x4MZNGdFVeZ3BRXbykxaVIQ==}
     peerDependencies:
       astro: ^7.0.0
       schema-dts: ^1.1.0
@@ -8037,7 +8037,7 @@ snapshots:
       valid-filename: 4.0.0
       zod: 3.25.76
 
-  astro-seo-schema@7.0.0(astro@7.3.3(@astrojs/markdown-remark@7.3.1(supports-color@10.2.2))(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.2)(yaml@2.9.1))(schema-dts@2.1.0):
+  astro-seo-schema@7.0.1(astro@7.3.3(@astrojs/markdown-remark@7.3.1(supports-color@10.2.2))(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.2)(yaml@2.9.1))(schema-dts@2.1.0):
     dependencies:
       astro: 7.3.3(@astrojs/markdown-remark@7.3.1(supports-color@10.2.2))(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.2)(yaml@2.9.1)
       schema-dts: 2.1.0
